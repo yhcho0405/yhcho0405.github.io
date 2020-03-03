@@ -57,7 +57,15 @@
 <link rel="stylesheet" href="/css/back-to-top.css">
 
     
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159607493-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159607493-1');
+</script>
+
     
     
     
@@ -161,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    몇 초 읽기 소요 (대략 76 단어)
+                    몇 초 읽기 소요 (대략 77 단어)
                 </span>
                 
                 
@@ -176,9 +184,16 @@
         <div class="content">
             <p>왜 이리 어렵게 풀어놨을까</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">11</span>];</span><br><span class="line">	<span class="keyword">int</span> b[<span class="number">11</span>];</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">		b[i] = i + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> v;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt; <span class="number">-1</span>; i--)</span><br><span class="line">	&#123;</span><br><span class="line">		v = b[i];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a[i] + <span class="number">1</span>; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			b[i+j] = b[i+j+<span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		b[i+a[i]] = v;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; b[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/11/10/20191110-boj14501/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -214,7 +229,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    몇 초 읽기 소요 (대략 98 단어)
+                    몇 초 읽기 소요 (대략 99 단어)
                 </span>
                 
                 
@@ -229,12 +244,16 @@
         <div class="content">
             <p>이전의 <a href="https://yhcho0405.github.io/2019/11/03/20191103-boj2352/">반도체 설계</a> 문제와 동일하다.<br>다른 점은 최대 길이 정도?</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, g, t, L[<span class="number">1001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">		<span class="keyword">auto</span> p = lower_bound(L+<span class="number">1</span>, L+g+<span class="number">1</span>, t);</span><br><span class="line">		*p = t;</span><br><span class="line">		<span class="keyword">if</span>(p == L+g+<span class="number">1</span>) g++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; g;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>마찬가지로 실제 최장증가수열을 구하진 못한다.</p>
-<p>그저 길이만 출력한다.</p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/11/04/20191104-boj11053/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -270,7 +289,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1분 읽기 소요 (대략 156 단어)
+                    1분 읽기 소요 (대략 157 단어)
                 </span>
                 
                 
@@ -288,9 +307,16 @@
 <p>lower_bound로 최장증가수열을 구현하는 방식을 봤는데 실제로 유효한 수열을 구하진 않았다.</p>
 <p>그런데 이 문제는 수열을 구하는 게 아니라 수열의 길이만 구하면 되므로 최대한 생략하고 수열의 길이만 구하도록 바꿨다.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, g, t, L[<span class="number">40001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">		<span class="keyword">auto</span> p = lower_bound(L+<span class="number">1</span>, L+g+<span class="number">1</span>, t);</span><br><span class="line">		*p = t;</span><br><span class="line">		<span class="keyword">if</span>(p == L+g+<span class="number">1</span>) g++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; g;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/11/03/20191103-boj2352/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -326,7 +352,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1분 읽기 소요 (대략 223 단어)
+                    1분 읽기 소요 (대략 224 단어)
                 </span>
                 
                 
@@ -342,11 +368,16 @@
             <p>어렵게 생각하면 절대 안 풀리더라.</p>
 <p>왼쪽 위부터 한자리씩 비교하며 다르면 그 칸을 포함해 오른쪽으로 3, 아래로 3 칸을 바꿔준다.</p>
 <p>전체가 같아지면 멈추고 모든 칸을 다 바꿨는데 다르면 -1출력.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">char</span> a[<span class="number">51</span>][<span class="number">51</span>], b[<span class="number">51</span>][<span class="number">51</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> ii = i<span class="number">-1</span>; ii &lt;= i+<span class="number">1</span>; ii++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> jj = j<span class="number">-1</span>; jj &lt;= j+<span class="number">1</span>; jj++)</span><br><span class="line">            a[ii][jj] = <span class="string">'0'</span> + <span class="string">'1'</span> - a[ii][jj];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">com</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++)</span><br><span class="line">            <span class="keyword">if</span> (a[i][j] != b[i][j])</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>, a[i]);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>, b[i]);       </span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n<span class="number">-1</span>; i++)</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; m<span class="number">-1</span>; j++)</span><br><span class="line">            <span class="keyword">if</span> (a[i<span class="number">-1</span>][j<span class="number">-1</span>] != b[i<span class="number">-1</span>][j<span class="number">-1</span>]) &#123;</span><br><span class="line">                swap(i, j);</span><br><span class="line">                cnt++;</span><br><span class="line">            &#125;              </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d"</span>, com()? cnt : <span class="number">-1</span>);   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>a[i], b[i]로 받아도 개행이 인식되면 알아서 2차원 배열로 저장하는 듯</p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/10/28/20191028-boj1080/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -382,7 +413,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 소요 (대략 332 단어)
+                    2분 읽기 소요 (대략 333 단어)
                 </span>
                 
                 
@@ -402,26 +433,16 @@
 <li><p>다음 부등호가 “&lt;” 라면 부등호 다음 수를 9로 만들고 그전의 자리에는 -1을 해준다.</p>
 </li>
 <li><p>“&gt;” 라면 사용 안 했던 수 중에 가장 큰 수를 넣는다.<br>이런 방식으로 부등호 개수만큼 반복한다.</p>
-</li>
-</ol>
-<br/>
-
-<h2 id="가장-작은-수를-구할-때"><a href="#가장-작은-수를-구할-때" class="headerlink" title="가장 작은 수를 구할 때"></a>가장 작은 수를 구할 때</h2><hr>
-<ol>
-<li><p>앞자리에 0을 넣고 시작한다.</p>
-</li>
-<li><p>다음 부등호가 “&gt;” 라면 부등호 다음 수를 0으로 만들고 그전의 자리에는 +1을 해준다.</p>
-</li>
-<li><p>“&lt;” 라면 사용 한했던 수 중에 가장 작은 수를 넣는다.</p>
-</li>
-<li><p>이런 방식으로 부등호 개수만큼 반복한다.</p>
-</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	short a[<span class="number">10</span>];</span><br><span class="line">	short p[<span class="number">10</span>] = &#123;<span class="number">0</span>, &#125;;</span><br><span class="line">	short k;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; k;</span><br><span class="line">	<span class="keyword">char</span> b[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; b[i];</span><br><span class="line">	short po = <span class="number">0</span>;</span><br><span class="line">	a[<span class="number">0</span>] = <span class="number">9</span>;</span><br><span class="line">	p[<span class="number">9</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(b[i] == <span class="string">'&lt;'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			a[i+<span class="number">1</span>] = a[i];</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = po; j &lt; i+<span class="number">1</span>; j++)</span><br><span class="line">				p[--a[j]] = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(b[i] == <span class="string">'&gt;'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			po = i + <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">9</span>; j &gt; <span class="number">-1</span>; j--)</span><br><span class="line">				<span class="keyword">if</span>(p[j] == <span class="number">0</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					a[i + <span class="number">1</span>] = j;</span><br><span class="line">					p[j] = <span class="number">1</span>;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= k; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; a[i];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	short l[<span class="number">10</span>] = &#123;<span class="number">0</span>, &#125;;</span><br><span class="line">	po = <span class="number">0</span>;</span><br><span class="line">	a[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	l[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(b[i] == <span class="string">'&gt;'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			a[i+<span class="number">1</span>] = a[i];</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = po; j &lt; i+<span class="number">1</span>; j++)</span><br><span class="line">				l[++a[j]] = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(b[i] == <span class="string">'&lt;'</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			po = i + <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">10</span>; j++)</span><br><span class="line">				<span class="keyword">if</span>(l[j] == <span class="number">0</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					a[i + <span class="number">1</span>] = j;</span><br><span class="line">					l[j] = <span class="number">1</span>;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= k; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; a[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>for 문 굳이 2번 돌릴 필요 없이 함수로 짜면 깔끔할 듯하다.</p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/10/28/20191028-boj2529/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -457,7 +478,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1분 읽기 소요 (대략 199 단어)
+                    1분 읽기 소요 (대략 200 단어)
                 </span>
                 
                 
@@ -482,12 +503,16 @@
 </li>
 </ol>
 <p>3개 중 가장 작은 게 답이다.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">include &lt;iostream&gt;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, m;</span><br><span class="line">	short pa[<span class="number">50</span>], na[<span class="number">50</span>];</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; pa[i] &gt;&gt; na[i];</span><br><span class="line">	sort(pa, pa+m);</span><br><span class="line">	sort(na, na+m);</span><br><span class="line">	<span class="keyword">int</span> d1 = pa[<span class="number">0</span>] * (n / <span class="number">6</span>) + na[<span class="number">0</span>] * (n % <span class="number">6</span>);</span><br><span class="line">	<span class="keyword">int</span> d2 = na[<span class="number">0</span>] * n;</span><br><span class="line">	<span class="keyword">int</span> d3 = pa[<span class="number">0</span>] * ((n / <span class="number">6</span>) + <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">int</span> v = min(min(d1, d2), d3);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; v;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>정렬은 아무리 봐도 불편하다.<br>나중에 수정하자.</p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/10/25/20191025-boj1046/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -523,7 +548,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 소요 (대략 369 단어)
+                    2분 읽기 소요 (대략 370 단어)
                 </span>
                 
                 
@@ -550,13 +575,16 @@
 이전에 회의실 배정인가 거기서 썼던 pair를 쓰면 편하겠단 생각이 들었다.
 
 <p>first는 어차피 오름차순으로 정렬되니 다음 사람의 점수보다 무조건 낮을 것이고 그 와중에 second까지 작으면 조건에 의해 걔는 탈락이다.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; p;</span><br><span class="line"><span class="keyword">int</span> tk[<span class="number">21</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	p v[<span class="number">100001</span>];</span><br><span class="line">	short t;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; t; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; v[j].first &gt;&gt; v[j].second;</span><br><span class="line">		&#125;</span><br><span class="line">		sort(v, v+n);</span><br><span class="line">		<span class="keyword">int</span> po = v[<span class="number">0</span>].second;</span><br><span class="line">		<span class="keyword">int</span> p = n;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(po &lt; v[j].second) p--;</span><br><span class="line">			<span class="keyword">else</span> po = v[j].second;</span><br><span class="line">		&#125;</span><br><span class="line">		tk[i] = p;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; t; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; tk[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>왜 배열명을 tk로 썼는지 기억이 가물가물한데 아마 테스트 케이스를 줄여서 tk라 한듯하다.</p>
-<p>근데 놀랍게도 test case를 굳이 줄인다면 tc이다.</p>
-<p>졸았나보다.</p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/10/25/20191025-boj1946/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -592,7 +620,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 소요 (대략 308 단어)
+                    2분 읽기 소요 (대략 309 단어)
                 </span>
                 
                 
@@ -608,19 +636,16 @@
             <p>가장 작은 답이 나오려면 +끼리 괄호로 묶고 계산하면 된다. 라고 생각했지만 계속 반례가 생각나서 이건 아닐 거라고 판단했고 그냥 첫 번째 -가 나온 순간부터 다 빼버리면 처음 생각했던 것보다 단순하게 끝난다.</p>
 <p>+아스키코드 10은 line feed (다음 줄)</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">bool</span> ch = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">int</span> a, b;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a);</span><br><span class="line">	<span class="keyword">for</span>(;<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c), c != <span class="number">10</span>;)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(c == <span class="string">'-'</span>) ch = <span class="literal">true</span>;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;b);</span><br><span class="line">		<span class="keyword">if</span>(ch) a -= b;</span><br><span class="line">		<span class="keyword">else</span> a += b;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>cin으로 받아보려 했으나 작동이 안 돼서 scanf로 받았다.</p>
-<p>자료형을 정확히 명시해줘야 하는 것 같다.</p>
-<p>추가로 for 문에 대해 새로 알게 된 점.</p>
-<p>for(시작할 때 한 번만 실행; 조건문 말고도 scanf 같은 거 사용 가능, 한번 돌 때마다 조건문 확인해서 매번 실행되는 듯; 증감식, 여기도 매번 실행)</p>
-<p>더 찾아봐야 알겠지만 이런 느낌인 듯.</p>
-<p>​</p>
-<p>이렇게도 될까?</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">bool</span> ch = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">int</span> a, b;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">for</span>(<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a); <span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c), c != <span class="number">10</span>;)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(c == <span class="string">'-'</span>) ch = <span class="literal">true</span>;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;b);</span><br><span class="line">		<span class="keyword">if</span>(ch) a -= b;</span><br><span class="line">		<span class="keyword">else</span> a += b;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>된다. 2바이트 줄였다.</p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/10/25/20191025-boj1541/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -656,7 +681,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1분 읽기 소요 (대략 205 단어)
+                    1분 읽기 소요 (대략 206 단어)
                 </span>
                 
                 
@@ -673,14 +698,16 @@
 <p>추가하는 연산은 무조건 차이가 가장 적게 할 테니까 신경 쓰지 않는다.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> a[<span class="number">50</span>], b[<span class="number">50</span>];</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b;</span><br><span class="line">	<span class="keyword">int</span> al = <span class="built_in">sprintf</span>(a, <span class="string">"%s"</span>, a);</span><br><span class="line">	<span class="keyword">int</span> bl = <span class="built_in">sprintf</span>(b, <span class="string">"%s"</span>, b);</span><br><span class="line">	<span class="keyword">int</span> c = <span class="number">51</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bl - al + <span class="number">1</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> co = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; al; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(b[j+i] != a[j]) co++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(co &lt; c) c = co;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>지금보면 좀 한심한 코드다.</p>
-<p>배열 길이 구하겠다고 sprintf를 썼다.</p>
-<p>시간나면 수정해서 다시 올리자.</p>
-<br/>
-불편해서 바로 해버렸다.
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> a, b;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b;</span><br><span class="line">	<span class="keyword">int</span> c = <span class="number">51</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; b.size() - a.size() + <span class="number">1</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> co = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a.size(); j++)</span><br><span class="line">			<span class="keyword">if</span>(b[j+i] != a[j]) co++;</span><br><span class="line">		<span class="keyword">if</span>(co &lt; c) c = co;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/10/24/20191024-boj1120/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -716,7 +743,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    몇 초 읽기 소요 (대략 90 단어)
+                    몇 초 읽기 소요 (대략 91 단어)
                 </span>
                 
                 
@@ -737,9 +764,16 @@
 </ul>
 <p>3개 중에 가장 작은 값이 답이다. 가장 작은 값을 제외하곤 서로의 반례가 되기 때문.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n, m, k;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m &gt;&gt; k;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; min(min(n/<span class="number">2</span>, m), (n+m-k)/<span class="number">3</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2019/10/24/20191024-boj2875/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -1085,7 +1119,7 @@
 </div>
     
     
-        <div class="column-right-shadow is-hidden-widescreen ">
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
         
             
 <div class="card widget">
@@ -1262,7 +1296,7 @@
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
     
         
 <div class="card widget">
@@ -1565,7 +1599,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

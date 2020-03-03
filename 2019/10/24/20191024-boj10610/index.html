@@ -19,7 +19,7 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
 <meta property="article:published_time" content="2019-10-24T08:12:00.000Z">
-<meta property="article:modified_time" content="2020-03-02T13:18:00.724Z">
+<meta property="article:modified_time" content="2020-03-03T17:32:09.355Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="BOJ">
@@ -63,7 +63,15 @@
 <link rel="stylesheet" href="/css/back-to-top.css">
 
     
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159607493-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159607493-1');
+</script>
+
     
     
     
@@ -156,7 +164,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 소요 (대략 262 단어)
+                    2분 읽기 소요 (대략 263 단어)
                 </span>
                 
                 
@@ -173,6 +181,7 @@
 <p>결국엔 계속 3의 배수가 되는데 생각해보니 정렬된 거나 안된 거나 같이 위의 조건을 만족한다면 그냥 모듈러 연산으로 해도 된다는 생각이 들었다. 어쨌든 30의 배수가 되려면 위의 조건에서 0이 문자열에 포함되어 있는지 확인해 봐야 한다.</p>
 <p>조건을 모두 만족한 후 내림차순 정렬하면 풀린다.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">char</span> a, <span class="keyword">char</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a &gt; b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> n;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> s = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">bool</span> z = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n.size(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	s += (n[i] - <span class="string">'0'</span>);</span><br><span class="line">		<span class="keyword">if</span>(!(n[i] - <span class="string">'0'</span>))</span><br><span class="line">        	z = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!z || s % <span class="number">3</span>)</span><br><span class="line">    	<span class="built_in">cout</span> &lt;&lt; <span class="number">-1</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        sort(n.begin(), n.end(), cmp);</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; n &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 
         </div>
         
@@ -530,7 +539,7 @@
 </div>
     
     
-        <div class="column-right-shadow is-hidden-widescreen ">
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
         
             
 <div class="card widget">
@@ -707,7 +716,7 @@
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
     
         
 <div class="card widget">
@@ -1010,7 +1019,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

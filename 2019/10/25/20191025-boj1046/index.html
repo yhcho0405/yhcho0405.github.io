@@ -10,16 +10,16 @@
 <title>[C++]BOJ 1046 - 기타줄 - yhcho0405</title>
 
 
-    <meta name="description" content="딴 거 다 필요 없고 가장 싼 패키지와 낱개 가격만 있으면 된다. 그걸 구하기 위해 나는 정렬을 사용한 모양이다. 굳이 그랬어야 할까. 아무튼 경우의 수는 3가지다.  패키지로 살 수 있을 만큼 산 후 나머지 부족한 것을 낱개로 구입.  전부 낱개로 구입.  기타줄 몇 개 남더라도 싹 다 패키지로 구입.   3개 중 가장 작은 게 답이다. 123456789">
+    <meta name="description" content="딴 거 다 필요 없고 가장 싼 패키지와 낱개 가격만 있으면 된다. 그걸 구하기 위해 나는 정렬을 사용한 모양이다. 굳이 그랬어야 할까. 아무튼 경우의 수는 3가지다.  패키지로 살 수 있을 만큼 산 후 나머지 부족한 것을 낱개로 구입.  전부 낱개로 구입.  기타줄 몇 개 남더라도 싹 다 패키지로 구입.   3개 중 가장 작은 게 답이다.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[C++]BOJ 1046 - 기타줄">
 <meta property="og:url" content="https://yhcho0405.github.io/2019/10/25/20191025-boj1046/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="딴 거 다 필요 없고 가장 싼 패키지와 낱개 가격만 있으면 된다. 그걸 구하기 위해 나는 정렬을 사용한 모양이다. 굳이 그랬어야 할까. 아무튼 경우의 수는 3가지다.  패키지로 살 수 있을 만큼 산 후 나머지 부족한 것을 낱개로 구입.  전부 낱개로 구입.  기타줄 몇 개 남더라도 싹 다 패키지로 구입.   3개 중 가장 작은 게 답이다. 123456789">
+<meta property="og:description" content="딴 거 다 필요 없고 가장 싼 패키지와 낱개 가격만 있으면 된다. 그걸 구하기 위해 나는 정렬을 사용한 모양이다. 굳이 그랬어야 할까. 아무튼 경우의 수는 3가지다.  패키지로 살 수 있을 만큼 산 후 나머지 부족한 것을 낱개로 구입.  전부 낱개로 구입.  기타줄 몇 개 남더라도 싹 다 패키지로 구입.   3개 중 가장 작은 게 답이다.">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
 <meta property="article:published_time" content="2019-10-24T21:34:00.000Z">
-<meta property="article:modified_time" content="2020-03-02T13:58:08.381Z">
+<meta property="article:modified_time" content="2020-03-03T17:32:47.062Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="BOJ">
@@ -63,7 +63,15 @@
 <link rel="stylesheet" href="/css/back-to-top.css">
 
     
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159607493-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159607493-1');
+</script>
+
     
     
     
@@ -156,7 +164,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1분 읽기 소요 (대략 199 단어)
+                    1분 읽기 소요 (대략 200 단어)
                 </span>
                 
                 
@@ -181,6 +189,7 @@
 </li>
 </ol>
 <p>3개 중 가장 작은 게 답이다.</p>
+<a id="more"></a>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">include &lt;iostream&gt;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, m;</span><br><span class="line">	short pa[<span class="number">50</span>], na[<span class="number">50</span>];</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++)</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; pa[i] &gt;&gt; na[i];</span><br><span class="line">	sort(pa, pa+m);</span><br><span class="line">	sort(na, na+m);</span><br><span class="line">	<span class="keyword">int</span> d1 = pa[<span class="number">0</span>] * (n / <span class="number">6</span>) + na[<span class="number">0</span>] * (n % <span class="number">6</span>);</span><br><span class="line">	<span class="keyword">int</span> d2 = na[<span class="number">0</span>] * n;</span><br><span class="line">	<span class="keyword">int</span> d3 = pa[<span class="number">0</span>] * ((n / <span class="number">6</span>) + <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">int</span> v = min(min(d1, d2), d3);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; v;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>정렬은 아무리 봐도 불편하다.<br>나중에 수정하자.</p>
@@ -541,7 +550,7 @@
 </div>
     
     
-        <div class="column-right-shadow is-hidden-widescreen ">
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
         
             
 <div class="card widget">
@@ -718,7 +727,7 @@
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
     
         
 <div class="card widget">
@@ -1021,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

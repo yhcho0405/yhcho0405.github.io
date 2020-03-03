@@ -57,7 +57,15 @@
 <link rel="stylesheet" href="/css/back-to-top.css">
 
     
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159607493-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159607493-1');
+</script>
+
     
     
     
@@ -161,7 +169,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    13분 읽기 소요 (대략 1898 단어)
+                    13분 읽기 소요 (대략 1899 단어)
                 </span>
                 
                 
@@ -197,191 +205,17 @@
 <p>추가 할 기능</p>
 <ol>
 <li>여러개의 북마크를 어떻게 보여줄지.</li>
-<li>북마크된 링크로 넘어가는 방식은 어떻게 할지(링크누르기?, 버튼누르기?)</li>
-</ol>
-<p>아이디어</p>
-<ol>
-<li>유튜브 링크 뒤에 시간을 붙이면 그 시간대로 영상이 재생된다.</li>
-</ol>
-</li>
-</ul>
-<h2 id="2019년-12월-24일"><a href="#2019년-12월-24일" class="headerlink" title="2019년 12월 24일"></a>2019년 12월 24일</h2><hr>
-<ul>
-<li><p>유튜브 게시자의 프로필사진을 불러와 보여주는 기능 구상.</p>
-</li>
-<li><p>추출해야할 jpg파일의 src값 img태그의 class이름까지는 구했는데 자바스크립트에서 이를 받아올 방법을 찾아야 함.</p>
-</li>
-<li><p>jquery를 이용해 보려 했으나 실패.</p>
-</li>
-<li><p>북마킹 버튼 디자인(오픈소스 활용)</p>
-<p>문제점</p>
-<ol>
-<li>위에서 말했던 대로 jquery를 못 쓰고 js로만 해보려 했으나 안됨.</li>
-<li>아직도 23일 문제점 1을 해결하지 못함.</li>
-</ol>
-<p>추가 할 기능</p>
-<ol>
-<li>북마크된 정보에 프로필사진과 채널 명, 제목 일부를 보여줄 레이아웃 구상.</li>
-<li>크롬 내부저장소에 북마크 된 정보를 저장.</li>
-</ol>
-<p>아이디어</p>
-<ol>
-<li>채널 프로필 사진을 함께 보여주어 정보확인 부분에서의 명확성을 높힘.</li>
-</ol>
-</li>
-</ul>
-<h2 id="2019년-12월-25일"><a href="#2019년-12월-25일" class="headerlink" title="2019년 12월 25일"></a>2019년 12월 25일</h2><hr>
-<ul>
-<li>새로운 확장프로그램 아이디어 생겨서 병행하느라 별로 못함.</li>
-</ul>
-<h2 id="2019년-12월-26일"><a href="#2019년-12월-26일" class="headerlink" title="2019년 12월 26일"></a>2019년 12월 26일</h2><hr>
-<ul>
-<li><p>게시자의 프로필 사진을 가져오는 것 보단 썸네일을 가져오는게 가시성이 더 높을 것이라 판단.</p>
-</li>
-<li><p>썸네일을 html iframe으로 불러오는데 성공.</p>
-</li>
-<li><p>링크와 합쳐 화면에 띄우는 데 성공.</p>
-</li>
-<li><p>삭제버튼 추가.</p>
-<p>문제점</p>
-<ol>
-<li>썸네일 위 아래로 검은색 여백이 생간다.</li>
-<li>크기를 강제로 줄이면 아래쪽 썸네일이 잘리기 때문에 해결하지 못한다.</li>
-</ol>
-</li>
-</ul>
-<h2 id="2019년-12월-27일"><a href="#2019년-12월-27일" class="headerlink" title="2019년 12월 27일"></a>2019년 12월 27일</h2><hr>
-<ul>
-<li><p>전체적인 레이아웃 수정.</p>
-</li>
-<li><p>제목 가져와서 화면에 표시하기 성공.</p>
-</li>
-<li><p>제목 string으로 형변환 후 “ - YouTube” 삭제.</p>
-</li>
-<li><p>뒤늦은 오류 발견.(해결)</p>
-<ul>
-<li>타이틀을 가져올 때 알람의 수 만큼 제목 앞에 붙어서 출력되는 문제 수정.</li>
-<li>현재 시간을 가져올 때 가끔 인덱스 참조 예외가 생기는 문제 수정. (추후 유튜브 UI가 업데이트 되면 다시 발생할 가능성이 있기 때문에 오류코드와 이메일 삽입)</li>
-</ul>
-<p>문제점</p>
-<ol>
-<li>디자인 수정 필요.</li>
-<li>크롬 저장소 활용해야 함.</li>
-<li>youtube에서만 작동하도록 예외처리가 안됨.</li>
-<li>버튼이 사라지게 하는 방법 찾기.</li>
-</ol>
-<p>추가할 점</p>
-<ol>
-<li>버튼의 활용 및 레이아웃 구상.</li>
-</ol>
-</li>
-</ul>
-<h2 id="2019년-12월-28일"><a href="#2019년-12월-28일" class="headerlink" title="2019년 12월 28일"></a>2019년 12월 28일</h2><hr>
-<ul>
-<li><p>유튜브에서만 동작할 수 있도록 예외처리 함.</p>
-</li>
-<li><p>제목 자르기 부분의 오류 확인 및 수정.(알람에 9+가 떴을 경우 외 여러가지 상황에 유동적으로 반응하게끔)</p>
-</li>
-<li><p>유튜브 안에는 있지만 동영상을 시청하지 않는 상황에 대한 예외처리 완료.</p>
-<p>문제점</p>
-<ol>
-<li>동영상이 끝났을 때 에러코드 출력함. 예외처리 필요.</li>
-<li>크롬 익스텐션에선 html의 인라인 함수를 보안상의 이유로 막아놈.(인라인 onclick 사용 불가)</li>
-<li>2번의 이유로 js파일 내부에서 버튼 클릭 이벤트를 만들었으나, html 파일의 형식으로 insertBefore메서드를 사용할 방법을 찾아야 함.</li>
-</ol>
-<p>아이디어</p>
-<ol>
-<li>북마크가 쌓이면서 스크롤이 내려간다면 북마크 버튼의 위치를 유동적으로 바꾸는 방법이 있으면 좋겠다.</li>
-</ol>
-</li>
-</ul>
-<h2 id="2019년-12월-29일"><a href="#2019년-12월-29일" class="headerlink" title="2019년 12월 29일"></a>2019년 12월 29일</h2><hr>
-<ul>
-<li><p>insertBefore 메소드를 사용하지 않고 append로 처리해 클릭하면 현재의 창이 스크랩 되도록 함.</p>
-</li>
-<li><p>크롬 스토리지 기능을 사용해 북마크를 자동으로 저장하고 가져오는 기능 추가.</p>
-</li>
-<li><p>delete all 버튼도 기능 부여.</p>
-</li>
-<li><p>스토리지 기능 사용하며 코드 구조 수정.</p>
-</li>
-<li><p>예외처리 때문에 유튜브 밖에서 기록 삭제가 안되는 오류 수정.</p>
-</li>
-<li><p>썸네일 가져오는 방식을 iframe에서 img로 바꿈.</p>
-</li>
-<li><p>썸네일 상하 여백 크롭.</p>
-<p>문제점</p>
-<ol>
-<li>익스텐션에서 a태그를 사용할 수 없다.</li>
-</ol>
-<p>추가할 점</p>
-<ol>
-<li>썸네일과 제목 클릭 시 하이퍼링크.</li>
-<li>레이아웃 수정.</li>
-<li>알수 없는 크롬저장소 오류 원인 찾기.</li>
-</ol>
-<p>발견 된 오류</p>
-<ol>
-<li>정상 작동 하나, 가끔 삭제 후 다시 들어가보면 다시 생겨있거나 이전의 기록과 합쳐짐.</li>
-</ol>
-</li>
-</ul>
-<h2 id="2019년-12월-30일"><a href="#2019년-12월-30일" class="headerlink" title="2019년 12월 30일"></a>2019년 12월 30일</h2><hr>
-<ul>
-<li><p>디자인 레이아웃 수정.</p>
-</li>
-<li><p>하이퍼링크 기능 활성화.</p>
-</li>
-<li><p>썸네일 테두리 둥글게 처리.</p>
-</li>
-<li><p>제목 2줄이상 오버플로우는 hidden처리.</p>
-</li>
-<li><p>실시간 영상의 경우 인덱스 오류 발생.</p>
-</li>
-<li><p>인덱스 참조에러가 알림의 유, 무와 관련있다는 사실 파악.</p>
-</li>
-<li><p>29일 발생한 오류 1번을 해결함.</p>
-</li>
-<li><p>시간 가져오는 방식 갈아엎음.(27일 발생한 인덱스 참조 오류의 원인 자체를 없앰.)</p>
-<p>문제점</p>
-<ol>
-<li>16개 밖에 저장하지 못함.(string이 담을 수 있는 최대용량을 넘은것은 터무니없고 크롬 스토리지도 5mb까지 지원하기 때문에 충분하다. 아마 구조체 형식으로 처리해야 할 듯 하다.)<ul>
-<li>chrome.storage.sync는 용량제한 100kb가 걸려있다는 사실 알게됨.(local은 제한 없어서 그거 썼다)</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="2019년-12월-31일"><a href="#2019년-12월-31일" class="headerlink" title="2019년 12월 31일"></a>2019년 12월 31일</h2><hr>
-<ul>
-<li>개별 삭제 버튼 추가.</li>
-</ul>
-<h2 id="2020년-1월-1일"><a href="#2020년-1월-1일" class="headerlink" title="2020년 1월 1일"></a>2020년 1월 1일</h2><hr>
-<ul>
-<li>id값은 고유해야 함.</li>
-<li>개별삭제기능 구현.</li>
-<li>아직 오류있음.</li>
-<li>오류해결</li>
-<li>초반에 기획했던 기능은 모두 구현 완료.</li>
-</ul>
-<h2 id="2020년-1월-2일"><a href="#2020년-1월-2일" class="headerlink" title="2020년 1월 2일"></a>2020년 1월 2일</h2><hr>
-<ul>
-<li>처음 사용자에게 발생하는 undefined 오류에 안내말 삽입.</li>
-<li>1차 디버깅, 오류는 위 사항 말고 발견되지 않음.</li>
-</ul>
-<h2 id="2020년-1월-31일"><a href="#2020년-1월-31일" class="headerlink" title="2020년 1월 31일"></a>2020년 1월 31일</h2><hr>
-<ul>
-<li>처음 사용자에게 발생하는 저장소 오류에 대한 예외처리 코드 추가.</li>
-<li>크롬 웹 스토어에 등록 거부됨. 재등록 후 등록 심사중.</li>
-</ul>
-<br/>
-
-<blockquote>
-<p>최종적으론 크롬 웹 스토어에 등록을 성공했으며 블로그 좌측 배너에 링크되어 있다.<br>초반에 구상한 기능은 모두 구현해 놨지만 아쉬운점이 많다.<br>삽질도 많이 했지만 그래서 더 의미있는 경험이었다.</p>
-</blockquote>
-
+<li>북마크된 링크로 넘어가는 방식은 어떻게 할지(링크누르기?, 버튼누르기?)
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2020/01/31/20200131-js-chrome-extension/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -708,7 +542,7 @@
 </div>
     
     
-        <div class="column-right-shadow is-hidden-widescreen ">
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
         
             
 <div class="card widget">
@@ -885,7 +719,7 @@
 
 
 
-<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
     
         
 <div class="card widget">
@@ -1188,7 +1022,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
