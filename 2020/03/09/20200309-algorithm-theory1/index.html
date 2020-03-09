@@ -18,8 +18,8 @@
 <meta property="og:description" content="주어진 배열에서 가장 작은 숫자를 앞으로 옮겨가며 정렬하는 방법이다.">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://yhcho0405.github.io/thumbnails/study2.jpg">
-<meta property="article:published_time" content="2020-03-09T01:10:00.000Z">
-<meta property="article:modified_time" content="2020-03-09T01:14:25.616Z">
+<meta property="article:published_time" content="2020-03-09T01:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-09T01:47:57.989Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="theory">
@@ -153,7 +153,7 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-09T01:10:00.000Z">2020-03-09</time>
+                <time class="level-item has-text-grey" datetime="2020-03-09T01:00:00.000Z">2020-03-09</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
@@ -163,7 +163,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 소요 (대략 246 단어)
+                    2분 읽기 소요 (대략 270 단어)
                 </span>
                 
                 
@@ -178,12 +178,16 @@
         <div class="content">
             <p>주어진 배열에서 가장 작은 숫자를 앞으로 옮겨가며 정렬하는 방법이다.</p>
 <p><img src="https://i.stack.imgur.com/5ai2E.jpg" alt="stackoverflow"></p>
+<br/>
 <a id="more"></a>
+\#include \<climits> 는 자료형의 최대, 최소값이 정의된 헤더파일이다.  
+
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;climits&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> min, idx, tmp, arr[<span class="number">10</span>] = &#123;<span class="number">10</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">1</span>,<span class="number">8</span>&#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		min = INT_MAX;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = i; j &lt; <span class="number">10</span>; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(min &gt; arr[j]) &#123;</span><br><span class="line">				min = arr[j];</span><br><span class="line">				idx = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		tmp = arr[i];</span><br><span class="line">		arr[i] = arr[idx];</span><br><span class="line">		arr[idx] = tmp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i ++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; arr[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<p>흔히 ‘정렬’이라는 주제를 떠올렸을 때 가장 직관적으로 떠올릴 수 있는 방법인 만큼 비 효율적이다.</p>
+<p>흔히 ‘정렬’이라는 주제를 떠올렸을 때 가장 직관적으로 떠올릴 수 있는 방법 중 하나인 만큼 비 효율적이다.</p>
 <p>알고리즘의 성능을 분석할 때 시간복잡도라는 척도를 사용한다고 한다.</p>
 <p>n개의 수를 정렬한다면<br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/022f41f8c29a0da175bc0d4f84c53a8046e6cb8f" alt="wikipedia"><br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5042a309a9d1de0d8c89443c1950dd1e28a802e3" alt="wikipedia"><br>위 식을 빅 오 표기법으로 나타내면 O(n^2) 가 된다.</p>
 <br/>
@@ -227,6 +231,13 @@
 
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/03/09/20200309-algorithm-theory2/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">버블 정렬(Bubble Sort)</span>
+            </a>
+        </div>
         
         
         <div class="level-end">
@@ -285,7 +296,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            20
+                            21
                         </p>
                     </a>
                 </div>
@@ -400,6 +411,25 @@
         
         <article class="media">
             
+            <a href="/2020/03/09/20200309-algorithm-theory2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/study3.jpg" alt="버블 정렬(Bubble Sort)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-09T01:10:00.000Z">2020-03-09</time></div>
+                    <a href="/2020/03/09/20200309-algorithm-theory2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">버블 정렬(Bubble Sort)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/03/09/20200309-algorithm-theory1/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/study2.jpg" alt="선택 정렬(Selection Sort)">
@@ -408,7 +438,7 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-09T01:10:00.000Z">2020-03-09</time></div>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-09T01:00:00.000Z">2020-03-09</time></div>
                     <a href="/2020/03/09/20200309-algorithm-theory1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">선택 정렬(Selection Sort)</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
@@ -474,25 +504,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2019/11/04/20191104-boj11053/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 11053 - 가장 긴 증가하는 부분 수열">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-11-03T20:04:00.000Z">2019-11-04</time></div>
-                    <a href="/2019/11/04/20191104-boj11053/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 11053 - 가장 긴 증가하는 부분 수열</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -510,7 +521,7 @@
                     <span class="level-item">3월 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -570,7 +581,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -586,7 +597,7 @@
                 <span class="level-item">theory</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
@@ -656,7 +667,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">18</span>
+                        <span class="tag is-grey">19</span>
                     </a>
                 </div>
                 
@@ -691,7 +702,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/sort/">
                         <span class="tag">sort</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -705,7 +716,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/theory/">
                         <span class="tag">theory</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -733,7 +744,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/BOJ/" style="font-size: 15px;">BOJ</a> <a href="/tags/C/" style="font-size: 17.5px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/greedy/" style="font-size: 12.5px;">greedy</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 10px;">theory</a> <a href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/" style="font-size: 10px;">다이나믹 프로그래밍</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a>
+        <a href="/tags/BOJ/" style="font-size: 16px;">BOJ</a> <a href="/tags/C/" style="font-size: 18px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/greedy/" style="font-size: 14px;">greedy</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/sort/" style="font-size: 12px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 12px;">theory</a> <a href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/" style="font-size: 10px;">다이나믹 프로그래밍</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a>
     </div>
 </div>
         
@@ -762,7 +773,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -778,7 +789,7 @@
                 <span class="level-item">theory</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
@@ -848,7 +859,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">18</span>
+                        <span class="tag is-grey">19</span>
                     </a>
                 </div>
                 
@@ -883,7 +894,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/sort/">
                         <span class="tag">sort</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -897,7 +908,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/theory/">
                         <span class="tag">theory</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -925,7 +936,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/BOJ/" style="font-size: 15px;">BOJ</a> <a href="/tags/C/" style="font-size: 17.5px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/greedy/" style="font-size: 12.5px;">greedy</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 10px;">theory</a> <a href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/" style="font-size: 10px;">다이나믹 프로그래밍</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a>
+        <a href="/tags/BOJ/" style="font-size: 16px;">BOJ</a> <a href="/tags/C/" style="font-size: 18px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/greedy/" style="font-size: 14px;">greedy</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/sort/" style="font-size: 12px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 12px;">theory</a> <a href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/" style="font-size: 10px;">다이나믹 프로그래밍</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a>
     </div>
 </div>
     
@@ -1064,7 +1075,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
