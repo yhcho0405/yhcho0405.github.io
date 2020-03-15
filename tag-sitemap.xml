@@ -3,6 +3,27 @@
 
 
     <url>
+        <loc>https://yhcho0405.github.io/tags/sort/</loc>
+        <lastmod>2020-03-15T13:58:38.137Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/theory/</loc>
+        <lastmod>2020-03-15T13:58:38.137Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/algorithm/</loc>
+        <lastmod>2020-03-15T13:58:38.137Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://yhcho0405.github.io/tags/chrome-extension/</loc>
         <lastmod>2020-03-15T13:50:51.485Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -54,27 +75,6 @@
     <url>
         <loc>https://yhcho0405.github.io/tags/C/</loc>
         <lastmod>2020-03-15T13:50:45.999Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/sort/</loc>
-        <lastmod>2020-03-15T13:50:40.298Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/theory/</loc>
-        <lastmod>2020-03-15T13:50:40.298Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/algorithm/</loc>
-        <lastmod>2020-03-15T13:50:40.298Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
