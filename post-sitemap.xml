@@ -8,40 +8,8 @@
     </url>
 
     <url>
-        <loc>https://yhcho0405.github.io/2020/03/14/20200314-algorithm-theory4/</loc>
-        <lastmod>2020-03-15T10:57:46.872Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://yhcho0405.github.io/2020/03/15/20200315-algorithm-theory5/</loc>
-        <lastmod>2020-03-15T10:55:27.862Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory1/</loc>
-        <lastmod>2020-03-15T06:02:27.766Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory2/</loc>
-        <lastmod>2020-03-15T06:02:15.156Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory3/</loc>
-        <lastmod>2020-03-15T06:01:51.748Z</lastmod>
+        <lastmod>2020-03-15T11:08:58.782Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -49,7 +17,7 @@
 
     <url>
         <loc>https://yhcho0405.github.io/2020/01/31/20200131-js-chrome-extension/</loc>
-        <lastmod>2020-03-09T18:04:48.502Z</lastmod>
+        <lastmod>2020-03-15T11:08:52.652Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -57,7 +25,39 @@
 
     <url>
         <loc>https://yhcho0405.github.io/2020/03/03/20200303-cpp-project-bandscheduler/</loc>
-        <lastmod>2020-03-09T18:04:38.317Z</lastmod>
+        <lastmod>2020-03-15T11:08:48.347Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory1/</loc>
+        <lastmod>2020-03-15T11:08:26.795Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory2/</loc>
+        <lastmod>2020-03-15T11:08:19.033Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory3/</loc>
+        <lastmod>2020-03-15T11:08:13.676Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2020/03/14/20200314-algorithm-theory4/</loc>
+        <lastmod>2020-03-15T11:08:10.066Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
