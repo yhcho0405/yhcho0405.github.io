@@ -7,27 +7,25 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>[C++]BOJ 1120 - 문자열 - yhcho0405</title>
+<title>병합 정렬(Merge Sort) - yhcho0405</title>
 
 
-    <meta name="description" content="단순 그리디. B 안에서의 차이가 가장 적은 A를 구하면 그게 답이다. 추가하는 연산은 무조건 차이가 가장 적게 할 테니까 신경 쓰지 않는다. 1234567891011121314151617181920#include &lt;iostream&gt;using namespace std;int main()&amp;#123;	char a[50], b[50];	cin &gt;">
+    <meta name="description" content="퀵소트와 마찬가지로 분할정복 알고리즘이다.재귀함수를 이용해 배열을 절반으로 잘라가며 분할하고 정복한다.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[C++]BOJ 1120 - 문자열">
-<meta property="og:url" content="https://yhcho0405.github.io/2019/10/24/20191024-boj1120/index.html">
+<meta property="og:title" content="병합 정렬(Merge Sort)">
+<meta property="og:url" content="https://yhcho0405.github.io/2020/03/15/20200315-algorithm-theory5/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="단순 그리디. B 안에서의 차이가 가장 적은 A를 구하면 그게 답이다. 추가하는 연산은 무조건 차이가 가장 적게 할 테니까 신경 쓰지 않는다. 1234567891011121314151617181920#include &lt;iostream&gt;using namespace std;int main()&amp;#123;	char a[50], b[50];	cin &gt;">
+<meta property="og:description" content="퀵소트와 마찬가지로 분할정복 알고리즘이다.재귀함수를 이용해 배열을 절반으로 잘라가며 분할하고 정복한다.">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
-<meta property="article:published_time" content="2019-10-24T08:39:00.000Z">
-<meta property="article:modified_time" content="2020-03-03T17:31:40.467Z">
+<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/algorithms.png">
+<meta property="article:published_time" content="2020-03-15T10:53:00.000Z">
+<meta property="article:modified_time" content="2020-03-15T10:55:27.862Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
-<meta property="article:tag" content="BOJ">
-<meta property="article:tag" content="C++">
-<meta property="article:tag" content="greedy">
-<meta property="article:tag" content="브루트 포스">
+<meta property="article:tag" content="theory">
+<meta property="article:tag" content="sort">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
+<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/algorithms.png">
 
 
 
@@ -95,7 +93,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/ideaico.png" alt="[C++]BOJ 1120 - 문자열" height="28">
+                <img src="/images/ideaico.png" alt="병합 정렬(Merge Sort)" height="28">
             
             </a>
         </div>
@@ -144,7 +142,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1120 - 문자열">
+            <img class="thumbnail" src="/thumbnails/algorithms.png" alt="병합 정렬(Merge Sort)">
         </span>
     </div>
     
@@ -152,17 +150,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-10-24T08:39:00.000Z">2019-10-24</time>
+                <time class="level-item has-text-grey" datetime="2020-03-15T10:53:00.000Z">2020-03-15</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
+                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    1분 읽기 소요 (대략 206 단어)
+                    2분 읽기 소요 (대략 341 단어)
                 </span>
                 
                 
@@ -171,20 +169,41 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                [C++]BOJ 1120 - 문자열
+                병합 정렬(Merge Sort)
             
         </h1>
         <div class="content">
-            <p>단순 그리디. B 안에서의 차이가 가장 적은 A를 구하면 그게 답이다.</p>
-<p>추가하는 연산은 무조건 차이가 가장 적게 할 테니까 신경 쓰지 않는다.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> a[<span class="number">50</span>], b[<span class="number">50</span>];</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b;</span><br><span class="line">	<span class="keyword">int</span> al = <span class="built_in">sprintf</span>(a, <span class="string">"%s"</span>, a);</span><br><span class="line">	<span class="keyword">int</span> bl = <span class="built_in">sprintf</span>(b, <span class="string">"%s"</span>, b);</span><br><span class="line">	<span class="keyword">int</span> c = <span class="number">51</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; bl - al + <span class="number">1</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> co = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; al; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(b[j+i] != a[j]) co++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(co &lt; c) c = co;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>지금보면 좀 한심한 코드다.</p>
+            <p>퀵소트와 마찬가지로 분할정복 알고리즘이다.<br>재귀함수를 이용해 배열을 절반으로 잘라가며 분할하고 정복한다.</p>
 <a id="more"></a>
-<p>배열 길이 구하겠다고 sprintf를 썼다.</p>
-<p>시간나면 수정해서 다시 올리자.</p>
+
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Merge-sort-example-300px.gif" alt="wikipedia"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> arr[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> m, <span class="keyword">int</span> mid, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = m;</span><br><span class="line">	<span class="keyword">int</span> j = mid + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> k = m;</span><br><span class="line">	<span class="keyword">while</span>(i &lt;= mid &amp;&amp; j &lt;= n) &#123;</span><br><span class="line">		<span class="keyword">if</span>(a[i] &lt;= a[j]) &#123;</span><br><span class="line">			arr[k] = a[i];</span><br><span class="line">			i++;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			arr[k] = a[j];</span><br><span class="line">			j++;</span><br><span class="line">		&#125;</span><br><span class="line">		k++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(i &gt; mid) &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> t = j; t &lt;= n; t++) &#123;</span><br><span class="line">			arr[k] = a[t];</span><br><span class="line">			k++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> t = i; t &lt;= mid; t++) &#123;</span><br><span class="line">			arr[k] = a[t];</span><br><span class="line">			k++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> t = m; t &lt;= n; t++) &#123;</span><br><span class="line">		a[t] = arr[t];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(m &lt; n) &#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (m + n) / <span class="number">2</span>;</span><br><span class="line">		mergeSort(a, m, mid);</span><br><span class="line">		mergeSort(a, mid + <span class="number">1</span>, n);</span><br><span class="line">		merge(a, m, mid, n);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">10</span>] = &#123;<span class="number">10</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">1</span>,<span class="number">8</span>&#125;;</span><br><span class="line">	mergeSort(<span class="built_in">array</span>, <span class="number">0</span>, <span class="number">9</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="built_in">array</span>[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>위 코드에서 mergeSort()함수는 재귀함수로써 배열을 절반으로 나눠가며 merge()함수를 호출하고, merge()함수에서는 요소들을 비교하며 정렬하는 정복 과정을 수행한다.</p>
+<blockquote>
+<p>mergeSort()는 분할, merge()는 정복의 역할을 한다.</p>
+</blockquote>
 <br>
-불편해서 바로 해버렸다.
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> a, b;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b;</span><br><span class="line">	<span class="keyword">int</span> c = <span class="number">51</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; b.size() - a.size() + <span class="number">1</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> co = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a.size(); j++)</span><br><span class="line">			<span class="keyword">if</span>(b[j+i] != a[j]) co++;</span><br><span class="line">		<span class="keyword">if</span>(co &lt; c) c = co;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>퀵소트와 다르게 모든 경우에서 O(NlogN)의 시간복잡도를 보장받는다.<br>다만 데이터를 담을 추가적인 공간이 필요하기 때문에 메모리 측면에서 비효율적이다.</p>
+<table>
+<thead>
+<tr>
+<th align="center">algorithm</th>
+<th align="center">average</th>
+<th align="center">worst</th>
+<th align="center">best</th>
+<th align="center">space</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">merge</td>
+<td align="center">O(NlogN)</td>
+<td align="center">O(NlogN)</td>
+<td align="center">O(NlogN)</td>
+<td align="center">O(n)</td>
+</tr>
+</tbody></table>
 
         </div>
         
@@ -192,7 +211,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/BOJ/" rel="tag">BOJ</a>, <a class="has-link-grey -link" href="/tags/C/" rel="tag">C++</a>, <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="has-link-grey -link" href="/tags/greedy/" rel="tag">greedy</a>, <a class="has-link-grey -link" href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" rel="tag">브루트 포스</a>
+                    <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="has-link-grey -link" href="/tags/sort/" rel="tag">sort</a>, <a class="has-link-grey -link" href="/tags/theory/" rel="tag">theory</a>
                 </div>
             </div>
         </div>
@@ -209,17 +228,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2019/10/25/20191025-boj1541/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">[C++]BOJ 1541 - 잃어버린 괄호</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/10/24/20191024-boj2875/">
-                <span class="level-item">[C++]BOJ 2875 - 대회 or 인턴</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/14/20200314-algorithm-theory4/">
+                <span class="level-item">퀵 정렬(Quick Sort)</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -924,7 +936,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/ideaico.png" alt="[C++]BOJ 1120 - 문자열" height="28">
+                    <img src="/images/ideaico.png" alt="병합 정렬(Merge Sort)" height="28">
                 
                 </a>
                 <p class="is-size-7">
