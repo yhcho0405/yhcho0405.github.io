@@ -8,8 +8,8 @@
     </url>
 
     <url>
-        <loc>https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory1/</loc>
-        <lastmod>2020-03-15T13:58:38.137Z</lastmod>
+        <loc>https://yhcho0405.github.io/2020/03/16/20200316-algorithm-theory6/</loc>
+        <lastmod>2020-03-16T04:33:10.408Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +17,31 @@
 
     <url>
         <loc>https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory3/</loc>
-        <lastmod>2020-03-15T13:58:27.785Z</lastmod>
+        <lastmod>2020-03-16T01:23:51.966Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2020/03/15/20200315-algorithm-theory5/</loc>
+        <lastmod>2020-03-16T01:20:58.412Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2019/10/24/20191024-A_BOJstart/</loc>
+        <lastmod>2020-03-16T01:13:57.270Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory1/</loc>
+        <lastmod>2020-03-15T13:58:38.137Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -34,14 +58,6 @@
     <url>
         <loc>https://yhcho0405.github.io/2020/03/14/20200314-algorithm-theory4/</loc>
         <lastmod>2020-03-15T13:57:56.322Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/2020/03/15/20200315-algorithm-theory5/</loc>
-        <lastmod>2020-03-15T13:57:49.584Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -186,14 +202,6 @@
     <url>
         <loc>https://yhcho0405.github.io/2019/10/24/20191024-boj1931/</loc>
         <lastmod>2020-03-03T17:31:22.942Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/2019/10/24/20191024-A_BOJstart/</loc>
-        <lastmod>2020-03-03T17:30:52.088Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

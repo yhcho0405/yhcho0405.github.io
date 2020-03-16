@@ -19,7 +19,7 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
 <meta property="article:published_time" content="2020-03-09T05:24:00.000Z">
-<meta property="article:modified_time" content="2020-03-15T13:58:27.785Z">
+<meta property="article:modified_time" content="2020-03-16T01:23:51.966Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="theory">
@@ -160,7 +160,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 소요 (대략 231 단어)
+                    2분 읽기 소요 (대략 255 단어)
                 </span>
                 
                 
@@ -180,9 +180,7 @@
 
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp, arr[<span class="number">10</span>] = &#123;<span class="number">10</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">1</span>,<span class="number">8</span>&#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">int</span> j = i;</span><br><span class="line">		<span class="keyword">while</span>(arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">			tmp = arr[j];</span><br><span class="line">			arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">			arr[j + <span class="number">1</span>] = tmp;</span><br><span class="line">			j--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; arr[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>최악의 경우<br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6fd040d16ddcc273c6928e0e06485727f2c3c2cf" alt="wikipedia"><br>번의 비교를 하게 되므로, O(n^2) 가 된다.<br><br><br>역시나 선택정렬이나 버블정렬과 같은 시간복잡도를 가지지만 실제론 삽입정렬이 가장 빠르다.<br>필요할 때만 위치를 바꾸기 때문에 거의 정렬이 된 상태일 때 매우 빠르고, 자원을 덜 사용하여 효율적으로 작동한다.</p>
-<br>
-
+<p>최악의 경우<br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/6fd040d16ddcc273c6928e0e06485727f2c3c2cf" alt="wikipedia"><br>번의 비교를 하게 되므로, O(n^2) 가 된다.<br><br><br>역시나 선택정렬이나 버블정렬과 같은 시간복잡도를 가지지만 실제론 삽입정렬이 가장 빠르다.<br>필요할 때만 위치를 바꾸기 때문에 거의 정렬이 된 상태일 때 가장 빠르고, 자원을 덜 사용하여 효율적으로 작동한다.<br>때문에 다른 정렬 알고리즘의 일부로 사용되는 경우가 있다.<br><br></p>
 <table>
 <thead>
 <tr>
@@ -289,7 +287,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            24
+                            25
                         </p>
                     </a>
                 </div>
@@ -399,6 +397,25 @@
         
         <article class="media">
             
+            <a href="/2020/03/16/20200316-algorithm-theory6/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="힙 정렬(Heap Sort)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-16T04:30:00.000Z">2020-03-16</time></div>
+                    <a href="/2020/03/16/20200316-algorithm-theory6/" class="title has-link-black-ter is-size-6 has-text-weight-normal">힙 정렬(Heap Sort)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/03/15/20200315-algorithm-theory5/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/algorithm.png" alt="병합 정렬(Merge Sort)">
@@ -473,25 +490,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/09/20200309-algorithm-theory1/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="선택 정렬(Selection Sort)">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-09T01:00:00.000Z">2020-03-09</time></div>
-                    <a href="/2020/03/09/20200309-algorithm-theory1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">선택 정렬(Selection Sort)</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -509,7 +507,7 @@
                     <span class="level-item">3월 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -569,7 +567,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">22</span>
+                <span class="level-item tag">23</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -585,7 +583,7 @@
                 <span class="level-item">theory</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
@@ -655,7 +653,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">22</span>
+                        <span class="tag is-grey">23</span>
                     </a>
                 </div>
                 
@@ -690,7 +688,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/sort/">
                         <span class="tag">sort</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">6</span>
                     </a>
                 </div>
                 
@@ -704,7 +702,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/theory/">
                         <span class="tag">theory</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">6</span>
                     </a>
                 </div>
                 
@@ -761,7 +759,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">22</span>
+                <span class="level-item tag">23</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -777,7 +775,7 @@
                 <span class="level-item">theory</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
@@ -847,7 +845,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">22</span>
+                        <span class="tag is-grey">23</span>
                     </a>
                 </div>
                 
@@ -882,7 +880,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/sort/">
                         <span class="tag">sort</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">6</span>
                     </a>
                 </div>
                 
@@ -896,7 +894,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/theory/">
                         <span class="tag">theory</span>
-                        <span class="tag is-grey">5</span>
+                        <span class="tag is-grey">6</span>
                     </a>
                 </div>
                 
@@ -1062,7 +1060,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
