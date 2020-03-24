@@ -7,26 +7,20 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find) - yhcho0405</title>
+<title>Tag: gcd - yhcho0405</title>
 
 
-    <meta name="description" content="크루스칼 알고리즘은 가장 적은 비용으로 모든 노드를 연결하여 최소비용신장트리를 만들 때 사용하는 알고리즘이다.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)">
-<meta property="og:url" content="https://yhcho0405.github.io/2020/03/23/20200319-algorithm-theory9/index.html">
+    <meta name="description" content="내가 보려고 쓰는 블로그">
+<meta property="og:type" content="website">
+<meta property="og:title" content="yhcho0405">
+<meta property="og:url" content="https://yhcho0405.github.io/tags/gcd/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="크루스칼 알고리즘은 가장 적은 비용으로 모든 노드를 연결하여 최소비용신장트리를 만들 때 사용하는 알고리즘이다.">
+<meta property="og:description" content="내가 보려고 쓰는 블로그">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
-<meta property="article:published_time" content="2020-03-23T03:18:00.000Z">
-<meta property="article:modified_time" content="2020-03-23T03:18:31.155Z">
+<meta property="og:image" content="https://yhcho0405.github.io/images/og_image.png">
 <meta property="article:author" content="yhcho0405">
-<meta property="article:tag" content="algorithm">
-<meta property="article:tag" content="C++">
-<meta property="article:tag" content="theory">
-<meta property="article:tag" content="크루스칼알고리즘">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
+<meta name="twitter:image" content="https://yhcho0405.github.io/images/og_image.png">
 
 
 
@@ -94,7 +88,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/ideaico.png" alt="크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)" height="28">
+                <img src="/images/ideaico.png" alt="yhcho0405" height="28">
             
             </a>
         </div>
@@ -138,30 +132,41 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">Tags</a></li>
+            <li class="is-active"><a href="#" aria-current="page">gcd</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    
 <div class="card">
     
     <div class="card-image">
-        <span class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/algorithm.png" alt="크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)">
-        </span>
+        <a href="/2020/03/24/20200324-etc-math1/" class="image is-7by1">
+            <img class="thumbnail" src="/thumbnails/etc.png" alt="유클리드 호제법(Euclidean algorithm)">
+        </a>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-23T03:18:00.000Z">2020-03-23</time>
+                <time class="level-item has-text-grey" datetime="2020-03-24T14:50:00.000Z">2020-03-24</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                <a class="has-link-grey -link" href="/categories/etc/">etc</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/etc/math/">math</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    4분 읽기 소요 (대략 587 단어)
+                    2분 읽기 소요 (대략 313 단어)
                 </span>
                 
                 
@@ -170,33 +175,23 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)
+                <a class="has-link-black-ter" href="/2020/03/24/20200324-etc-math1/">유클리드 호제법(Euclidean algorithm)</a>
             
         </h1>
         <div class="content">
-            <p>크루스칼 알고리즘은 가장 적은 비용으로 모든 노드를 연결하여 최소비용신장트리를 만들 때 사용하는 알고리즘이다.</p>
-<br>
-<a id="more"></a>
-가장 가중치가 작은 간선부터 골라가는 그리디한 방법이며 작동과정 중 사이클이 생기지 않도록 유니온파인드를 사용해 해결한다.
-
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Prim_Algorithm_0.svg/300px-Prim_Algorithm_0.svg.png" alt="wikipedia"><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Kruskal_Algorithm_1.svg/300px-Kruskal_Algorithm_1.svg.png" alt="가중치가 가장 작은 간선을 선택한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Kruskal_Algorithm_2.svg/300px-Kruskal_Algorithm_2.svg.png" alt="마찬가지로 가중치가 가장 작은 간선을 선택한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Kruskal_Algorithm_3.svg/300px-Kruskal_Algorithm_3.svg.png" alt="그 다음으로 작은 간선을 선택한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Kruskal_Algorithm_4.svg/300px-Kruskal_Algorithm_4.svg.png" alt="간선 AB를 선택하고 사이클이 발생하는 BD는 제외한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Kruskal_Algorithm_5.svg/300px-Kruskal_Algorithm_5.svg.png" alt="다음으로 작은 간선을 고르고 사이클이 발생하면 제외한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Kruskal_Algorithm_6.svg/300px-Kruskal_Algorithm_6.svg.png" alt="반복하면 최소 비용 신장 부분 그래프가 완성된다."></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getParent</span><span class="params">(<span class="keyword">int</span> <span class="built_in">set</span>[], <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">set</span>[x] == x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">set</span>[x] = getParent(<span class="built_in">set</span>, <span class="built_in">set</span>[x]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">unionParent</span><span class="params">(<span class="keyword">int</span> <span class="built_in">set</span>[], <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">	a = getParent(<span class="built_in">set</span>, a);</span><br><span class="line">	b = getParent(<span class="built_in">set</span>, b);</span><br><span class="line">	<span class="keyword">if</span>(a &lt; b) <span class="built_in">set</span>[b] = a;</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">set</span>[a] = b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> <span class="built_in">set</span>[], <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">	a = getParent(<span class="built_in">set</span>, a);</span><br><span class="line">	b = getParent(<span class="built_in">set</span>, b);</span><br><span class="line">	<span class="keyword">if</span>(a == b) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Edge</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> node[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">int</span> distance;</span><br><span class="line">	Edge(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> distance) &#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;node[<span class="number">0</span>] = a;</span><br><span class="line">		<span class="keyword">this</span>-&gt;node[<span class="number">1</span>] = b;</span><br><span class="line">		<span class="keyword">this</span>-&gt;distance = distance;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(Edge &amp;edge) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>-&gt;distance &lt; edge.distance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">7</span>;</span><br><span class="line">	<span class="keyword">int</span> m = <span class="number">11</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;Edge&gt; v;</span><br><span class="line"></span><br><span class="line">	v.push_back(Edge(<span class="number">1</span>, <span class="number">2</span>, <span class="number">7</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">2</span>, <span class="number">3</span>, <span class="number">8</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">2</span>, <span class="number">4</span>, <span class="number">9</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">4</span>, <span class="number">5</span>, <span class="number">15</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">4</span>, <span class="number">6</span>, <span class="number">6</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">5</span>, <span class="number">6</span>, <span class="number">8</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">6</span>, <span class="number">7</span>, <span class="number">11</span>));</span><br><span class="line"></span><br><span class="line">	sort(v.begin(), v.end());</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> <span class="built_in">set</span>[n];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		<span class="built_in">set</span>[i] = i;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v.size(); i++) &#123;</span><br><span class="line">		<span class="keyword">if</span>(!find(<span class="built_in">set</span>, v[i].node[<span class="number">0</span>] - <span class="number">1</span>, v[i].node[<span class="number">1</span>] - <span class="number">1</span>)) &#123;</span><br><span class="line">			sum += v[i].distance;</span><br><span class="line">			unionParent(<span class="built_in">set</span>, v[i].node[<span class="number">0</span>] - <span class="number">1</span>, v[i].node[<span class="number">1</span>] - <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>위 코드에서 정점 A, B, C, D, E, F, E는 각 1, 2, 3, 4, 5, 6으로 표현했다.<br>최소 비용 신장 트리에서 간선들의 가중치 합을 출력하는 코드다.</p>
-
+            <p>유클리드 호제법은 2개의 자연수 사이의 최대공약수를 구할 때 사용하는 알고리즘이다.<br><br><br>2개의 자연수 a, b(a &gt; b)가 있고 a % b = r 이라고 한다면 a, b의 최대공약수는 a, r의 최대공약수와 같다. 이 성질을 이용해 b를 r로 나눈 나머지 r’을 구하고 다시 r을 r’으로 나눈 나머지를 구하는 과정을 반복해서 나머지가 0이 되었을 때 나누는 수가 a와 b의 최대공약수라고 한다.</p>
         </div>
         
-        <div class="level is-size-7 is-uppercase">
+        
+        <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/C/" rel="tag">C++</a>, <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="has-link-grey -link" href="/tags/theory/" rel="tag">theory</a>, <a class="has-link-grey -link" href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/" rel="tag">크루스칼알고리즘</a>
+                <a class="button is-size-7 is-light" href="/2020/03/24/20200324-etc-math1/#more">Read More</a>
                 </div>
             </div>
         </div>
         
         
-        
     </div>
 </div>
 
@@ -204,19 +199,7 @@
 
 
 
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/18/20200318-algorithm-theory8/">
-                <span class="level-item">DFS(Depth First Search)와 BFS(Breath First Search)</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
+
 
 
 </div>
@@ -264,7 +247,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            29
+                            33
                         </p>
                     </a>
                 </div>
@@ -276,7 +259,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            5
+                            6
                         </p>
                     </a>
                 </div>
@@ -288,7 +271,7 @@
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
-                            20
+                            24
                         </p>
                     </a>
                 </div>
@@ -374,18 +357,18 @@
         
         <article class="media">
             
-            <a href="/2020/03/23/20200319-algorithm-theory9/" class="media-left">
+            <a href="/2020/03/24/20200324-etc-math1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)">
+                    <img class="thumbnail" src="/thumbnails/etc.png" alt="유클리드 호제법(Euclidean algorithm)">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-23T03:18:00.000Z">2020-03-23</time></div>
-                    <a href="/2020/03/23/20200319-algorithm-theory9/" class="title has-link-black-ter is-size-6 has-text-weight-normal">크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-24T14:50:00.000Z">2020-03-24</time></div>
+                    <a href="/2020/03/24/20200324-etc-math1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">유클리드 호제법(Euclidean algorithm)</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                        <a class="has-link-grey -link" href="/categories/etc/">etc</a> / <a class="has-link-grey -link" href="/categories/etc/math/">math</a>
                     </p>
                 </div>
             </div>
@@ -393,54 +376,16 @@
         
         <article class="media">
             
-            <a href="/2020/03/18/20200318-algorithm-theory8/" class="media-left">
+            <a href="/2020/03/24/20200324-boj1110/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="DFS(Depth First Search)와 BFS(Breath First Search)">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1110 - 더하기 사이클">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-18T09:00:00.000Z">2020-03-18</time></div>
-                    <a href="/2020/03/18/20200318-algorithm-theory8/" class="title has-link-black-ter is-size-6 has-text-weight-normal">DFS(Depth First Search)와 BFS(Breath First Search)</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/17/20200317-algorithm-theory7/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="[C++]스택(Stack)과 큐(Queue)">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-17T04:00:00.000Z">2020-03-17</time></div>
-                    <a href="/2020/03/17/20200317-algorithm-theory7/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]스택(Stack)과 큐(Queue)</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/16/20200316-boj1202/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1202 - 보석 도둑">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-16T10:29:00.000Z">2020-03-16</time></div>
-                    <a href="/2020/03/16/20200316-boj1202/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1202 - 보석 도둑</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-24T14:12:00.000Z">2020-03-24</time></div>
+                    <a href="/2020/03/24/20200324-boj1110/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1110 - 더하기 사이클</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -450,16 +395,54 @@
         
         <article class="media">
             
-            <a href="/2020/03/16/20200316-algorithm-theory6/" class="media-left">
+            <a href="/2020/03/24/20200324-algorithm-theory11/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="힙 정렬(Heap Sort)">
+                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="에라토스테네스의 체 (+ 골드바흐의 추측)">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-16T04:30:00.000Z">2020-03-16</time></div>
-                    <a href="/2020/03/16/20200316-algorithm-theory6/" class="title has-link-black-ter is-size-6 has-text-weight-normal">힙 정렬(Heap Sort)</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-24T12:00:00.000Z">2020-03-24</time></div>
+                    <a href="/2020/03/24/20200324-algorithm-theory11/" class="title has-link-black-ter is-size-6 has-text-weight-normal">에라토스테네스의 체 (+ 골드바흐의 추측)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/03/23/20200323-algorithm-theory10/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="다익스트라 알고리즘(Dijkstra Algorithm)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-23T08:00:00.000Z">2020-03-23</time></div>
+                    <a href="/2020/03/23/20200323-algorithm-theory10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">다익스트라 알고리즘(Dijkstra Algorithm)</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/03/23/20200323-algorithm-theory9/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-23T03:18:00.000Z">2020-03-23</time></div>
+                    <a href="/2020/03/23/20200323-algorithm-theory9/" class="title has-link-black-ter is-size-6 has-text-weight-normal">크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
                     </p>
@@ -484,7 +467,7 @@
                     <span class="level-item">3월 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">11</span>
+                    <span class="level-item tag">15</span>
                 </span>
             </a>
         </li>
@@ -544,7 +527,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">27</span>
+                <span class="level-item tag">30</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -552,7 +535,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -560,7 +543,7 @@
                 <span class="level-item">theory</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">9</span>
+                <span class="level-item tag">11</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
@@ -568,9 +551,17 @@
                 <span class="level-item">etc</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
+        <a class="level is-marginless" href="/categories/etc/math/">
+            <span class="level-start">
+                <span class="level-item">math</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/etc/project/">
             <span class="level-start">
                 <span class="level-item">project</span>
@@ -595,14 +586,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BOJ/">
                         <span class="tag">BOJ</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
-                        <span class="tag is-grey">21</span>
+                        <span class="tag is-grey">25</span>
                     </a>
                 </div>
                 
@@ -637,7 +628,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">31</span>
                     </a>
                 </div>
                 
@@ -663,9 +654,23 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/gcd/">
+                        <span class="tag">gcd</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/greedy/">
                         <span class="tag">greedy</span>
-                        <span class="tag is-grey">16</span>
+                        <span class="tag is-grey">17</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/heap/">
+                        <span class="tag">heap</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -707,13 +712,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/theory/">
                         <span class="tag">theory</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">12</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/">
                         <span class="tag">다이나믹 프로그래밍</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC/">
+                        <span class="tag">다익스트라</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -726,8 +738,15 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/">
-                        <span class="tag">크루스칼알고리즘</span>
+                    <a class="tags has-addons" href="/tags/%EC%86%8C%EC%88%98/">
+                        <span class="tag">소수</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/">
+                        <span class="tag">크루스칼</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -742,7 +761,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/BOJ/" style="font-size: 16.67px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.33px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/greedy/" style="font-size: 15px;">greedy</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 11.67px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 13.33px;">theory</a> <a href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/" style="font-size: 10px;">다이나믹 프로그래밍</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/" style="font-size: 10px;">크루스칼알고리즘</a>
+        <a href="/tags/BOJ/" style="font-size: 16.67px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.33px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 15px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 11.67px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 13.33px;">theory</a> <a href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/" style="font-size: 10px;">다이나믹 프로그래밍</a> <a href="/tags/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC/" style="font-size: 10px;">다익스트라</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
 </div>
         
@@ -771,7 +790,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">27</span>
+                <span class="level-item tag">30</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -779,7 +798,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -787,7 +806,7 @@
                 <span class="level-item">theory</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">9</span>
+                <span class="level-item tag">11</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
@@ -795,9 +814,17 @@
                 <span class="level-item">etc</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
+        <a class="level is-marginless" href="/categories/etc/math/">
+            <span class="level-start">
+                <span class="level-item">math</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
         <a class="level is-marginless" href="/categories/etc/project/">
             <span class="level-start">
                 <span class="level-item">project</span>
@@ -822,14 +849,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BOJ/">
                         <span class="tag">BOJ</span>
-                        <span class="tag is-grey">17</span>
+                        <span class="tag is-grey">18</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
-                        <span class="tag is-grey">21</span>
+                        <span class="tag is-grey">25</span>
                     </a>
                 </div>
                 
@@ -864,7 +891,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">31</span>
                     </a>
                 </div>
                 
@@ -890,9 +917,23 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/gcd/">
+                        <span class="tag">gcd</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/greedy/">
                         <span class="tag">greedy</span>
-                        <span class="tag is-grey">16</span>
+                        <span class="tag is-grey">17</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/heap/">
+                        <span class="tag">heap</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -934,13 +975,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/theory/">
                         <span class="tag">theory</span>
-                        <span class="tag is-grey">9</span>
+                        <span class="tag is-grey">12</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/">
                         <span class="tag">다이나믹 프로그래밍</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC/">
+                        <span class="tag">다익스트라</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -953,8 +1001,15 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/">
-                        <span class="tag">크루스칼알고리즘</span>
+                    <a class="tags has-addons" href="/tags/%EC%86%8C%EC%88%98/">
+                        <span class="tag">소수</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/">
+                        <span class="tag">크루스칼</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -969,7 +1024,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/BOJ/" style="font-size: 16.67px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.33px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/greedy/" style="font-size: 15px;">greedy</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 11.67px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 13.33px;">theory</a> <a href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/" style="font-size: 10px;">다이나믹 프로그래밍</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/" style="font-size: 10px;">크루스칼알고리즘</a>
+        <a href="/tags/BOJ/" style="font-size: 16.67px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.33px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 15px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 11.67px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 13.33px;">theory</a> <a href="/tags/%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/" style="font-size: 10px;">다이나믹 프로그래밍</a> <a href="/tags/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC/" style="font-size: 10px;">다익스트라</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
 </div>
     
@@ -985,7 +1040,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/ideaico.png" alt="크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)" height="28">
+                    <img src="/images/ideaico.png" alt="yhcho0405" height="28">
                 
                 </a>
                 <p class="is-size-7">
