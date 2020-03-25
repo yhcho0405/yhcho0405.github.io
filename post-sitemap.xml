@@ -8,8 +8,16 @@
     </url>
 
     <url>
+        <loc>https://yhcho0405.github.io/2020/03/17/20200317-algorithm-theory7/</loc>
+        <lastmod>2020-03-25T02:39:37.227Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://yhcho0405.github.io/2020/03/25/20200325-boj1343/</loc>
-        <lastmod>2020-03-24T18:01:20.936Z</lastmod>
+        <lastmod>2020-03-25T02:38:56.606Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -74,14 +82,6 @@
     <url>
         <loc>https://yhcho0405.github.io/2020/03/16/20200316-boj1202/</loc>
         <lastmod>2020-03-17T04:07:44.960Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/2020/03/17/20200317-algorithm-theory7/</loc>
-        <lastmod>2020-03-17T04:07:42.932Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
