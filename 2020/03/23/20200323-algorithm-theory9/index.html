@@ -10,16 +10,16 @@
 <title>크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find) - yhcho0405</title>
 
 
-    <meta name="description" content="크루스칼 알고리즘은 가장 적은 비용으로 모든 노드를 연결하여 최소비용신장트리를 만들 때 사용하는 알고리즘이다.">
+    <meta name="description" content="크루스칼 알고리즘은 가장 적은 비용으로 모든 노드를 연결하여 최소비용신장트리를 만들 때 사용하는 알고리즘이다.   가장 가중치가 작은 간선부터 골라가는 그리디한 방법이며 작동과정 중 사이클이 생기지 않도록 유니온파인드를 사용해 해결한다.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)">
 <meta property="og:url" content="https://yhcho0405.github.io/2020/03/23/20200323-algorithm-theory9/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="크루스칼 알고리즘은 가장 적은 비용으로 모든 노드를 연결하여 최소비용신장트리를 만들 때 사용하는 알고리즘이다.">
+<meta property="og:description" content="크루스칼 알고리즘은 가장 적은 비용으로 모든 노드를 연결하여 최소비용신장트리를 만들 때 사용하는 알고리즘이다.   가장 가중치가 작은 간선부터 골라가는 그리디한 방법이며 작동과정 중 사이클이 생기지 않도록 유니온파인드를 사용해 해결한다.">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
 <meta property="article:published_time" content="2020-03-23T03:18:00.000Z">
-<meta property="article:modified_time" content="2020-03-23T03:49:06.084Z">
+<meta property="article:modified_time" content="2020-03-25T02:54:16.530Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="C++">
@@ -161,7 +161,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    4분 읽기 소요 (대략 587 단어)
+                    4분 읽기 소요 (대략 592 단어)
                 </span>
                 
                 
@@ -175,11 +175,34 @@
         </h1>
         <div class="content">
             <p>크루스칼 알고리즘은 가장 적은 비용으로 모든 노드를 연결하여 최소비용신장트리를 만들 때 사용하는 알고리즘이다.</p>
-<a id="more"></a>
 <br>
 
 <p>가장 가중치가 작은 간선부터 골라가는 그리디한 방법이며 작동과정 중 사이클이 생기지 않도록 유니온파인드를 사용해 해결한다.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Prim_Algorithm_0.svg/300px-Prim_Algorithm_0.svg.png" alt="wikipedia"><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Kruskal_Algorithm_1.svg/300px-Kruskal_Algorithm_1.svg.png" alt="가중치가 가장 작은 간선을 선택한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Kruskal_Algorithm_2.svg/300px-Kruskal_Algorithm_2.svg.png" alt="마찬가지로 가중치가 가장 작은 간선을 선택한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Kruskal_Algorithm_3.svg/300px-Kruskal_Algorithm_3.svg.png" alt="그 다음으로 작은 간선을 선택한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Kruskal_Algorithm_4.svg/300px-Kruskal_Algorithm_4.svg.png" alt="간선 AB를 선택하고 사이클이 발생하는 BD는 제외한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Kruskal_Algorithm_5.svg/300px-Kruskal_Algorithm_5.svg.png" alt="다음으로 작은 간선을 고르고 사이클이 발생하면 제외한다."><br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Kruskal_Algorithm_6.svg/300px-Kruskal_Algorithm_6.svg.png" alt="반복하면 최소 비용 신장 부분 그래프가 완성된다."></p>
+<a id="more"></a>
+
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Prim_Algorithm_0.svg/300px-Prim_Algorithm_0.svg.png" alt><br><em>사용할 그래프</em></p>
+<br>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Kruskal_Algorithm_1.svg/300px-Kruskal_Algorithm_1.svg.png" alt><br><em>가중치가 가장 작은 간선을 선택한다.</em></p>
+<br>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Kruskal_Algorithm_2.svg/300px-Kruskal_Algorithm_2.svg.png" alt><br><em>마찬가지로 가중치가 가장 작은 간선을 선택한다.</em></p>
+<br>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Kruskal_Algorithm_3.svg/300px-Kruskal_Algorithm_3.svg.png" alt><br><em>그 다음으로 작은 간선을 선택한다.</em></p>
+<br>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Kruskal_Algorithm_4.svg/300px-Kruskal_Algorithm_4.svg.png" alt><br><em>간선 AB를 선택하고 사이클이 발생하는 BD는 제외한다.</em></p>
+<br>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Kruskal_Algorithm_5.svg/300px-Kruskal_Algorithm_5.svg.png" alt><br><em>다음으로 작은 간선을 고르고 사이클이 발생하면 제외한다.</em></p>
+<br>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Kruskal_Algorithm_6.svg/300px-Kruskal_Algorithm_6.svg.png" alt><br><em>반복하면 최소 비용 신장 부분 그래프가 완성된다.</em></p>
+<br>
+
+
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getParent</span><span class="params">(<span class="keyword">int</span> <span class="built_in">set</span>[], <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">set</span>[x] == x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">set</span>[x] = getParent(<span class="built_in">set</span>, <span class="built_in">set</span>[x]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">unionParent</span><span class="params">(<span class="keyword">int</span> <span class="built_in">set</span>[], <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">	a = getParent(<span class="built_in">set</span>, a);</span><br><span class="line">	b = getParent(<span class="built_in">set</span>, b);</span><br><span class="line">	<span class="keyword">if</span>(a &lt; b) <span class="built_in">set</span>[b] = a;</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">set</span>[a] = b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> <span class="built_in">set</span>[], <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">	a = getParent(<span class="built_in">set</span>, a);</span><br><span class="line">	b = getParent(<span class="built_in">set</span>, b);</span><br><span class="line">	<span class="keyword">if</span>(a == b) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Edge</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> node[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">int</span> distance;</span><br><span class="line">	Edge(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> distance) &#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;node[<span class="number">0</span>] = a;</span><br><span class="line">		<span class="keyword">this</span>-&gt;node[<span class="number">1</span>] = b;</span><br><span class="line">		<span class="keyword">this</span>-&gt;distance = distance;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(Edge &amp;edge) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>-&gt;distance &lt; edge.distance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">7</span>;</span><br><span class="line">	<span class="keyword">int</span> m = <span class="number">11</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;Edge&gt; v;</span><br><span class="line"></span><br><span class="line">	v.push_back(Edge(<span class="number">1</span>, <span class="number">2</span>, <span class="number">7</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">2</span>, <span class="number">3</span>, <span class="number">8</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">2</span>, <span class="number">4</span>, <span class="number">9</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">4</span>, <span class="number">5</span>, <span class="number">15</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">4</span>, <span class="number">6</span>, <span class="number">6</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">5</span>, <span class="number">6</span>, <span class="number">8</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>));</span><br><span class="line">	v.push_back(Edge(<span class="number">6</span>, <span class="number">7</span>, <span class="number">11</span>));</span><br><span class="line"></span><br><span class="line">	sort(v.begin(), v.end());</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> <span class="built_in">set</span>[n];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		<span class="built_in">set</span>[i] = i;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; v.size(); i++) &#123;</span><br><span class="line">		<span class="keyword">if</span>(!find(<span class="built_in">set</span>, v[i].node[<span class="number">0</span>] - <span class="number">1</span>, v[i].node[<span class="number">1</span>] - <span class="number">1</span>)) &#123;</span><br><span class="line">			sum += v[i].distance;</span><br><span class="line">			unionParent(<span class="built_in">set</span>, v[i].node[<span class="number">0</span>] - <span class="number">1</span>, v[i].node[<span class="number">1</span>] - <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>위 코드에서 정점 A, B, C, D, E, F, E는 각 1, 2, 3, 4, 5, 6으로 표현했다.<br>최소 비용 신장 트리에서 간선들의 가중치 합을 출력하는 코드다.</p>
@@ -271,7 +294,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            34
+                            35
                         </p>
                     </a>
                 </div>
@@ -381,6 +404,25 @@
         
         <article class="media">
             
+            <a href="/2020/03/25/20200325-boj1969/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1343 - 폴리오미노">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-24T18:01:00.000Z">2020-03-25</time></div>
+                    <a href="/2020/03/25/20200325-boj1969/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1343 - 폴리오미노</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/03/25/20200325-boj1343/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1343 - 폴리오미노">
@@ -455,25 +497,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/23/20200323-algorithm-theory10/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/algorithm.png" alt="다익스트라 알고리즘(Dijkstra Algorithm)">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-23T08:00:00.000Z">2020-03-23</time></div>
-                    <a href="/2020/03/23/20200323-algorithm-theory10/" class="title has-link-black-ter is-size-6 has-text-weight-normal">다익스트라 알고리즘(Dijkstra Algorithm)</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -491,7 +514,7 @@
                     <span class="level-item">3월 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">16</span>
+                    <span class="level-item tag">17</span>
                 </span>
             </a>
         </li>
@@ -551,7 +574,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">31</span>
+                <span class="level-item tag">32</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -559,7 +582,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">20</span>
+                <span class="level-item tag">21</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -610,14 +633,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BOJ/">
                         <span class="tag">BOJ</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
-                        <span class="tag is-grey">26</span>
+                        <span class="tag is-grey">27</span>
                     </a>
                 </div>
                 
@@ -652,7 +675,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">32</span>
+                        <span class="tag is-grey">33</span>
                     </a>
                 </div>
                 
@@ -687,7 +710,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/greedy/">
                         <span class="tag">greedy</span>
-                        <span class="tag is-grey">18</span>
+                        <span class="tag is-grey">19</span>
                     </a>
                 </div>
                 
@@ -814,7 +837,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">31</span>
+                <span class="level-item tag">32</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -822,7 +845,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">20</span>
+                <span class="level-item tag">21</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -873,14 +896,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BOJ/">
                         <span class="tag">BOJ</span>
-                        <span class="tag is-grey">19</span>
+                        <span class="tag is-grey">20</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
-                        <span class="tag is-grey">26</span>
+                        <span class="tag is-grey">27</span>
                     </a>
                 </div>
                 
@@ -915,7 +938,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">32</span>
+                        <span class="tag is-grey">33</span>
                     </a>
                 </div>
                 
@@ -950,7 +973,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/greedy/">
                         <span class="tag">greedy</span>
-                        <span class="tag is-grey">18</span>
+                        <span class="tag is-grey">19</span>
                     </a>
                 </div>
                 
@@ -1186,7 +1209,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

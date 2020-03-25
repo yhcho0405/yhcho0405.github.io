@@ -3,43 +3,57 @@
 
 
     <url>
-        <loc>https://yhcho0405.github.io/tags/Data-Structure/</loc>
-        <lastmod>2020-03-25T02:39:37.227Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/theory/</loc>
-        <lastmod>2020-03-25T02:39:37.227Z</lastmod>
+        <loc>https://yhcho0405.github.io/tags/greedy/</loc>
+        <lastmod>2020-03-25T05:51:09.913Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://yhcho0405.github.io/tags/C/</loc>
-        <lastmod>2020-03-25T02:39:37.227Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/algorithm/</loc>
-        <lastmod>2020-03-25T02:39:37.227Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/greedy/</loc>
-        <lastmod>2020-03-25T02:38:56.606Z</lastmod>
+        <lastmod>2020-03-25T05:51:09.913Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://yhcho0405.github.io/tags/BOJ/</loc>
-        <lastmod>2020-03-25T02:38:56.606Z</lastmod>
+        <lastmod>2020-03-25T05:51:09.913Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/algorithm/</loc>
+        <lastmod>2020-03-25T05:51:09.913Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/%25ED%2581%25AC%25EB%25A3%25A8%25EC%258A%25A4%25EC%25B9%25BC/</loc>
+        <lastmod>2020-03-25T02:54:16.530Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/theory/</loc>
+        <lastmod>2020-03-25T02:54:16.530Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/%25EB%258B%25A4%25EC%259D%25B5%25EC%258A%25A4%25ED%258A%25B8%25EB%259D%25BC/</loc>
+        <lastmod>2020-03-25T02:51:29.175Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/Data-Structure/</loc>
+        <lastmod>2020-03-25T02:39:37.227Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -59,13 +73,6 @@
     </url>
 
     <url>
-        <loc>https://yhcho0405.github.io/tags/%25EB%258B%25A4%25EC%259D%25B5%25EC%258A%25A4%25ED%258A%25B8%25EB%259D%25BC/</loc>
-        <lastmod>2020-03-24T14:17:50.093Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://yhcho0405.github.io/tags/heap/</loc>
         <lastmod>2020-03-23T09:15:06.319Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -75,13 +82,6 @@
     <url>
         <loc>https://yhcho0405.github.io/tags/sort/</loc>
         <lastmod>2020-03-23T09:15:06.319Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/%25ED%2581%25AC%25EB%25A3%25A8%25EC%258A%25A4%25EC%25B9%25BC/</loc>
-        <lastmod>2020-03-23T03:49:06.084Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
