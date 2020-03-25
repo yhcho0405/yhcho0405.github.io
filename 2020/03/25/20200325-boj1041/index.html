@@ -7,26 +7,26 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>다익스트라 알고리즘(Dijkstra Algorithm) - yhcho0405</title>
+<title>[C++]BOJ 1041 - 주사위 - yhcho0405</title>
 
 
-    <meta name="description" content="다익스트라 알고리즘은 출발점으로부터 모든 정점까지의 최단 거리를 구하기 위해 사용한다.길찾기에도 쓰인다.">
+    <meta name="description" content="우선 한 면이 바닥에 가려져 있으므로 총 5n^2만큼의 면을 볼 수 있다.그 중 3면이 보이는 주사위는 윗쪽 꼭지점 4개, 2면이 보이는 주사위는 눈에 보이는 모서리 8개와 아랫쪽 꼭지점 4개, 1면이 보이는 주사위는 5n^2 - (3 * 3면이 보이는 주사위의 수) - (2 * 2면이 보이는 주사위의 수) 이다.이를 식으로 나타내면,  3 면 &#x3D;&#x3D; 4 개">
 <meta property="og:type" content="article">
-<meta property="og:title" content="다익스트라 알고리즘(Dijkstra Algorithm)">
-<meta property="og:url" content="https://yhcho0405.github.io/2020/03/23/20200323-algorithm-theory10/index.html">
+<meta property="og:title" content="[C++]BOJ 1041 - 주사위">
+<meta property="og:url" content="https://yhcho0405.github.io/2020/03/25/20200325-boj1041/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="다익스트라 알고리즘은 출발점으로부터 모든 정점까지의 최단 거리를 구하기 위해 사용한다.길찾기에도 쓰인다.">
+<meta property="og:description" content="우선 한 면이 바닥에 가려져 있으므로 총 5n^2만큼의 면을 볼 수 있다.그 중 3면이 보이는 주사위는 윗쪽 꼭지점 4개, 2면이 보이는 주사위는 눈에 보이는 모서리 8개와 아랫쪽 꼭지점 4개, 1면이 보이는 주사위는 5n^2 - (3 * 3면이 보이는 주사위의 수) - (2 * 2면이 보이는 주사위의 수) 이다.이를 식으로 나타내면,  3 면 &#x3D;&#x3D; 4 개">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
-<meta property="article:published_time" content="2020-03-23T08:00:00.000Z">
-<meta property="article:modified_time" content="2020-03-25T02:51:29.175Z">
+<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
+<meta property="article:published_time" content="2020-03-25T10:05:00.000Z">
+<meta property="article:modified_time" content="2020-03-25T10:11:35.053Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="BOJ">
 <meta property="article:tag" content="C++">
-<meta property="article:tag" content="theory">
-<meta property="article:tag" content="다익스트라">
+<meta property="article:tag" content="greedy">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
+<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
 
 
 
@@ -94,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/ideaico.png" alt="다익스트라 알고리즘(Dijkstra Algorithm)" height="28">
+                <img src="/images/ideaico.png" alt="[C++]BOJ 1041 - 주사위" height="28">
             
             </a>
         </div>
@@ -143,7 +143,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/algorithm.png" alt="다익스트라 알고리즘(Dijkstra Algorithm)">
+            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1041 - 주사위">
         </span>
     </div>
     
@@ -151,17 +151,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-23T08:00:00.000Z">2020-03-23</time>
+                <time class="level-item has-text-grey" datetime="2020-03-25T10:05:00.000Z">2020-03-25</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    1분 읽기 소요 (대략 202 단어)
+                    2분 읽기 소요 (대략 354 단어)
                 </span>
                 
                 
@@ -170,22 +170,22 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                다익스트라 알고리즘(Dijkstra Algorithm)
+                [C++]BOJ 1041 - 주사위
             
         </h1>
         <div class="content">
-            <p>다익스트라 알고리즘은 출발점으로부터 모든 정점까지의 최단 거리를 구하기 위해 사용한다.<br><img src="https://upload.wikimedia.org/wikipedia/commons/2/23/Dijkstras_progress_animation.gif" alt><br><em>길찾기에도 쓰인다.</em></p>
+            <p>우선 한 면이 바닥에 가려져 있으므로 총 5n^2만큼의 면을 볼 수 있다.<br>그 중 3면이 보이는 주사위는 윗쪽 꼭지점 4개, 2면이 보이는 주사위는 눈에 보이는 모서리 8개와 아랫쪽 꼭지점 4개, 1면이 보이는 주사위는 5n^2 - (3 * 3면이 보이는 주사위의 수) - (2 * 2면이 보이는 주사위의 수) 이다.<br>이를 식으로 나타내면,</p>
+<blockquote>
+<p>3 면 == 4 개<br>2 면 == 8n  - 12 개<br>1 면 == 5n^2 - 16n + 12 개</p>
+</blockquote>
+<p>로 정리할 수 있다.</p>
+<p>그리고 3면과 2면을 고를 때 단순히 주사위 면 중 숫자가 작은 면을 골라내면 문제가 발생하기 때문에 서로 이어진 면들을 선택해야 한다.</p>
+<blockquote>
+<p>3면이 보이는 경우 == 마주보는 3쌍의 면들 중 각 쌍에서 작은 면을 고른다.<br>2면이 보이는 경우 == 마주보는 면을 제외하고 모든 경우의 합(12개)을 저장하고 가장 작은 값을 이용한다.</p>
+</blockquote>
+<p>마지막으로 주사위가 하나일 경우 예외처리를 해준다.  </p>
 <a id="more"></a>
-<br>
-
-<ol>
-<li>모든 정점을 미방문 상태로 표시하고 시작점에 방문한다.</li>
-<li>시작 정점을 제외하고 모든 정점까지의 거리를 무한대로 둔다.</li>
-<li>현재 위치에서 갈 수 있는 모든 정점을 확인하고 해당 정점이 현재까지 기록한 거리보다 더 짧게 이동할 수 있다면 갱신한다.</li>
-<li>아직 선택하지 않았던 정점 중 가장 짧은 거리의 정점을 현재 정점으로 선택한다.</li>
-<li>3 ~ 4번 반복.</li>
-</ol>
-<p>코드는 직접 짜보고 나중에 추가</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> n, d[<span class="number">6</span>], v3, v[<span class="number">12</span>], v2, cnt;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++)</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; d[i];</span><br><span class="line">	v3 = min(d[<span class="number">0</span>], d[<span class="number">5</span>]) + min(d[<span class="number">2</span>], d[<span class="number">3</span>]) + min(d[<span class="number">1</span>], d[<span class="number">4</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; <span class="number">6</span>; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span>((i==<span class="number">0</span>&amp;&amp;j==<span class="number">5</span>)||(i==<span class="number">2</span>&amp;&amp;j==<span class="number">3</span>)||(i==<span class="number">1</span>&amp;&amp;j==<span class="number">4</span>)) <span class="keyword">continue</span>;</span><br><span class="line">			v[cnt++] = d[i] + d[j];</span><br><span class="line">		&#125;</span><br><span class="line">	sort(v, v + <span class="number">12</span>);</span><br><span class="line">	sort(d, d + <span class="number">6</span>);</span><br><span class="line">	v2 = v[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; d[<span class="number">0</span>] + d[<span class="number">1</span>] + d[<span class="number">2</span>] + d[<span class="number">3</span>] + d[<span class="number">4</span>];</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; v3 * <span class="number">4</span> + v2 * (<span class="number">8</span> * n - <span class="number">12</span>) + d[<span class="number">0</span>] * (<span class="number">5</span> * (n * n) - <span class="number">16</span> * n + <span class="number">12</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
         </div>
         
@@ -193,7 +193,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/C/" rel="tag">C++</a>, <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="has-link-grey -link" href="/tags/theory/" rel="tag">theory</a>, <a class="has-link-grey -link" href="/tags/%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BC/" rel="tag">다익스트라</a>
+                    <a class="has-link-grey -link" href="/tags/BOJ/" rel="tag">BOJ</a>, <a class="has-link-grey -link" href="/tags/C/" rel="tag">C++</a>, <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="has-link-grey -link" href="/tags/greedy/" rel="tag">greedy</a>
                 </div>
             </div>
         </div>
@@ -210,17 +210,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/03/24/20200324-algorithm-theory11/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">에라토스테네스의 체 (+ 골드바흐의 추측)</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/23/20200323-algorithm-theory9/">
-                <span class="level-item">크루스칼 알고리즘(Kruskal Algorithm) (feat. Union-Find)</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/25/20200325-boj1969/">
+                <span class="level-item">[C++]BOJ 1969 - DNA</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -1081,7 +1074,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/ideaico.png" alt="다익스트라 알고리즘(Dijkstra Algorithm)" height="28">
+                    <img src="/images/ideaico.png" alt="[C++]BOJ 1041 - 주사위" height="28">
                 
                 </a>
                 <p class="is-size-7">
