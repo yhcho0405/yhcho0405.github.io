@@ -7,19 +7,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>[C++]BOJ 11726 - 2×n 타일링 - yhcho0405</title>
+<title>[C++]BOJ 1932 - 정수 삼각형 - yhcho0405</title>
 
 
-    <meta name="description" content="2n 크기의 직사각형은 2(n-1)크기의 직사각형에서 세로로 길쭉한 블럭 하나를 추가한 것과 같고 2(n-2)크기의 직사각형에서 가로로 길쭉한 블럭 두개를 쌓아서 추가하는 경우와 같다.2(n-2)크기의 직사각형 역시 세로로 길쭉한 블럭을 두개 추가하면 2n크기인 직사각형이 되지만, 2(n-1)와 겹치는 경우가 발생하기에 제외한다.">
+    <meta name="description" content="삼각형 내부의 모든 지점에 dp를 수행하던 방향에 따라 그 전 층의 자신과 인접한 지점의 값 중 큰 값을 추가한다.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[C++]BOJ 11726 - 2×n 타일링">
-<meta property="og:url" content="https://yhcho0405.github.io/2020/03/26/20200327-boj11726/index.html">
+<meta property="og:title" content="[C++]BOJ 1932 - 정수 삼각형">
+<meta property="og:url" content="https://yhcho0405.github.io/2020/03/27/20200327-boj1932/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="2n 크기의 직사각형은 2(n-1)크기의 직사각형에서 세로로 길쭉한 블럭 하나를 추가한 것과 같고 2(n-2)크기의 직사각형에서 가로로 길쭉한 블럭 두개를 쌓아서 추가하는 경우와 같다.2(n-2)크기의 직사각형 역시 세로로 길쭉한 블럭을 두개 추가하면 2n크기인 직사각형이 되지만, 2(n-1)와 겹치는 경우가 발생하기에 제외한다.">
+<meta property="og:description" content="삼각형 내부의 모든 지점에 dp를 수행하던 방향에 따라 그 전 층의 자신과 인접한 지점의 값 중 큰 값을 추가한다.">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
-<meta property="article:published_time" content="2020-03-25T15:40:00.000Z">
-<meta property="article:modified_time" content="2020-03-25T15:40:00.000Z">
+<meta property="article:published_time" content="2020-03-26T17:35:00.000Z">
+<meta property="article:modified_time" content="2020-03-26T17:35:00.000Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="BOJ">
@@ -93,7 +93,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/ideaico.png" alt="[C++]BOJ 11726 - 2×n 타일링" height="28">
+                <img src="/images/ideaico.png" alt="[C++]BOJ 1932 - 정수 삼각형" height="28">
             
             </a>
         </div>
@@ -125,7 +125,7 @@
                 
                 
                 
-                <a class="navbar-item search" title="검색" href="javascript:;">
+                <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
                 </a>
                 
@@ -142,7 +142,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 11726 - 2×n 타일링">
+            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1932 - 정수 삼각형">
         </span>
     </div>
     
@@ -150,7 +150,7 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-25T15:40:00.000Z">2020-03-26</time>
+                <time class="level-item has-text-grey" datetime="2020-03-26T17:35:00.000Z">2020-03-27</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
@@ -160,7 +160,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1분 읽기 (대략 169 단어)
+                    2분 읽기 소요 (대략 346 단어)
                 </span>
                 
                 
@@ -169,14 +169,19 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                [C++]BOJ 11726 - 2×n 타일링
+                [C++]BOJ 1932 - 정수 삼각형
             
         </h1>
         <div class="content">
-            <p>2n 크기의 직사각형은 2(n-1)크기의 직사각형에서 세로로 길쭉한 블럭 하나를 추가한 것과 같고 2(n-2)크기의 직사각형에서 가로로 길쭉한 블럭 두개를 쌓아서 추가하는 경우와 같다.<br>2(n-2)크기의 직사각형 역시 세로로 길쭉한 블럭을 두개 추가하면 2n크기인 직사각형이 되지만, 2(n-1)와 겹치는 경우가 발생하기에 제외한다.</p>
+            <p>삼각형 내부의 모든 지점에 dp를 수행하던 방향에 따라 그 전 층의 자신과 인접한 지점의 값 중 큰 값을 추가한다.</p>
 <a id="more"></a>
-<p>어째 피보나치와 같은 형태가 되었다.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, dp[<span class="number">1001</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>];</span><br><span class="line">    dp[i] %= <span class="number">10007</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>dp를 위에서 아래로 수행하는 방법과 아래에서 위로 수행하는 경우 두 가지를 가져와봤다.<br>결론은 아래에서 위가 더 효율적이다.</p>
+<h2 id="위에서-아래로"><a href="#위에서-아래로" class="headerlink" title="위에서 아래로"></a>위에서 아래로</h2><hr>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, dp[<span class="number">501</span>][<span class="number">501</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	dp[<span class="number">1</span>][<span class="number">1</span>] = m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++) &#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; m;</span><br><span class="line">			<span class="keyword">if</span>(j == <span class="number">1</span>) dp[i][j] = dp[i - <span class="number">1</span>][j] + m;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(j == i) dp[i][j] = dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + m;</span><br><span class="line">			<span class="keyword">else</span> dp[i][j] = max(dp[i - <span class="number">1</span>][j], dp[i - <span class="number">1</span>][j - <span class="number">1</span>]) + m;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	sort(dp[n] + <span class="number">1</span>, dp[n] + n + <span class="number">1</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; dp[n][n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>위에서 아래로 수행할 시 좌우 모서리 부분에 대한 예외처리가 필요하고, 또 마지막 바닥 줄에서 가장 큰 수를 찾아야 하므로 정렬이 필요했다.<br><br><br>하지만 아래에서 위로 수행하면 위의 두가지 단점을 해결해서 코드가 더 간결하다.</p>
+<h2 id="아래에서-위로"><a href="#아래에서-위로" class="headerlink" title="아래에서 위로"></a>아래에서 위로</h2><hr>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> dp[<span class="number">501</span>][<span class="number">501</span>];</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++)</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; dp[i][j];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n; i &gt;= <span class="number">1</span>; i--)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= i; j++)</span><br><span class="line">			dp[i<span class="number">-1</span>][j] += max(dp[i][j], dp[i][j+<span class="number">1</span>]);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; dp[<span class="number">1</span>][<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><del>사실 처음에 생각해낸 방법이 위에서 아래로 방법이다.</del></p>
 
         </div>
         
@@ -202,16 +207,16 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/03/26/20200327-boj1149/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/03/27/20200327-boj2156/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">[C++]BOJ 1149 - RGB거리</span>
+                <span class="level-item">[C++]BOJ 2156 - 포도주 시식</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/25/20200325-boj1041/">
-                <span class="level-item">[C++]BOJ 1041 - 주사위</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/27/20200327-boj2193/">
+                <span class="level-item">[C++]BOJ 2193 - 이친수</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -256,11 +261,11 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        포스트
+                        Posts
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            41
+                            44
                         </p>
                     </a>
                 </div>
@@ -268,7 +273,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        카테고리
+                        Categories
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
@@ -280,7 +285,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        태그
+                        Tags
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
@@ -293,7 +298,7 @@
         
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://github.com/yhcho0405" target="_blank" rel="external nofollow noopener noreferrer">
-                팔로우</a>
+                Follow</a>
         </div>
         
         
@@ -341,7 +346,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            링크
+            Links
         </h3>
         <ul class="menu-list">
         
@@ -366,21 +371,21 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                태그
+                Tags
             </h3>
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BOJ/">
                         <span class="tag">BOJ</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">30</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
-                        <span class="tag is-grey">33</span>
+                        <span class="tag is-grey">36</span>
                     </a>
                 </div>
                 
@@ -394,7 +399,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/DP/">
                         <span class="tag">DP</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">10</span>
                     </a>
                 </div>
                 
@@ -429,7 +434,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">39</span>
+                        <span class="tag is-grey">42</span>
                     </a>
                 </div>
                 
@@ -553,21 +558,21 @@
         <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            최근 글
+            Recent
         </h3>
         
         <article class="media">
             
-            <a href="/2020/03/26/20200326-boj1003/" class="media-left">
+            <a href="/2020/03/27/20200327-boj2156/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1003 - 피보나치 함수">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2156 - 포도주 시식">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T08:30:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200326-boj1003/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1003 - 피보나치 함수</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T17:50:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj2156/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2156 - 포도주 시식</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -577,16 +582,16 @@
         
         <article class="media">
             
-            <a href="/2020/03/26/20200326-boj9095/" class="media-left">
+            <a href="/2020/03/27/20200327-boj1932/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 9095 - 1, 2, 3 더하기">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1932 - 정수 삼각형">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T08:00:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200326-boj9095/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 9095 - 1, 2, 3 더하기</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T17:35:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj1932/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1932 - 정수 삼각형</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -596,16 +601,16 @@
         
         <article class="media">
             
-            <a href="/2020/03/26/20200326-boj1463/" class="media-left">
+            <a href="/2020/03/27/20200327-boj2193/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1463 - 1로 만들기">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2193 - 이친수">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T07:37:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200326-boj1463/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1463 - 1로 만들기</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T17:00:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj2193/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2193 - 이친수</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -615,7 +620,7 @@
         
         <article class="media">
             
-            <a href="/2020/03/26/20200327-boj2579/" class="media-left">
+            <a href="/2020/03/27/20200327-boj2579/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2579 - 계단 오르기">
                 </p>
@@ -623,8 +628,8 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-25T16:40:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200327-boj2579/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2579 - 계단 오르기</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T16:40:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj2579/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2579 - 계단 오르기</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -634,7 +639,7 @@
         
         <article class="media">
             
-            <a href="/2020/03/26/20200327-boj1149/" class="media-left">
+            <a href="/2020/03/27/20200327-boj1149/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1149 - RGB거리">
                 </p>
@@ -642,8 +647,8 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-25T15:52:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200327-boj1149/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1149 - RGB거리</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T15:52:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj1149/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1149 - RGB거리</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -658,7 +663,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            아카이브
+            Archives
         </h3>
         <ul class="menu-list">
         
@@ -668,7 +673,7 @@
                     <span class="level-item">3월 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">23</span>
+                    <span class="level-item tag">26</span>
                 </span>
             </a>
         </li>
@@ -719,7 +724,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                카테고리
+                Categories
             </h3>
             <ul class="menu-list">
             <li>
@@ -728,7 +733,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">38</span>
+                <span class="level-item tag">41</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -736,7 +741,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">28</span>
+                <span class="level-item tag">31</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -779,7 +784,7 @@
             <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            태그 클라우드
+            Tag Cloud
         </h3>
         <a href="/tags/BOJ/" style="font-size: 17.5px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.75px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 13.75px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.25px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16.25px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 15px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
@@ -801,7 +806,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                카테고리
+                Categories
             </h3>
             <ul class="menu-list">
             <li>
@@ -810,7 +815,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">38</span>
+                <span class="level-item tag">41</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -818,7 +823,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">28</span>
+                <span class="level-item tag">31</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -861,7 +866,7 @@
         <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            태그 클라우드
+            Tag Cloud
         </h3>
         <a href="/tags/BOJ/" style="font-size: 17.5px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.75px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 13.75px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.25px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16.25px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 15px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
@@ -879,7 +884,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/ideaico.png" alt="[C++]BOJ 11726 - 2×n 타일링" height="28">
+                    <img src="/images/ideaico.png" alt="[C++]BOJ 1932 - 정수 삼각형" height="28">
                 
                 </a>
                 <p class="is-size-7">
@@ -1001,7 +1006,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -1025,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="searchbox ins-search">
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">
@@ -1037,11 +1042,11 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: '포스트',
-                PAGES: '페이지',
-                CATEGORIES: '카테고리',
-                TAGS: '태그',
-                UNTITLED: '(제목없음)',
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
         };

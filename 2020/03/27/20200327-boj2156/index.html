@@ -7,19 +7,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>[C++]BOJ 2579 - 계단 오르기 - yhcho0405</title>
+<title>[C++]BOJ 2156 - 포도주 시식 - yhcho0405</title>
 
 
-    <meta name="description" content="n번째 계단 까지 얻을 수 있는 최대 점수를 구하기 위해 두 가지 경우를 살펴보겠다. n-1번째 계단을 밟고 왔을 경우 이 경우는 주어진 조건에 의해 n-2계단을 밟으면 안되므로 무조건 n-3계단을 밟고 와야 한다.따라서 n-3번째 계단 까지 얻을 수 있는 최대 점수 + n-1번 계단의 점수 + n번 계단의 점수가 n번째 계단까지 얻을 수 있는 최대 점수가">
+    <meta name="description" content="보자 마자 계단 오르기문제와 똑같다고 생각했지만 계단 오르기는 무조건 마지막 계단을 밟아야 하는 반면, 표도주는 꼭 마지막을 안 마셔도 된다.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[C++]BOJ 2579 - 계단 오르기">
-<meta property="og:url" content="https://yhcho0405.github.io/2020/03/26/20200327-boj2579/index.html">
+<meta property="og:title" content="[C++]BOJ 2156 - 포도주 시식">
+<meta property="og:url" content="https://yhcho0405.github.io/2020/03/27/20200327-boj2156/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="n번째 계단 까지 얻을 수 있는 최대 점수를 구하기 위해 두 가지 경우를 살펴보겠다. n-1번째 계단을 밟고 왔을 경우 이 경우는 주어진 조건에 의해 n-2계단을 밟으면 안되므로 무조건 n-3계단을 밟고 와야 한다.따라서 n-3번째 계단 까지 얻을 수 있는 최대 점수 + n-1번 계단의 점수 + n번 계단의 점수가 n번째 계단까지 얻을 수 있는 최대 점수가">
+<meta property="og:description" content="보자 마자 계단 오르기문제와 똑같다고 생각했지만 계단 오르기는 무조건 마지막 계단을 밟아야 하는 반면, 표도주는 꼭 마지막을 안 마셔도 된다.">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
-<meta property="article:published_time" content="2020-03-25T16:40:00.000Z">
-<meta property="article:modified_time" content="2020-03-25T16:40:00.000Z">
+<meta property="article:published_time" content="2020-03-26T17:50:00.000Z">
+<meta property="article:modified_time" content="2020-03-26T17:50:00.000Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="BOJ">
@@ -93,7 +93,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/ideaico.png" alt="[C++]BOJ 2579 - 계단 오르기" height="28">
+                <img src="/images/ideaico.png" alt="[C++]BOJ 2156 - 포도주 시식" height="28">
             
             </a>
         </div>
@@ -125,7 +125,7 @@
                 
                 
                 
-                <a class="navbar-item search" title="검색" href="javascript:;">
+                <a class="navbar-item search" title="Search" href="javascript:;">
                     <i class="fas fa-search"></i>
                 </a>
                 
@@ -142,7 +142,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2579 - 계단 오르기">
+            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2156 - 포도주 시식">
         </span>
     </div>
     
@@ -150,7 +150,7 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-25T16:40:00.000Z">2020-03-26</time>
+                <time class="level-item has-text-grey" datetime="2020-03-26T17:50:00.000Z">2020-03-27</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
@@ -160,7 +160,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 (대략 302 단어)
+                    1분 읽기 소요 (대략 212 단어)
                 </span>
                 
                 
@@ -169,21 +169,15 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                [C++]BOJ 2579 - 계단 오르기
+                [C++]BOJ 2156 - 포도주 시식
             
         </h1>
         <div class="content">
-            <p>n번째 계단 까지 얻을 수 있는 최대 점수를 구하기 위해 두 가지 경우를 살펴보겠다.</p>
-<h2 id="n-1번째-계단을-밟고-왔을-경우"><a href="#n-1번째-계단을-밟고-왔을-경우" class="headerlink" title="n-1번째 계단을 밟고 왔을 경우"></a>n-1번째 계단을 밟고 왔을 경우</h2><hr>
-<p>이 경우는 주어진 조건에 의해 n-2계단을 밟으면 안되므로 무조건 n-3계단을 밟고 와야 한다.<br>따라서 n-3번째 계단 까지 얻을 수 있는 최대 점수 + n-1번 계단의 점수 + n번 계단의 점수가 n번째 계단까지 얻을 수 있는 최대 점수가 된다.</p>
+            <p>보자 마자 <a href="https://yhcho0405.github.io/2020/03/27/20200327-boj2579/#more">계단 오르기</a>문제와 똑같다고 생각했지만 계단 오르기는 무조건 마지막 계단을 밟아야 하는 반면, 표도주는 꼭 마지막을 안 마셔도 된다.</p>
 <a id="more"></a>
-
-<h2 id="n-2번째-계단을-밟고-왔을-경우"><a href="#n-2번째-계단을-밟고-왔을-경우" class="headerlink" title="n-2번째 계단을 밟고 왔을 경우"></a>n-2번째 계단을 밟고 왔을 경우</h2><hr>
-<p>위의 상황보단 간단하다.<br>n-2계단 전에 n-3계단을 밟고 와도 문제가 없고 n-4계단을 밟고 왔어도 조건에 어긋나지 않는다.<br>따라서 n-2번째 계단 까지 얻을 수 있는 최대 점수 + n번 계단의 점수가 n번째 계단까지 얻을 수 있는 최대 점수가 된다.</p>
-<br>
-
-<p>위 두 경우 중 더 큰 값이 정답이다.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, d[<span class="number">301</span>], dp[<span class="number">301</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; d[i];</span><br><span class="line">	dp[<span class="number">1</span>] = d[<span class="number">1</span>];</span><br><span class="line">	dp[<span class="number">2</span>] = d[<span class="number">1</span>] + d[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++)</span><br><span class="line">		dp[i] = max(d[i - <span class="number">1</span>] + dp[i - <span class="number">3</span>], dp[i - <span class="number">2</span>]) + d[i];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>그래서 계단 오르기 방법에서는 마지막을 포함하도록 한정 지었던 반면에 포도주에선 단순히 dp[i - 1]이 값도 비교하게 하므로써 전에 있던 값이 더 크다면 그 값을 뒤로 밀도록 변경했다.</p>
+<p>그것 말곤 다른것이 없다. (사실 n의 범위가 다르다)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, d[<span class="number">10001</span>], dp[<span class="number">10001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; d[i];</span><br><span class="line">	dp[<span class="number">1</span>] = d[<span class="number">1</span>];</span><br><span class="line">	dp[<span class="number">2</span>] = d[<span class="number">1</span>] + d[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++)</span><br><span class="line">		dp[i] = max(max(d[i - <span class="number">1</span>] + dp[i - <span class="number">3</span>] + d[i], dp[i - <span class="number">1</span>]), dp[i - <span class="number">2</span>] + d[i]);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
         </div>
         
@@ -208,17 +202,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/03/26/20200326-boj1463/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">[C++]BOJ 1463 - 1로 만들기</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/26/20200327-boj1149/">
-                <span class="level-item">[C++]BOJ 1149 - RGB거리</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/27/20200327-boj1932/">
+                <span class="level-item">[C++]BOJ 1932 - 정수 삼각형</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -263,11 +250,11 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        포스트
+                        Posts
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            41
+                            44
                         </p>
                     </a>
                 </div>
@@ -275,7 +262,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        카테고리
+                        Categories
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
@@ -287,7 +274,7 @@
             <div class="level-item has-text-centered is-marginless">
                 <div>
                     <p class="heading">
-                        태그
+                        Tags
                     </p>
                     <a href="/tags">
                         <p class="title has-text-weight-normal">
@@ -300,7 +287,7 @@
         
         <div class="level">
             <a class="level-item button is-link is-rounded" href="https://github.com/yhcho0405" target="_blank" rel="external nofollow noopener noreferrer">
-                팔로우</a>
+                Follow</a>
         </div>
         
         
@@ -348,7 +335,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            링크
+            Links
         </h3>
         <ul class="menu-list">
         
@@ -373,21 +360,21 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                태그
+                Tags
             </h3>
             <div class="field is-grouped is-grouped-multiline">
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BOJ/">
                         <span class="tag">BOJ</span>
-                        <span class="tag is-grey">27</span>
+                        <span class="tag is-grey">30</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
-                        <span class="tag is-grey">33</span>
+                        <span class="tag is-grey">36</span>
                     </a>
                 </div>
                 
@@ -401,7 +388,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/DP/">
                         <span class="tag">DP</span>
-                        <span class="tag is-grey">7</span>
+                        <span class="tag is-grey">10</span>
                     </a>
                 </div>
                 
@@ -436,7 +423,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">39</span>
+                        <span class="tag is-grey">42</span>
                     </a>
                 </div>
                 
@@ -560,21 +547,21 @@
         <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            최근 글
+            Recent
         </h3>
         
         <article class="media">
             
-            <a href="/2020/03/26/20200326-boj1003/" class="media-left">
+            <a href="/2020/03/27/20200327-boj2156/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1003 - 피보나치 함수">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2156 - 포도주 시식">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T08:30:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200326-boj1003/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1003 - 피보나치 함수</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T17:50:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj2156/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2156 - 포도주 시식</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -584,16 +571,16 @@
         
         <article class="media">
             
-            <a href="/2020/03/26/20200326-boj9095/" class="media-left">
+            <a href="/2020/03/27/20200327-boj1932/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 9095 - 1, 2, 3 더하기">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1932 - 정수 삼각형">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T08:00:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200326-boj9095/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 9095 - 1, 2, 3 더하기</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T17:35:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj1932/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1932 - 정수 삼각형</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -603,16 +590,16 @@
         
         <article class="media">
             
-            <a href="/2020/03/26/20200326-boj1463/" class="media-left">
+            <a href="/2020/03/27/20200327-boj2193/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1463 - 1로 만들기">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2193 - 이친수">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T07:37:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200326-boj1463/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1463 - 1로 만들기</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T17:00:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj2193/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2193 - 이친수</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -622,7 +609,7 @@
         
         <article class="media">
             
-            <a href="/2020/03/26/20200327-boj2579/" class="media-left">
+            <a href="/2020/03/27/20200327-boj2579/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2579 - 계단 오르기">
                 </p>
@@ -630,8 +617,8 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-25T16:40:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200327-boj2579/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2579 - 계단 오르기</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T16:40:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj2579/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2579 - 계단 오르기</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -641,7 +628,7 @@
         
         <article class="media">
             
-            <a href="/2020/03/26/20200327-boj1149/" class="media-left">
+            <a href="/2020/03/27/20200327-boj1149/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1149 - RGB거리">
                 </p>
@@ -649,8 +636,8 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-25T15:52:00.000Z">2020-03-26</time></div>
-                    <a href="/2020/03/26/20200327-boj1149/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1149 - RGB거리</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-26T15:52:00.000Z">2020-03-27</time></div>
+                    <a href="/2020/03/27/20200327-boj1149/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1149 - RGB거리</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -665,7 +652,7 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            아카이브
+            Archives
         </h3>
         <ul class="menu-list">
         
@@ -675,7 +662,7 @@
                     <span class="level-item">3월 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">23</span>
+                    <span class="level-item tag">26</span>
                 </span>
             </a>
         </li>
@@ -726,7 +713,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                카테고리
+                Categories
             </h3>
             <ul class="menu-list">
             <li>
@@ -735,7 +722,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">38</span>
+                <span class="level-item tag">41</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -743,7 +730,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">28</span>
+                <span class="level-item tag">31</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -786,7 +773,7 @@
             <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            태그 클라우드
+            Tag Cloud
         </h3>
         <a href="/tags/BOJ/" style="font-size: 17.5px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.75px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 13.75px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.25px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16.25px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 15px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
@@ -808,7 +795,7 @@
     <div class="card-content">
         <div class="menu">
             <h3 class="menu-label">
-                카테고리
+                Categories
             </h3>
             <ul class="menu-list">
             <li>
@@ -817,7 +804,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">38</span>
+                <span class="level-item tag">41</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -825,7 +812,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">28</span>
+                <span class="level-item tag">31</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -868,7 +855,7 @@
         <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
-            태그 클라우드
+            Tag Cloud
         </h3>
         <a href="/tags/BOJ/" style="font-size: 17.5px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.75px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 13.75px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.25px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16.25px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 15px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 10px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
@@ -886,7 +873,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/ideaico.png" alt="[C++]BOJ 2579 - 계단 오르기" height="28">
+                    <img src="/images/ideaico.png" alt="[C++]BOJ 2156 - 포도주 시식" height="28">
                 
                 </a>
                 <p class="is-size-7">
@@ -1008,7 +995,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
@@ -1032,7 +1019,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="searchbox ins-search">
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="입력 하세요...">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">
@@ -1044,11 +1031,11 @@ document.addEventListener('DOMContentLoaded', function () {
     (function (window) {
         var INSIGHT_CONFIG = {
             TRANSLATION: {
-                POSTS: '포스트',
-                PAGES: '페이지',
-                CATEGORIES: '카테고리',
-                TAGS: '태그',
-                UNTITLED: '(제목없음)',
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
             },
             CONTENT_URL: '/content.json',
         };
