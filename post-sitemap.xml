@@ -8,15 +8,15 @@
     </url>
 
     <url>
-        <loc>https://yhcho0405.github.io/2020/03/26/20200326-boj9095/</loc>
-        <lastmod>2020-03-26T08:00:00.000Z</lastmod>
+        <loc>https://yhcho0405.github.io/2020/03/26/20200326-boj1003/</loc>
+        <lastmod>2020-03-26T08:30:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://yhcho0405.github.io/2020/03/26/20200326-boj1003/</loc>
+        <loc>https://yhcho0405.github.io/2020/03/26/20200326-boj9095/</loc>
         <lastmod>2020-03-26T08:00:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -26,6 +26,30 @@
     <url>
         <loc>https://yhcho0405.github.io/2020/03/26/20200326-boj1463/</loc>
         <lastmod>2020-03-26T07:37:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2020/03/26/20200327-boj2579/</loc>
+        <lastmod>2020-03-25T16:40:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2020/03/26/20200327-boj1149/</loc>
+        <lastmod>2020-03-25T15:52:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2020/03/26/20200327-boj11726/</loc>
+        <lastmod>2020-03-25T15:40:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -42,14 +66,6 @@
     <url>
         <loc>https://yhcho0405.github.io/2019/11/03/20191103-boj2352/</loc>
         <lastmod>2020-03-25T12:38:08.778Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/2019/11/04/20191104-boj11053/</loc>
-        <lastmod>2020-03-25T12:38:02.436Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -96,16 +112,16 @@
     </url>
 
     <url>
-        <loc>https://yhcho0405.github.io/2020/03/24/20200324-etc-math1/</loc>
-        <lastmod>2020-03-24T15:00:51.377Z</lastmod>
+        <loc>https://yhcho0405.github.io/2020/03/24/20200324-boj1110/</loc>
+        <lastmod>2020-03-24T14:52:21.894Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>https://yhcho0405.github.io/2020/03/24/20200324-boj1110/</loc>
-        <lastmod>2020-03-24T14:52:21.894Z</lastmod>
+        <loc>https://yhcho0405.github.io/2020/03/24/20200324-etc-math1/</loc>
+        <lastmod>2020-03-24T14:50:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -306,6 +322,14 @@
     <url>
         <loc>https://yhcho0405.github.io/2019/10/24/20191024-boj1931/</loc>
         <lastmod>2020-03-03T17:31:22.942Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/2019/11/04/20191104-boj11053/</loc>
+        <lastmod>2019-11-03T20:04:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
