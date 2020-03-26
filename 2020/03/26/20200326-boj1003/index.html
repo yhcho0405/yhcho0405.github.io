@@ -7,20 +7,26 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>카테고리: BOJ - yhcho0405</title>
+<title>[C++]BOJ 1003 - 피보나치 함수 - yhcho0405</title>
 
 
-    <meta name="description" content="내가 보려고 쓰는 블로그">
-<meta property="og:type" content="website">
-<meta property="og:title" content="yhcho0405">
-<meta property="og:url" content="https://yhcho0405.github.io/categories/algorithm/BOJ/index.html">
+    <meta name="description" content="시간 제한이 0.25초로 걸려있는 것이 정직하게 피보나치 돌리면 시간 초과가 뜬다는 것을 암시한 것인가.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C++]BOJ 1003 - 피보나치 함수">
+<meta property="og:url" content="https://yhcho0405.github.io/2020/03/26/20200326-boj1003/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="내가 보려고 쓰는 블로그">
+<meta property="og:description" content="시간 제한이 0.25초로 걸려있는 것이 정직하게 피보나치 돌리면 시간 초과가 뜬다는 것을 암시한 것인가.">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://yhcho0405.github.io/images/og_image.png">
+<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
+<meta property="article:published_time" content="2020-03-26T08:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-26T08:00:00.000Z">
 <meta property="article:author" content="yhcho0405">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="BOJ">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="DP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yhcho0405.github.io/images/og_image.png">
+<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
 
 
 
@@ -87,7 +93,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/ideaico.png" alt="yhcho0405" height="28">
+                <img src="/images/ideaico.png" alt="[C++]BOJ 1003 - 피보나치 함수" height="28">
             
             </a>
         </div>
@@ -131,27 +137,13 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/categories">카테고리</a></li>
-            
-            <li><a href="/categories/algorithm/">algorithm</a></li>
-            
-            <li class="is-active"><a href="#" aria-current="page">BOJ</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
     <div class="card-image">
-        <a href="/2020/03/26/20200326-boj1003/" class="image is-7by1">
+        <span class="image is-7by1">
             <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1003 - 피보나치 함수">
-        </a>
+        </span>
     </div>
     
     <div class="card-content article ">
@@ -177,21 +169,27 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/03/26/20200326-boj1003/">[C++]BOJ 1003 - 피보나치 함수</a>
+                [C++]BOJ 1003 - 피보나치 함수
             
         </h1>
         <div class="content">
             <p>시간 제한이 0.25초로 걸려있는 것이 정직하게 피보나치 돌리면 시간 초과가 뜬다는 것을 암시한 것인가.</p>
+<a id="more"></a>
+
+<p>n번째 피보나치를 구한다 생각하고 트리를 그려보면 매우 쉬워진다.<br>예를 들어 n번째 피보나치 수열을 구하는 트리에서 n + 1번째 피보나치 수열을 구하는 트리를 그린다 가정하면, 기존의 n이 부모인 트리에서 n + 1을 부모 노드로 추가하고 n - 1의 부분 트리가 하나 더 생긴다.<br>이것을 n + 1을 n으로 치환해서 읽어보면 n의 부모 노드에 n - 1과 n - 2의 자식 노드가 연결된 형태이다.<br>이 생각을 중심으로 0과 1 각각 갯수를 세어주면 된다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> f1[<span class="number">41</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>&#125;, f0[<span class="number">41</span>] = &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, t, n;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; <span class="number">41</span>; i++) &#123;</span><br><span class="line">		f1[i] = f1[i - <span class="number">1</span>] + f1[i - <span class="number">2</span>];</span><br><span class="line">		f0[i] = f0[i - <span class="number">1</span>] + f0[i - <span class="number">2</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; t &amp;&amp; <span class="built_in">cin</span> &gt;&gt; n; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; f0[n] &lt;&lt; <span class="string">" "</span> &lt;&lt; f1[n] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/26/20200326-boj1003/#more">자세히 보기</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/BOJ/" rel="tag">BOJ</a>, <a class="has-link-grey -link" href="/tags/C/" rel="tag">C++</a>, <a class="has-link-grey -link" href="/tags/DP/" rel="tag">DP</a>, <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -201,572 +199,21 @@
 
 
 
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/26/20200326-boj9095/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 9095 - 1, 2, 3 더하기">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-26T08:00:00.000Z">2020-03-26</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    몇 초 읽기 (대략 97 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/26/20200326-boj9095/">[C++]BOJ 9095 - 1, 2, 3 더하기</a>
-            
-        </h1>
-        <div class="content">
-            <p>dp[i]에는 정수 i를 1, 2, 3의 합으로 나타내는 방법의 수가 담겨있다.<br>그래서 정수 5를 1, 2, 3의 합으로 나타내는 방법의 수가 궁금하다면, dp[2] + dp[3] + dp[4]가 될 것이다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/26/20200326-boj9095/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/26/20200326-boj1463/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1463 - 1로 만들기">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-26T07:37:00.000Z">2020-03-26</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1분 읽기 (대략 174 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/26/20200326-boj1463/">[C++]BOJ 1463 - 1로 만들기</a>
-            
-        </h1>
-        <div class="content">
-            <p>크게 두 가지 경우의 수가 있다.</p>
-<ol>
-<li>3로 나누어 떨어질 경우</li>
-<li>3으로 나누어 떨어질 경우</li>
-</ol>
-<p>3번 조건은 언제나 적용할 수 있기 때문에 처음부터 계산하고 시작한다.<br>2와 3의 공배수 같은 경우는 2와 3 둘 다 나누어 떨어지기 때문에 다른 조건을 만들어야 하나 싶었지만 어차피 dp[]에 저장된 값을 같은 i를 돌고 있을 때 다시 확인하므로 상관이 없다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/26/20200326-boj1463/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/25/20200325-boj1041/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1041 - 주사위">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-25T10:05:00.000Z">2020-03-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2분 읽기 (대략 354 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/25/20200325-boj1041/">[C++]BOJ 1041 - 주사위</a>
-            
-        </h1>
-        <div class="content">
-            <p>우선 한 면이 바닥에 가려져 있으므로 총 5n^2만큼의 면을 볼 수 있다.<br>그 중 3면이 보이는 주사위는 윗쪽 꼭지점 4개, 2면이 보이는 주사위는 눈에 보이는 모서리 8개와 아랫쪽 꼭지점 4개, 1면이 보이는 주사위는 5n^2 - (3 * 3면이 보이는 주사위의 수) - (2 * 2면이 보이는 주사위의 수) 이다.<br>이를 식으로 나타내면,</p>
-<blockquote>
-<p>3 면 == 4 개<br>2 면 == 8n  - 12 개<br>1 면 == 5n^2 - 16n + 12 개</p>
-</blockquote>
-<p>로 정리할 수 있다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/25/20200325-boj1041/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/25/20200325-boj1969/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1969 - DNA">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-25T05:59:00.000Z">2020-03-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1분 읽기 (대략 180 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/25/20200325-boj1969/">[C++]BOJ 1969 - DNA</a>
-            
-        </h1>
-        <div class="content">
-            <p>사전순이기 때문에 A, C, G, T 순으로 세로줄에 등장하는 갯수가 제일 많은 뉴클레오타이드로 배치한다.<br>Hamming Distance는 세로줄에서 선택된 뉴클레오타이드를 제외하고 나머지 뉴클레오타이드의 등장횟수를 세면 된다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/25/20200325-boj1969/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/25/20200325-boj1343/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1343 - 폴리오미노">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-24T18:01:00.000Z">2020-03-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1분 읽기 (대략 187 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/25/20200325-boj1343/">[C++]BOJ 1343 - 폴리오미노</a>
-            
-        </h1>
-        <div class="content">
-            <p>보자마자 스택이 떠올랐다.<br>물론 스택을 사용하지는 않았다.<br>한 글자씩 받아와서 ‘X’ 4개가 쌓일 때, ‘.’을 만날 때, 모두 읽어서 종료됐을 때의 경우에서 최종 str에 추가해주는 방식으로 풀었다.<br><br><br>‘.’을 만났을 때와 종료됐을 때 종료조건과 2개가 쌓였을 때 “BB”를 str에 추가한다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/25/20200325-boj1343/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/24/20200324-boj1110/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1110 - 더하기 사이클">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-24T14:12:00.000Z">2020-03-24</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1분 읽기 (대략 128 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/24/20200324-boj1110/">[C++]BOJ 1110 - 더하기 사이클</a>
-            
-        </h1>
-        <div class="content">
-            <p>읽히는 대로 짜면 된다.<br>신기한 점은 이 문제의 정답은 1, 3, 4, 12, 20, 60으로 6가지 밖에 없다.<br>0부터 99까지의 숫자 중에 정답이 1인 숫자가 1개, 3인 숫자가 3개 4인 숫자가 4개, 5인 숫자가 5개, 12인 숫자가 12개, 20인 숫자가 20개, 60인 숫자가 60개다.<br>각 정답이 같은 숫자끼리 돌아가며 등장한다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/24/20200324-boj1110/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/03/16/20200316-boj1202/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1202 - 보석 도둑">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-16T10:29:00.000Z">2020-03-16</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3분 읽기 (대략 505 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/03/16/20200316-boj1202/">[C++]BOJ 1202 - 보석 도둑</a>
-            
-        </h1>
-        <div class="content">
-            <p>처음엔 무식하게 2중 for문으로 돌려보았다.<br>맞겠지 싶었는데 시간초과가 떴다.</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/16/20200316-boj1202/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2019/11/10/20191110-boj14501/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 14501 - 퇴사">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-11-10T14:31:00.000Z">2019-11-10</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    몇 초 읽기 (대략 77 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/11/10/20191110-boj14501/">[C++]BOJ 14501 - 퇴사</a>
-            
-        </h1>
-        <div class="content">
-            <p>왜 이리 어렵게 풀어놨을까</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">11</span>];</span><br><span class="line">	<span class="keyword">int</span> b[<span class="number">11</span>];</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; a[i];</span><br><span class="line">		b[i] = i + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> v;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt; <span class="number">-1</span>; i--)</span><br><span class="line">	&#123;</span><br><span class="line">		v = b[i];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a[i] + <span class="number">1</span>; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			b[i+j] = b[i+j+<span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		b[i+a[i]] = v;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; b[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/11/10/20191110-boj14501/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2019/11/04/20191104-boj11053/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 11053 - 가장 긴 증가하는 부분 수열">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-11-03T20:04:00.000Z">2019-11-04</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    몇 초 읽기 (대략 99 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/11/04/20191104-boj11053/">[C++]BOJ 11053 - 가장 긴 증가하는 부분 수열</a>
-            
-        </h1>
-        <div class="content">
-            <p>이전의 <a href="https://yhcho0405.github.io/2019/11/03/20191103-boj2352/">반도체 설계</a> 문제와 동일하다.<br>다른 점은 최대 길이 정도?</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, g, t, L[<span class="number">1001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">		<span class="keyword">auto</span> p = lower_bound(L+<span class="number">1</span>, L+g+<span class="number">1</span>, t);</span><br><span class="line">		*p = t;</span><br><span class="line">		<span class="keyword">if</span>(p == L+g+<span class="number">1</span>) g++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; g;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/11/04/20191104-boj11053/#more">자세히 보기</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-    
 <div class="card card-transparent">
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <div class="pagination-previous is-invisible is-hidden-mobile">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/algorithm/BOJ/page/0/">이전</a>
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/26/20200326-boj9095/">
+                <span class="level-item">[C++]BOJ 9095 - 1, 2, 3 더하기</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        <div class="pagination-next">
-            <a class="is-flex-grow has-text-black-ter" href="/categories/algorithm/BOJ/page/2/">다음</a>
-        </div>
-        <ul class="pagination-list is-hidden-mobile">
-            
-            <li><a class="pagination-link is-current" href="/categories/algorithm/BOJ/">1</a></li>
-            
-            <li><a class="pagination-link has-text-black-ter" href="/categories/algorithm/BOJ/page/2/">2</a></li>
-            
-            <li><a class="pagination-link has-text-black-ter" href="/categories/algorithm/BOJ/page/3/">3</a></li>
-            
-        </ul>
-    </nav>
+        
+    </div>
 </div>
+
+
 </div>
                 
 
@@ -1426,7 +873,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/ideaico.png" alt="yhcho0405" height="28">
+                    <img src="/images/ideaico.png" alt="[C++]BOJ 1003 - 피보나치 함수" height="28">
                 
                 </a>
                 <p class="is-size-7">
