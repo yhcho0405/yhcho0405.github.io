@@ -4,28 +4,42 @@
 
     <url>
         <loc>https://yhcho0405.github.io/tags/BOJ/</loc>
-        <lastmod>2020-03-27T09:10:00.000Z</lastmod>
+        <lastmod>2020-04-03T06:11:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://yhcho0405.github.io/tags/DP/</loc>
-        <lastmod>2020-03-27T09:10:00.000Z</lastmod>
+        <lastmod>2020-04-03T06:11:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://yhcho0405.github.io/tags/C/</loc>
-        <lastmod>2020-03-27T09:10:00.000Z</lastmod>
+        <lastmod>2020-04-03T06:11:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://yhcho0405.github.io/tags/algorithm/</loc>
-        <lastmod>2020-03-27T09:10:00.000Z</lastmod>
+        <lastmod>2020-04-03T06:11:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/dfs/</loc>
+        <lastmod>2020-04-03T05:11:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/%25EB%25B8%258C%25EB%25A3%25A8%25ED%258A%25B8-%25ED%258F%25AC%25EC%258A%25A4/</loc>
+        <lastmod>2020-04-03T05:11:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -74,13 +88,6 @@
 
     <url>
         <loc>https://yhcho0405.github.io/tags/search/</loc>
-        <lastmod>2020-03-18T09:00:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/dfs/</loc>
         <lastmod>2020-03-18T09:00:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -166,13 +173,6 @@
     <url>
         <loc>https://yhcho0405.github.io/tags/LIS/</loc>
         <lastmod>2019-11-03T20:04:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/%25EB%25B8%258C%25EB%25A3%25A8%25ED%258A%25B8-%25ED%258F%25AC%25EC%258A%25A4/</loc>
-        <lastmod>2019-10-24T08:39:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
