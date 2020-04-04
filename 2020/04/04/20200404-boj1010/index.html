@@ -7,20 +7,26 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>Tag: heap - yhcho0405</title>
+<title>[C++]BOJ 9465 - 다리 놓기 - yhcho0405</title>
 
 
-    <meta name="description" content="내가 보려고 쓰는 블로그">
-<meta property="og:type" content="website">
-<meta property="og:title" content="yhcho0405">
-<meta property="og:url" content="https://yhcho0405.github.io/tags/heap/index.html">
+    <meta name="description" content="보자마자 떠오른것은 조합이다.mCn을 계산하면 정답이 나오지만 m이 최대 29까지 등장하기 때문에 계산 과정에서 29!을 계산할 여지가 있다.29!은 long long에도 못들어가는 아무튼 엄청 크다.이를 해결하는 방법은 여러가지가 있다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C++]BOJ 9465 - 다리 놓기">
+<meta property="og:url" content="https://yhcho0405.github.io/2020/04/04/20200404-boj1010/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="내가 보려고 쓰는 블로그">
+<meta property="og:description" content="보자마자 떠오른것은 조합이다.mCn을 계산하면 정답이 나오지만 m이 최대 29까지 등장하기 때문에 계산 과정에서 29!을 계산할 여지가 있다.29!은 long long에도 못들어가는 아무튼 엄청 크다.이를 해결하는 방법은 여러가지가 있다.">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://yhcho0405.github.io/images/og_image.png">
+<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
+<meta property="article:published_time" content="2020-04-04T03:35:00.000Z">
+<meta property="article:modified_time" content="2020-04-04T03:35:00.000Z">
 <meta property="article:author" content="yhcho0405">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="BOJ">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yhcho0405.github.io/images/og_image.png">
+<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
 
 
 
@@ -87,7 +93,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/ideaico.png" alt="yhcho0405" height="28">
+                <img src="/images/ideaico.png" alt="[C++]BOJ 9465 - 다리 놓기" height="28">
             
             </a>
         </div>
@@ -131,41 +137,30 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">heap</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
     <div class="card-image">
-        <a href="/2020/03/16/20200316-algorithm-theory6/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/algorithm.png" alt="힙 정렬(Heap Sort)">
-        </a>
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 9465 - 다리 놓기">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-16T04:30:00.000Z">2020-03-16</time>
+                <time class="level-item has-text-grey" datetime="2020-04-04T03:35:00.000Z">2020-04-04</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3분 읽기 소요 (대략 419 단어)
+                    4분 읽기 소요 (대략 566 단어)
                 </span>
                 
                 
@@ -174,23 +169,31 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/03/16/20200316-algorithm-theory6/">힙 정렬(Heap Sort)</a>
+                [C++]BOJ 9465 - 다리 놓기
             
         </h1>
         <div class="content">
-            <p>최대 힙 트리나 최소 힙 트리를 구현해 정렬하는 방법이다.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sorting_heapsort_anim.gif" alt="wikipedia"></p>
-<p>트리 구조로 보여주는 움짤을 찾아보려 했으나 귀찮았다.</p>
+            <p>보자마자 떠오른것은 조합이다.<br>mCn을 계산하면 정답이 나오지만 m이 최대 29까지 등장하기 때문에 계산 과정에서 29!을 계산할 여지가 있다.<br>29!은 long long에도 못들어가는 아무튼 엄청 크다.<br>이를 해결하는 방법은 여러가지가 있다.</p>
+<a id="more"></a>
+<p>먼저 조합의 성질을 보자.<br><strong>nCr</strong>이라면 <strong>n! / {(n - r)! * r!}</strong> 이다.<br>이 때문에 r을 n - r로 바꾸어 계산해도 정답은 일치한다.<br>그렇다면 주어진 범위에서 계산 과정 중 분자의 크기가 가장 커지게 만드는 경우는 <strong>n이 29일 때와 r이 14또는 15일 때</strong> 이다.<br>수식을 약분하면 계산 과정 중 등장할 가장 큰 수인 29!/15!은<br><strong>6,761,440,164,390,912,000</strong><br>이고 long long의 양수 최대범위는<br><strong>9,223,372,036,854,775,807</strong><br>이다.<br><br><br>아슬아슬하게 걸친다.<br>가장 큰 수가 오버플로우가 발생하지 않는다면 주어진 범위 내의 모든 수도 계산하는데 문제가 없을 것이다.</p>
+<p>위 내용을 코드로 나타내면 아래와 같다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> t, n, m, ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span>(t--) &#123;</span><br><span class="line">		ans = <span class="number">1</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">		n = n &gt; m - n ? m - n : n; <span class="comment">// m - n과 n중 더 작은것을 사용한다.</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">			ans *= m - i;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++)</span><br><span class="line">			ans /= i;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; ans;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>또 다른 방법은 조합 계산을 동적 계획법을 이용해 재귀함수로 구현하는 것이다.<br>그 전에 조합 <strong>nCr = n-1Cr-1 + n-1Cr</strong>로 나타낼 수 있다는 것을 알아야 한다.(파스칼의 삼각형으로 부터 유래되었다.)<br>로또로 예를 들어 보면 45개 중 6개를 뽑을 때의 경우의 수는 <strong>1번 공을 미리 뽑고 5개를 랜덤으로 뽑는 경우와 1번 공을 제외하고 6개를 랜덤으로 뽑는 경우를 더한 것</strong>과 같다.<br>저 공식을 사용해 계속 쪼개나가서 n과r이 같아지거나 r이 0이 될 때 1을 반환하면 된다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> t, a, b, dp[<span class="number">31</span>][<span class="number">31</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">cbn</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n == r || r == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(dp[n][r]) <span class="keyword">return</span> dp[n][r];</span><br><span class="line">	<span class="keyword">return</span> dp[n][r] = cbn(n - <span class="number">1</span>, r - <span class="number">1</span>) + cbn(n - <span class="number">1</span>, r);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span>(t--) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; cbn(b, a) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/03/16/20200316-algorithm-theory6/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/BOJ/" rel="tag">BOJ</a>, <a class="has-link-grey -link" href="/tags/C/" rel="tag">C++</a>, <a class="has-link-grey -link" href="/tags/DP/" rel="tag">DP</a>, <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -200,7 +203,19 @@
 
 
 
-
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/04/03/20200403-boj9465/">
+                <span class="level-item">[C++]BOJ 9465 - 스티커</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -873,7 +888,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/ideaico.png" alt="yhcho0405" height="28">
+                    <img src="/images/ideaico.png" alt="[C++]BOJ 9465 - 다리 놓기" height="28">
                 
                 </a>
                 <p class="is-size-7">
