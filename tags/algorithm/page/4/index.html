@@ -146,6 +146,66 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/2020/03/14/20200314-algorithm-theory4/" class="image is-7by1">
+            <img class="thumbnail" src="/thumbnails/algorithm.png" alt="퀵 정렬(Quick Sort)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-14T03:22:00.000Z">2020-03-14</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3분 읽기 소요 (대략 418 단어)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/03/14/20200314-algorithm-theory4/">퀵 정렬(Quick Sort)</a>
+            
+        </h1>
+        <div class="content">
+            <p>분할 정복 알고리즘의 대표적인 예시이며 피봇을 기준으로 정렬해 나가는 정렬 방법이다.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif" alt="wikipedia"></p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2020/03/14/20200314-algorithm-theory4/#more">Read More</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/2020/03/09/20200309-algorithm-theory3/" class="image is-7by1">
             <img class="thumbnail" src="/thumbnails/algorithm.png" alt="삽입 정렬(Insertion Sort)">
         </a>
@@ -719,67 +779,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2019/10/25/20191025-boj1541/" class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1541 - 잃어버린 괄호">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2019-10-24T20:55:00.000Z">2019-10-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2분 읽기 소요 (대략 309 단어)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2019/10/25/20191025-boj1541/">[C++]BOJ 1541 - 잃어버린 괄호</a>
-            
-        </h1>
-        <div class="content">
-            <p>가장 작은 답이 나오려면 +끼리 괄호로 묶고 계산하면 된다. 라고 생각했지만 계속 반례가 생각나서 이건 아닐 거라고 판단했고 그냥 첫 번째 -가 나온 순간부터 다 빼버리면 처음 생각했던 것보다 단순하게 끝난다.</p>
-<p>+아스키코드 10은 line feed (다음 줄)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">bool</span> ch = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">int</span> a, b;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a);</span><br><span class="line">	<span class="keyword">for</span>(;<span class="built_in">scanf</span>(<span class="string">"%c"</span>, &amp;c), c != <span class="number">10</span>;)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(c == <span class="string">'-'</span>) ch = <span class="literal">true</span>;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;b);</span><br><span class="line">		<span class="keyword">if</span>(ch) a -= b;</span><br><span class="line">		<span class="keyword">else</span> a += b;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2019/10/25/20191025-boj1541/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -845,7 +844,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            51
+                            52
                         </p>
                     </a>
                 </div>
@@ -857,7 +856,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            6
+                            8
                         </p>
                     </a>
                 </div>
@@ -891,21 +890,9 @@
                 
             </a>
             
-            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Youtube" href="https://www.youtube.com/channel/UCFpFqUVx0wxTF7uBkIF9Vwg">
-                
-                <i class="fab fa-youtube"></i>
-                
-            </a>
-            
             <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Email" href="mailto:yhcho0405@kakao.com">
                 
                 <i class="fas fa-envelope"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Baekjoon OJ" href="https://www.acmicpc.net/user/yh0405">
-                
-                <i class="fas fa-bold"></i>
                 
             </a>
             
@@ -958,14 +945,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BOJ/">
                         <span class="tag">BOJ</span>
-                        <span class="tag is-grey">37</span>
+                        <span class="tag is-grey">38</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
-                        <span class="tag is-grey">43</span>
+                        <span class="tag is-grey">44</span>
                     </a>
                 </div>
                 
@@ -979,7 +966,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/DP/">
                         <span class="tag">DP</span>
-                        <span class="tag is-grey">18</span>
+                        <span class="tag is-grey">19</span>
                     </a>
                 </div>
                 
@@ -1014,7 +1001,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">49</span>
+                        <span class="tag is-grey">50</span>
                     </a>
                 </div>
                 
@@ -1143,6 +1130,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/07/20200407-boj11057/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 11057 - 오르막 수">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-06T15:12:00.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/20200407-boj11057/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 11057 - 오르막 수</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithms/">algorithms</a> / <a class="has-link-grey -link" href="/categories/algorithms/BOJ/">BOJ</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/06/20200406-boj2293/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2293 - 동전 1">
@@ -1164,14 +1170,14 @@
             
             <a href="/2020/04/04/20200404-boj1010/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 9465 - 다리 놓기">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1010 - 다리 놓기">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-04T03:35:00.000Z">2020-04-04</time></div>
-                    <a href="/2020/04/04/20200404-boj1010/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 9465 - 다리 놓기</a>
+                    <a href="/2020/04/04/20200404-boj1010/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1010 - 다리 놓기</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                     </p>
@@ -1217,25 +1223,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/03/28/20200328-boj11052/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 11052 - 카드 구매하기">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-28T04:20:00.000Z">2020-03-28</time></div>
-                    <a href="/2020/03/28/20200328-boj11052/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 11052 - 카드 구매하기</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1253,7 +1240,7 @@
                     <span class="level-item">4월 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">4</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -1343,6 +1330,22 @@
                 <span class="level-item tag">10</span>
             </span>
         </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/algorithms/">
+            <span class="level-start">
+                <span class="level-item">algorithms</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/algorithms/BOJ/">
+            <span class="level-start">
+                <span class="level-item">BOJ</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
             <span class="level-start">
                 <span class="level-item">etc</span>
@@ -1377,7 +1380,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/BOJ/" style="font-size: 17.5px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.75px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 15px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.25px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 11.25px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16.25px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 13.75px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11.25px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
+        <a href="/tags/BOJ/" style="font-size: 17.14px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.57px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 15.71px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.43px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 11.43px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 15.71px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.86px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 14.29px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11.43px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
 </div>
         
@@ -1425,6 +1428,22 @@
                 <span class="level-item tag">10</span>
             </span>
         </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/algorithms/">
+            <span class="level-start">
+                <span class="level-item">algorithms</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/algorithms/BOJ/">
+            <span class="level-start">
+                <span class="level-item">BOJ</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
             <span class="level-start">
                 <span class="level-item">etc</span>
@@ -1459,7 +1478,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/BOJ/" style="font-size: 17.5px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.75px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 15px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.25px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 11.25px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16.25px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 13.75px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11.25px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
+        <a href="/tags/BOJ/" style="font-size: 17.14px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.57px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 15.71px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.43px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 11.43px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 15.71px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.86px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 14.29px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11.43px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
 </div>
     
