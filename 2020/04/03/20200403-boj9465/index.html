@@ -160,7 +160,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 소요 (대략 263 단어)
+                    2분 읽기 소요 (대략 306 단어)
                 </span>
                 
                 
@@ -176,6 +176,7 @@
             <p>동적 계획법으로 해결할 수 있다.<br><img src="/image-in-post/20200403-boj9465-1.PNG" alt="먼저 dp00을 선택했을 때"><br><img src="/image-in-post/20200403-boj9465-2.PNG" alt="dp11을 선택하는 경우와"></p>
 <a id="more"></a>
 <p><img src="/image-in-post/20200403-boj9465-3.PNG" alt="dp12을 선택하는 경우가 있다."><br><img src="/image-in-post/20200403-boj9465-4.PNG" alt="물론 dp02또한 선택할 수는 있지만,"><br><img src="/image-in-post/20200403-boj9465-5.PNG" alt="dp11이 선택됐을 때 경우와 겹치기 때문에 점화식에서는 고려할 필요가 없다."></p>
+<p>따라서 두 번째 사진 처럼 짧은 대각선에 있거나 세 번째 사진처럼 긴 대각선에 있는 경우만 생각해주면 된다.</p>
 <p>위 내용을 코드로 옮기면 아래와 같다.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> t, n, dp[<span class="number">2</span>][<span class="number">100001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">	<span class="keyword">while</span>(t--) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++)</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">				<span class="built_in">cin</span> &gt;&gt; dp[i][j];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">			dp[<span class="number">0</span>][i] += max(dp[<span class="number">1</span>][i - <span class="number">1</span>], dp[<span class="number">1</span>][i - <span class="number">2</span>]);</span><br><span class="line">			dp[<span class="number">1</span>][i] += max(dp[<span class="number">0</span>][i - <span class="number">1</span>], dp[<span class="number">0</span>][i - <span class="number">2</span>]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; max(dp[<span class="number">0</span>][n], max(dp[<span class="number">0</span>][n - <span class="number">1</span>], max(dp[<span class="number">1</span>][n], dp[<span class="number">1</span>][n - <span class="number">1</span>]))) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1035,7 +1036,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
