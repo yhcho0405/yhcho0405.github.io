@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+
+<meta name="generator" content="Hexo 4.2.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<title>[C++]BOJ 2167 - 2차원 배열의 합 - yhcho0405</title>
+
+
+    <meta name="description" content="그리디로 풀었을 때 최악의 경우 n * m * k번, 300 * 300 * 10,000 &#x3D; 900,000,000번 계산하므로 시간초과가 난다.그래서 dp로 풀어야 한다. 할 줄 알았는데 그리디하게 풀어도 맞는다고 한다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[C++]BOJ 2167 - 2차원 배열의 합">
+<meta property="og:url" content="https://yhcho0405.github.io/2020/04/07/20200407-boj2167/index.html">
+<meta property="og:site_name" content="yhcho0405">
+<meta property="og:description" content="그리디로 풀었을 때 최악의 경우 n * m * k번, 300 * 300 * 10,000 &#x3D; 900,000,000번 계산하므로 시간초과가 난다.그래서 dp로 풀어야 한다. 할 줄 알았는데 그리디하게 풀어도 맞는다고 한다.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
+<meta property="article:published_time" content="2020-04-07T07:25:00.000Z">
+<meta property="article:modified_time" content="2020-04-07T07:25:00.000Z">
+<meta property="article:author" content="yhcho0405">
+<meta property="article:tag" content="algorithm">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="BOJ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/ideafaico.png">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159607493-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-159607493-1');
+</script>
+
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="/rss2.xml" title="yhcho0405" type="application/rss+xml">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/ideaico.png" alt="[C++]BOJ 2167 - 2차원 배열의 합" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/yhcho0405">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2167 - 2차원 배열의 합">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-07T07:25:00.000Z">2020-04-07</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/algorithms/">algorithms</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithms/BOJ/">BOJ</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2분 읽기 소요 (대략 359 단어)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                [C++]BOJ 2167 - 2차원 배열의 합
+            
+        </h1>
+        <div class="content">
+            <p>그리디로 풀었을 때 최악의 경우 n * m * k번, 300 * 300 * 10,000 = 900,000,000번 계산하므로 시간초과가 난다.<br>그래서 dp로 풀어야 한다. 할 줄 알았는데 그리디하게 풀어도 맞는다고 한다.</p>
+<a id="more"></a>
+<p>어쨌든 dp[i][j]에는 (0, 0)부터 (i, j)까지의 숫자 합을 저장한다.</p>
+<h2 id="dp-를-채워나가는-방법"><a href="#dp-를-채워나가는-방법" class="headerlink" title="dp[][]를 채워나가는 방법"></a>dp[][]를 채워나가는 방법</h2><hr>
+<p><img src="/image-in-post/20200407-boj2167-1.png" alt="노란 영역의 합을 구하려면"><br><img src="/image-in-post/20200407-boj2167-10.png" alt="초록 칸의 값과"><br><img src="/image-in-post/20200407-boj2167-2.png" alt="이 파란 영역의 합과"><br><img src="/image-in-post/20200407-boj2167-3.png" alt="이 파란 영역의 합을 더하고"><br><img src="/image-in-post/20200407-boj2167-4.png" alt="중복된 빨간 영역의 합을 빼면 된다."></p>
+<br>
+
+<h2 id="주어진-영역의-합을-구하는-방법"><a href="#주어진-영역의-합을-구하는-방법" class="headerlink" title="주어진 영역의 합을 구하는 방법"></a>주어진 영역의 합을 구하는 방법</h2><hr>
+<p><img src="/image-in-post/20200407-boj2167-5.png" alt="노란 영역의 합을 구하려면"><br><img src="/image-in-post/20200407-boj2167-6.png" alt="이 파란 영역의 합에서"><br><img src="/image-in-post/20200407-boj2167-7.png" alt="필요없는 이 빨간 영역의 합과"><br><img src="/image-in-post/20200407-boj2167-8.png" alt="이 빨간 영역의 합을 빼고"><br><img src="/image-in-post/20200407-boj2167-9.png" alt="중복되서 빼버린 이 파란 영역의 합을 더해주면 된다."></p>
+<br>
+
+<p>위 과정을 코드로 작성하면 아래와 같다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, ans, i, j, x, y, dp[<span class="number">301</span>][<span class="number">301</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span>(j = <span class="number">1</span>; j &lt;= m; j++) &#123;</span><br><span class="line">			<span class="built_in">cin</span> &gt;&gt; dp[i][j];</span><br><span class="line">			dp[i][j] += dp[i - <span class="number">1</span>][j] + dp[i][j - <span class="number">1</span>] - dp[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; k++) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; i &gt;&gt; j &gt;&gt; x &gt;&gt; y;</span><br><span class="line">		ans = dp[x][y] - dp[x][j - <span class="number">1</span>] - dp[i - <span class="number">1</span>][y] + dp[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; ans &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/BOJ/" rel="tag">BOJ</a>, <a class="has-link-grey -link" href="/tags/C/" rel="tag">C++</a>, <a class="has-link-grey -link" href="/tags/DP/" rel="tag">DP</a>, <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/04/07/20200407-boj11055/">
+                <span class="level-item">[C++]BOJ 11055 - 가장 큰 증가 부분 수열</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="is-rounded" src="https://avatars3.githubusercontent.com/u/52823519" alt="yhcho0405">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        yhcho0405
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        내가 보려고 쓰는 블로그
+                    </p>
+                    
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            55
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            8
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            25
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/yhcho0405" target="_blank" rel="external nofollow noopener noreferrer">
+                Follow</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Github" href="https://github.com/yhcho0405">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="external nofollow noopener noreferrer" title="Email" href="mailto:yhcho0405@kakao.com">
+                
+                <i class="fas fa-envelope"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener" title="RSS" href="/rss2.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://chrome.google.com/webstore/detail/youtubookmark-bookmark-yo/fhbaihahknhibdhgddjnekoffmjbpikm" target="_blank" rel="external nofollow noopener noreferrer">
+                    <span class="level-left">
+                        <span class="level-item">YOUTUBOOKMARK</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">chrome.google.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/BOJ/">
+                        <span class="tag">BOJ</span>
+                        <span class="tag is-grey">41</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/C/">
+                        <span class="tag">C++</span>
+                        <span class="tag is-grey">47</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/CSS/">
+                        <span class="tag">CSS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/DP/">
+                        <span class="tag">DP</span>
+                        <span class="tag is-grey">22</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Data-Structure/">
+                        <span class="tag">Data Structure</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/HTML/">
+                        <span class="tag">HTML</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/JS/">
+                        <span class="tag">JS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/LIS/">
+                        <span class="tag">LIS</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/algorithm/">
+                        <span class="tag">algorithm</span>
+                        <span class="tag is-grey">53</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/bfs/">
+                        <span class="tag">bfs</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/chrome-extension/">
+                        <span class="tag">chrome extension</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dfs/">
+                        <span class="tag">dfs</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/gcd/">
+                        <span class="tag">gcd</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/greedy/">
+                        <span class="tag">greedy</span>
+                        <span class="tag is-grey">19</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/heap/">
+                        <span class="tag">heap</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/jquery/">
+                        <span class="tag">jquery</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/math/">
+                        <span class="tag">math</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/project/">
+                        <span class="tag">project</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/search/">
+                        <span class="tag">search</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/sort/">
+                        <span class="tag">sort</span>
+                        <span class="tag is-grey">6</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/study/">
+                        <span class="tag">study</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/theory/">
+                        <span class="tag">theory</span>
+                        <span class="tag is-grey">11</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/">
+                        <span class="tag">브루트 포스</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%EC%86%8C%EC%88%98/">
+                        <span class="tag">소수</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/">
+                        <span class="tag">크루스칼</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/04/07/20200407-boj2167/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2167 - 2차원 배열의 합">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-07T07:25:00.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/20200407-boj2167/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2167 - 2차원 배열의 합</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithms/">algorithms</a> / <a class="has-link-grey -link" href="/categories/algorithms/BOJ/">BOJ</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/04/07/20200407-boj11055/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 11055 - 가장 큰 증가 부분 수열">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-07T03:38:00.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/20200407-boj11055/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 11055 - 가장 큰 증가 부분 수열</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithms/">algorithms</a> / <a class="has-link-grey -link" href="/categories/algorithms/BOJ/">BOJ</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/04/07/20200407-boj1699/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1699 - 제곱수의 합">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-06T23:14:00.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/20200407-boj1699/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 1699 - 제곱수의 합</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithms/">algorithms</a> / <a class="has-link-grey -link" href="/categories/algorithms/BOJ/">BOJ</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/04/07/20200407-boj11057/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 11057 - 오르막 수">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-06T15:12:00.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/20200407-boj11057/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 11057 - 오르막 수</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithms/">algorithms</a> / <a class="has-link-grey -link" href="/categories/algorithms/BOJ/">BOJ</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/04/06/20200406-boj2293/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2293 - 동전 1">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-06T05:59:00.000Z">2020-04-06</time></div>
+                    <a href="/2020/04/06/20200406-boj2293/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2293 - 동전 1</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">4월 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">3월 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">30</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">1월 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">11월 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">10월 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">14</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen is-sticky">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/algorithm/">
+            <span class="level-start">
+                <span class="level-item">algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">48</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/algorithm/BOJ/">
+            <span class="level-start">
+                <span class="level-item">BOJ</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">38</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/algorithm/theory/">
+            <span class="level-start">
+                <span class="level-item">theory</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/algorithms/">
+            <span class="level-start">
+                <span class="level-item">algorithms</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/algorithms/BOJ/">
+            <span class="level-start">
+                <span class="level-item">BOJ</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/etc/">
+            <span class="level-start">
+                <span class="level-item">etc</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/etc/math/">
+            <span class="level-start">
+                <span class="level-item">math</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/etc/project/">
+            <span class="level-start">
+                <span class="level-item">project</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/BOJ/" style="font-size: 17.5px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.75px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 16.25px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.25px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 11.25px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 15px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 13.75px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11.25px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right is-sticky">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/algorithm/">
+            <span class="level-start">
+                <span class="level-item">algorithm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">48</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/algorithm/BOJ/">
+            <span class="level-start">
+                <span class="level-item">BOJ</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">38</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/algorithm/theory/">
+            <span class="level-start">
+                <span class="level-item">theory</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">10</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/algorithms/">
+            <span class="level-start">
+                <span class="level-item">algorithms</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/algorithms/BOJ/">
+            <span class="level-start">
+                <span class="level-item">BOJ</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/etc/">
+            <span class="level-start">
+                <span class="level-item">etc</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/etc/math/">
+            <span class="level-start">
+                <span class="level-item">math</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/etc/project/">
+            <span class="level-start">
+                <span class="level-item">project</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/tags/BOJ/" style="font-size: 17.5px;">BOJ</a> <a href="/tags/C/" style="font-size: 18.75px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 16.25px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11.25px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/dfs/" style="font-size: 11.25px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 15px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 10px;">project</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 12.5px;">sort</a> <a href="/tags/study/" style="font-size: 10px;">study</a> <a href="/tags/theory/" style="font-size: 13.75px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11.25px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/ideaico.png" alt="[C++]BOJ 2167 - 2차원 배열의 합" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 yhcho0405&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="external nofollow noopener noreferrer">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="external nofollow noopener noreferrer" title="Download on GitHub" href="https://github.com/yhcho0405">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("ko");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://yhcho0405.github.io',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/" rel="external nofollow noopener noreferrer" target="_blank">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
