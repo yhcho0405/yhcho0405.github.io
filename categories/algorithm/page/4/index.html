@@ -287,7 +287,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    몇 초 읽기 소요 (대략 99 단어)
+                    1분 읽기 소요 (대략 217 단어)
                 </span>
                 
                 
@@ -300,8 +300,9 @@
             
         </h1>
         <div class="content">
-            <p>이전의 <a href="https://yhcho0405.github.io/2019/11/03/20191103-boj2352/">반도체 설계</a> 문제와 동일하다.<br>다른 점은 최대 길이 정도?</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, g, t, L[<span class="number">1001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">		<span class="keyword">auto</span> p = lower_bound(L+<span class="number">1</span>, L+g+<span class="number">1</span>, t);</span><br><span class="line">		*p = t;</span><br><span class="line">		<span class="keyword">if</span>(p == L+g+<span class="number">1</span>) g++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; g;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>이전의 <a href="/2019/11/03/20191103-boj2352/">반도체 설계</a> 문제와 동일하게 최장 증가 수열을 구하는 문제다.</p>
+<p><strong>2020년 4원 7일 포스트 수정</strong></p>
+<p>저 문제 풀 때는 dp가 뭔지도 몰랐다.<br>이번엔 동적 계획법으로 풀어봤다.<br>dp[i]에 arr[i]이전의 값들을 비교하며 arr[i]보다 작은 값이 있다면 그 때의 dp[]에 담겨있는 값 + 1을 dp[i]에 넣는다. arr[i]이전의 모든 수에 위 과정을 반복했을 때 가장 큰 수가 dp[i]가 된다.<br>마지막으로 dp[]에 담겨있는 값 중 가장 큰 값이 최장증가수열의 길이가 된다.</p>
         </div>
         
         
@@ -347,7 +348,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    1분 읽기 소요 (대략 157 단어)
+                    1분 읽기 소요 (대략 153 단어)
                 </span>
                 
                 
@@ -361,10 +362,8 @@
         </h1>
         <div class="content">
             <p>뭔가 했는데 알고리즘 분류를 보니 LIS라고 한다.</p>
-<p>최장증가수열을 공부하고 풀었다.</p>
 <p>lower_bound로 최장증가수열을 구현하는 방식을 봤는데 실제로 유효한 수열을 구하진 않았다.</p>
 <p>그런데 이 문제는 수열을 구하는 게 아니라 수열의 길이만 구하면 되므로 최대한 생략하고 수열의 길이만 구하도록 바꿨다.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, g, t, L[<span class="number">40001</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; t;</span><br><span class="line">		<span class="keyword">auto</span> p = lower_bound(L+<span class="number">1</span>, L+g+<span class="number">1</span>, t);</span><br><span class="line">		*p = t;</span><br><span class="line">		<span class="keyword">if</span>(p == L+g+<span class="number">1</span>) g++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; g;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         
         
@@ -848,7 +847,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            53
+                            54
                         </p>
                     </a>
                 </div>
@@ -949,14 +948,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BOJ/">
                         <span class="tag">BOJ</span>
-                        <span class="tag is-grey">39</span>
+                        <span class="tag is-grey">40</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
-                        <span class="tag is-grey">45</span>
+                        <span class="tag is-grey">46</span>
                     </a>
                 </div>
                 
@@ -970,7 +969,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/DP/">
                         <span class="tag">DP</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 
@@ -1005,7 +1004,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">51</span>
+                        <span class="tag is-grey">52</span>
                     </a>
                 </div>
                 
@@ -1134,6 +1133,25 @@
         
         <article class="media">
             
+            <a href="/2020/04/07/20200407-boj11055/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 11055 - 가장 큰 증가 부분 수열">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-07T03:50:00.000Z">2020-04-07</time></div>
+                    <a href="/2020/04/07/20200407-boj11055/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 11055 - 가장 큰 증가 부분 수열</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithms/">algorithms</a> / <a class="has-link-grey -link" href="/categories/algorithms/BOJ/">BOJ</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/07/20200407-boj1699/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 1699 - 제곱수의 합">
@@ -1208,25 +1226,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/03/20200403-boj9465/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 9465 - 스티커">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-03T06:11:00.000Z">2020-04-03</time></div>
-                    <a href="/2020/04/03/20200403-boj9465/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 9465 - 스티커</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1244,7 +1243,7 @@
                     <span class="level-item">4월 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">6</span>
+                    <span class="level-item tag">7</span>
                 </span>
             </a>
         </li>
@@ -1339,7 +1338,7 @@
                 <span class="level-item">algorithms</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithms/BOJ/">
@@ -1347,7 +1346,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
@@ -1437,7 +1436,7 @@
                 <span class="level-item">algorithms</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithms/BOJ/">
@@ -1445,7 +1444,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/etc/">
