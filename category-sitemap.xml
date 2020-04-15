@@ -8,6 +8,20 @@
     </url>
 
     <url>
+        <loc>https://yhcho0405.github.io/categories/etc/project/</loc>
+        <lastmod>2020-04-15T01:50:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/categories/etc/</loc>
+        <lastmod>2020-04-15T01:50:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://yhcho0405.github.io/categories/language/python/</loc>
         <lastmod>2020-04-13T11:18:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -43,22 +57,8 @@
     </url>
 
     <url>
-        <loc>https://yhcho0405.github.io/categories/etc/</loc>
-        <lastmod>2020-03-24T14:50:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://yhcho0405.github.io/categories/algorithm/theory/</loc>
         <lastmod>2020-03-24T12:00:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/categories/etc/project/</loc>
-        <lastmod>2020-03-02T18:10:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
