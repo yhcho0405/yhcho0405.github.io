@@ -182,6 +182,7 @@
 <p>우선 bfs를 사용한 방법은 x, y방향, 이동횟수 큐를 만들어서 각각 1을 넣어준다. (시작점 좌표(1, 1), 시작 이동횟수 = 1)<br>이후 상하좌우로 이동할 수 있는 칸을 큐에 계속 넣어주고 이동횟수도 업데이트한다.<br>큐가 비었거나 도착점에 도달하면 종료 후 이동횟수를 출력한다.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; qx, qy, qc;</span><br><span class="line"><span class="keyword">int</span> n, m, arr[<span class="number">101</span>][<span class="number">101</span>], v[<span class="number">101</span>][<span class="number">101</span>], sx, sy, sc, ans;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">chk</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(x &gt; m || x &lt; <span class="number">1</span> || y &gt; n || y &lt; <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span>(!arr[y][x]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span>(v[y][x]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%1d"</span>, &amp;arr[i][j]);</span><br><span class="line">	qx.push(<span class="number">1</span>), qy.push(<span class="number">1</span>), qc.push(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">while</span>(!qx.empty()) &#123;</span><br><span class="line">		sx = qx.front(); qx.pop();</span><br><span class="line">		sy = qy.front(); qy.pop();</span><br><span class="line">		sc = qc.front(); qc.pop();</span><br><span class="line">		<span class="keyword">if</span>(v[sy][sx]) <span class="keyword">continue</span>;</span><br><span class="line">		v[sy][sx] = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span>(sx == m &amp;&amp; sy == n) <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">if</span>(chk(sx - <span class="number">1</span>, sy)) qx.push(sx - <span class="number">1</span>), qy.push(sy), qc.push(sc + <span class="number">1</span>);</span><br><span class="line">		<span class="keyword">if</span>(chk(sx + <span class="number">1</span>, sy)) qx.push(sx + <span class="number">1</span>), qy.push(sy), qc.push(sc + <span class="number">1</span>);</span><br><span class="line">		<span class="keyword">if</span>(chk(sx, sy - <span class="number">1</span>)) qx.push(sx), qy.push(sy - <span class="number">1</span>), qc.push(sc + <span class="number">1</span>);</span><br><span class="line">		<span class="keyword">if</span>(chk(sx, sy + <span class="number">1</span>)) qx.push(sx), qy.push(sy + <span class="number">1</span>), qc.push(sc + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; sc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<br>
 
 <p>dfs를 사용한 방법은 앞서 설명한 bfs보다 간단하다.<br>이동할 수 있는 모든 칸을 찾으며 각 칸까지 도달하는데 최소 이동횟수를 저장한다.<br>도착점에 저장된 이동횟수를 출력한다.<br>모든 경우를 탐색하므로 시간이 오래 걸린다.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, arr[<span class="number">101</span>][<span class="number">101</span>], ans[<span class="number">101</span>][<span class="number">101</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> cnt)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!arr[y][x]) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">if</span>(x &lt; <span class="number">1</span> || y &lt; <span class="number">1</span> || x &gt; m || y &gt; n) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">if</span>(ans[y][x] &lt;= cnt &amp;&amp; ans[y][x]) <span class="keyword">return</span>;</span><br><span class="line">	ans[y][x] = cnt;</span><br><span class="line">	dfs(x - <span class="number">1</span>, y, cnt + <span class="number">1</span>);</span><br><span class="line">	dfs(x + <span class="number">1</span>, y, cnt + <span class="number">1</span>);</span><br><span class="line">	dfs(x, y - <span class="number">1</span>, cnt + <span class="number">1</span>);</span><br><span class="line">	dfs(x, y + <span class="number">1</span>, cnt + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%1d"</span>, &amp;arr[i][j]);</span><br><span class="line">	dfs(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans[n][m];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -208,6 +209,13 @@
 
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/05/19/20200519-boj2667/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">[C++]BOJ 2667 - 단지번호붙이기</span>
+            </a>
+        </div>
         
         
         <div class="level-end">
@@ -261,7 +269,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            61
+                            62
                         </p>
                     </a>
                 </div>
@@ -362,14 +370,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BOJ/">
                         <span class="tag">BOJ</span>
-                        <span class="tag is-grey">44</span>
+                        <span class="tag is-grey">45</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C/">
                         <span class="tag">C++</span>
-                        <span class="tag is-grey">50</span>
+                        <span class="tag is-grey">51</span>
                     </a>
                 </div>
                 
@@ -418,14 +426,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/algorithm/">
                         <span class="tag">algorithm</span>
-                        <span class="tag is-grey">56</span>
+                        <span class="tag is-grey">57</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/bfs/">
                         <span class="tag">bfs</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -446,7 +454,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/dfs/">
                         <span class="tag">dfs</span>
-                        <span class="tag is-grey">3</span>
+                        <span class="tag is-grey">4</span>
                     </a>
                 </div>
                 
@@ -568,6 +576,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/19/20200519-boj2667/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2667 - 단지번호붙이기">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-19T14:08:00.000Z">2020-05-19</time></div>
+                    <a href="/2020/05/19/20200519-boj2667/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2667 - 단지번호붙이기</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/19/20200519-boj2178/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2178 - 미로 탐색">
@@ -642,25 +669,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/08/20200408-boj2294/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2294 - 동전 2">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-08T03:29:00.000Z">2020-04-08</time></div>
-                    <a href="/2020/04/08/20200408-boj2294/" class="title has-link-black-ter is-size-6 has-text-weight-normal">[C++]BOJ 2294 - 동전 2</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a> / <a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -678,7 +686,7 @@
                     <span class="level-item">5월 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -760,7 +768,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">55</span>
+                <span class="level-item tag">56</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -768,7 +776,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">45</span>
+                <span class="level-item tag">46</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -829,7 +837,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/BOJ/" style="font-size: 18px;">BOJ</a> <a href="/tags/C/" style="font-size: 19px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 17px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 11px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/crawling/" style="font-size: 10px;">crawling</a> <a href="/tags/dfs/" style="font-size: 12px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/language/" style="font-size: 11px;">language</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 11px;">project</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 14px;">sort</a> <a href="/tags/study/" style="font-size: 13px;">study</a> <a href="/tags/theory/" style="font-size: 15px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
+        <a href="/tags/BOJ/" style="font-size: 18px;">BOJ</a> <a href="/tags/C/" style="font-size: 19px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 17px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 12px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/crawling/" style="font-size: 10px;">crawling</a> <a href="/tags/dfs/" style="font-size: 13px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/language/" style="font-size: 11px;">language</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 11px;">project</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 14px;">sort</a> <a href="/tags/study/" style="font-size: 13px;">study</a> <a href="/tags/theory/" style="font-size: 15px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
 </div>
         
@@ -858,7 +866,7 @@
                 <span class="level-item">algorithm</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">55</span>
+                <span class="level-item tag">56</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/algorithm/BOJ/">
@@ -866,7 +874,7 @@
                 <span class="level-item">BOJ</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">45</span>
+                <span class="level-item tag">46</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/algorithm/theory/">
@@ -927,7 +935,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/tags/BOJ/" style="font-size: 18px;">BOJ</a> <a href="/tags/C/" style="font-size: 19px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 17px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 11px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/crawling/" style="font-size: 10px;">crawling</a> <a href="/tags/dfs/" style="font-size: 12px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/language/" style="font-size: 11px;">language</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 11px;">project</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 14px;">sort</a> <a href="/tags/study/" style="font-size: 13px;">study</a> <a href="/tags/theory/" style="font-size: 15px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
+        <a href="/tags/BOJ/" style="font-size: 18px;">BOJ</a> <a href="/tags/C/" style="font-size: 19px;">C++</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/DP/" style="font-size: 17px;">DP</a> <a href="/tags/Data-Structure/" style="font-size: 10px;">Data Structure</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/LIS/" style="font-size: 11px;">LIS</a> <a href="/tags/algorithm/" style="font-size: 20px;">algorithm</a> <a href="/tags/bfs/" style="font-size: 12px;">bfs</a> <a href="/tags/chrome-extension/" style="font-size: 10px;">chrome extension</a> <a href="/tags/crawling/" style="font-size: 10px;">crawling</a> <a href="/tags/dfs/" style="font-size: 13px;">dfs</a> <a href="/tags/gcd/" style="font-size: 10px;">gcd</a> <a href="/tags/greedy/" style="font-size: 16px;">greedy</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/language/" style="font-size: 11px;">language</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/project/" style="font-size: 11px;">project</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/search/" style="font-size: 10px;">search</a> <a href="/tags/sort/" style="font-size: 14px;">sort</a> <a href="/tags/study/" style="font-size: 13px;">study</a> <a href="/tags/theory/" style="font-size: 15px;">theory</a> <a href="/tags/%EB%B8%8C%EB%A3%A8%ED%8A%B8-%ED%8F%AC%EC%8A%A4/" style="font-size: 11px;">브루트 포스</a> <a href="/tags/%EC%86%8C%EC%88%98/" style="font-size: 10px;">소수</a> <a href="/tags/%ED%81%AC%EB%A3%A8%EC%8A%A4%EC%B9%BC/" style="font-size: 10px;">크루스칼</a>
     </div>
 </div>
     
@@ -1065,7 +1073,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

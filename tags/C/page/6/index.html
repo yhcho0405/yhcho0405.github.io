@@ -7,25 +7,20 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>버블 정렬(Bubble Sort) - yhcho0405</title>
+<title>Tag: C++ - yhcho0405</title>
 
 
-    <meta name="description" content="인접한 두 원소를 비교하며 정렬하는 방법이다.학기 초에 자주 접해서 익숙하다.  위 움짤은 마약같다.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="버블 정렬(Bubble Sort)">
-<meta property="og:url" content="https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory2/index.html">
+    <meta name="description" content="내가 보려고 쓰는 블로그">
+<meta property="og:type" content="website">
+<meta property="og:title" content="yhcho0405">
+<meta property="og:url" content="https://yhcho0405.github.io/tags/C/page/6/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="인접한 두 원소를 비교하며 정렬하는 방법이다.학기 초에 자주 접해서 익숙하다.  위 움짤은 마약같다.">
+<meta property="og:description" content="내가 보려고 쓰는 블로그">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
-<meta property="article:published_time" content="2020-03-09T01:10:00.000Z">
-<meta property="article:modified_time" content="2020-03-09T01:10:00.000Z">
+<meta property="og:image" content="https://yhcho0405.github.io/images/og_image.png">
 <meta property="article:author" content="yhcho0405">
-<meta property="article:tag" content="algorithm">
-<meta property="article:tag" content="theory">
-<meta property="article:tag" content="sort">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
+<meta name="twitter:image" content="https://yhcho0405.github.io/images/og_image.png">
 
 
 
@@ -92,7 +87,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/ideaico.png" alt="버블 정렬(Bubble Sort)" height="28">
+                <img src="/images/ideaico.png" alt="yhcho0405" height="28">
             
             </a>
         </div>
@@ -136,30 +131,41 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">Tags</a></li>
+            <li class="is-active"><a href="#" aria-current="page">C++</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    
 <div class="card">
     
     <div class="card-image">
-        <span class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/algorithm.png" alt="버블 정렬(Bubble Sort)">
-        </span>
+        <a href="/2019/10/24/20191024-boj11399/" class="image is-7by1">
+            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 11399 - ATM">
+        </a>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-09T01:10:00.000Z">2020-03-09</time>
+                <time class="level-item has-text-grey" datetime="2019-10-24T07:11:00.000Z">2019-10-24</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 소요 (대략 283 단어)
+                    몇 초 읽기 소요 (대략 71 단어)
                 </span>
                 
                 
@@ -168,53 +174,24 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                버블 정렬(Bubble Sort)
+                <a class="has-link-black-ter" href="/2019/10/24/20191024-boj11399/">[C++]BOJ 11399 - ATM</a>
             
         </h1>
         <div class="content">
-            <p>인접한 두 원소를 비교하며 정렬하는 방법이다.<br>학기 초에 자주 접해서 익숙하다.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/37/Bubble_sort_animation.gif" alt="wikipedia"></p>
-<p>위 움짤은 마약같다.</p>
-<a id="more"></a>
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp, arr[<span class="number">10</span>] = &#123;<span class="number">10</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">1</span>,<span class="number">8</span>&#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">9</span> - i; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">				tmp = arr[j];</span><br><span class="line">				arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">				arr[j + <span class="number">1</span>] = tmp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; arr[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>시간 복잡도는 선택정렬과 동일하다.<br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/022f41f8c29a0da175bc0d4f84c53a8046e6cb8f" alt="wikipedia"><br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5042a309a9d1de0d8c89443c1950dd1e28a802e3" alt="wikipedia"><br>O(n^2) 가 된다.<br><br><br>하지만 선택 정렬보다 느리게 작동한다.<br>버블정렬은 매번 인접한 원소의 자리를 바꿔줘야 하지만 선택정렬은 배열에서 가장 작은 원소의 자리만 바꿔주면 되기 때문에 연산하는 양에서 차이가 발생한다.</p>
-<br>
-
-<p>위 코드에 실행 중 스왑이 안 발생할 시 break 해주면 성능을 높일 수 있다.</p>
-<table>
-<thead>
-<tr>
-<th align="center">algorithm</th>
-<th align="center">average</th>
-<th align="center">worst</th>
-<th align="center">best</th>
-<th align="center">space</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">bubble</td>
-<td align="center">O(N^2)</td>
-<td align="center">O(N^2)</td>
-<td align="center">O(N^2)</td>
-<td align="center">O(1)</td>
-</tr>
-</tbody></table>
-
+            <p>앞사람의 인출 시간이 적을 때 전체 인출 시간이 적어진다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> time[<span class="number">1001</span>];</span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; a;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a; i++)</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; time[i];</span><br><span class="line">	sort(time, time + a);</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> b = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i + <span class="number">1</span>; j++)</span><br><span class="line">			b += time[j];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
         
-        <div class="level is-size-7 is-uppercase">
+        
+        <div class="level is-mobile">
             <div class="level-start">
                 <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="has-link-grey -link" href="/tags/sort/" rel="tag">sort</a>, <a class="has-link-grey -link" href="/tags/theory/" rel="tag">theory</a>
+                <a class="button is-size-7 is-light" href="/2019/10/24/20191024-boj11399/#more">Read More</a>
                 </div>
             </div>
         </div>
         
         
-        
     </div>
 </div>
 
@@ -222,28 +199,32 @@
 
 
 
+
+
+
+
+    
 <div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/03/09/20200309-algorithm-theory3/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">삽입 정렬(Insertion Sort)</span>
-            </a>
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous">
+            <a class="is-flex-grow has-text-black-ter" href="/tags/C/page/5/">Previous</a>
         </div>
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/09/20200309-algorithm-theory1/">
-                <span class="level-item">선택 정렬(Selection Sort)</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
+        <div class="pagination-next is-invisible is-hidden-mobile">
+            <a class="is-flex-grow has-text-black-ter" href="/tags/C/page/7/">Next</a>
         </div>
-        
-    </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link has-text-black-ter" href="/tags/C/">1</a></li>
+            
+            <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/tags/C/page/5/">5</a></li>
+            
+            <li><a class="pagination-link is-current" href="/tags/C/page/6/">6</a></li>
+            
+        </ul>
+    </nav>
 </div>
-
-
 </div>
                 
 
@@ -966,7 +947,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/ideaico.png" alt="버블 정렬(Bubble Sort)" height="28">
+                    <img src="/images/ideaico.png" alt="yhcho0405" height="28">
                 
                 </a>
                 <p class="is-size-7">

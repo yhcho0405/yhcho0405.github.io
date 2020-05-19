@@ -7,25 +7,27 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<title>버블 정렬(Bubble Sort) - yhcho0405</title>
+<title>[C++]BOJ 2667 - 단지번호붙이기 - yhcho0405</title>
 
 
-    <meta name="description" content="인접한 두 원소를 비교하며 정렬하는 방법이다.학기 초에 자주 접해서 익숙하다.  위 움짤은 마약같다.">
+    <meta name="description" content="지도를 배열에 저장하고 칸별로 분기를 돌며 집이 있는 칸을 만나면 인접한 집들을 탐색한다. 위 과정을 반복해 단지를 나누고 집의 수를 벡터에 저장한 후 정렬해 출력한다. bfs dfs 두 방법 모두 다뤄보겠다.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="버블 정렬(Bubble Sort)">
-<meta property="og:url" content="https://yhcho0405.github.io/2020/03/09/20200309-algorithm-theory2/index.html">
+<meta property="og:title" content="[C++]BOJ 2667 - 단지번호붙이기">
+<meta property="og:url" content="https://yhcho0405.github.io/2020/05/19/20200519-boj2667/index.html">
 <meta property="og:site_name" content="yhcho0405">
-<meta property="og:description" content="인접한 두 원소를 비교하며 정렬하는 방법이다.학기 초에 자주 접해서 익숙하다.  위 움짤은 마약같다.">
+<meta property="og:description" content="지도를 배열에 저장하고 칸별로 분기를 돌며 집이 있는 칸을 만나면 인접한 집들을 탐색한다. 위 과정을 반복해 단지를 나누고 집의 수를 벡터에 저장한 후 정렬해 출력한다. bfs dfs 두 방법 모두 다뤄보겠다.">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
-<meta property="article:published_time" content="2020-03-09T01:10:00.000Z">
-<meta property="article:modified_time" content="2020-03-09T01:10:00.000Z">
+<meta property="og:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
+<meta property="article:published_time" content="2020-05-19T14:08:00.000Z">
+<meta property="article:modified_time" content="2020-05-19T14:08:00.000Z">
 <meta property="article:author" content="yhcho0405">
 <meta property="article:tag" content="algorithm">
-<meta property="article:tag" content="theory">
-<meta property="article:tag" content="sort">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="BOJ">
+<meta property="article:tag" content="bfs">
+<meta property="article:tag" content="dfs">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/algorithm.png">
+<meta name="twitter:image" content="https://yhcho0405.github.io/thumbnails/baekjoon.png">
 
 
 
@@ -92,7 +94,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/ideaico.png" alt="버블 정렬(Bubble Sort)" height="28">
+                <img src="/images/ideaico.png" alt="[C++]BOJ 2667 - 단지번호붙이기" height="28">
             
             </a>
         </div>
@@ -141,7 +143,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/thumbnails/algorithm.png" alt="버블 정렬(Bubble Sort)">
+            <img class="thumbnail" src="/thumbnails/baekjoon.png" alt="[C++]BOJ 2667 - 단지번호붙이기">
         </span>
     </div>
     
@@ -149,17 +151,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-03-09T01:10:00.000Z">2020-03-09</time>
+                <time class="level-item has-text-grey" datetime="2020-05-19T14:08:00.000Z">2020-05-19</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/theory/">theory</a>
+                <a class="has-link-grey -link" href="/categories/algorithm/">algorithm</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/algorithm/BOJ/">BOJ</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2분 읽기 소요 (대략 283 단어)
+                    4분 읽기 소요 (대략 609 단어)
                 </span>
                 
                 
@@ -168,39 +170,21 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                버블 정렬(Bubble Sort)
+                [C++]BOJ 2667 - 단지번호붙이기
             
         </h1>
         <div class="content">
-            <p>인접한 두 원소를 비교하며 정렬하는 방법이다.<br>학기 초에 자주 접해서 익숙하다.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/37/Bubble_sort_animation.gif" alt="wikipedia"></p>
-<p>위 움짤은 마약같다.</p>
+            <p> 지도를 배열에 저장하고 칸별로 분기를 돌며 집이 있는 칸을 만나면 인접한 집들을 탐색한다.<br> 위 과정을 반복해 단지를 나누고 집의 수를 벡터에 저장한 후 정렬해 출력한다.<br> bfs dfs 두 방법 모두 다뤄보겠다.</p>
 <a id="more"></a>
 
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp, arr[<span class="number">10</span>] = &#123;<span class="number">10</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">1</span>,<span class="number">8</span>&#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">9</span> - i; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(arr[j] &gt; arr[j + <span class="number">1</span>]) &#123;</span><br><span class="line">				tmp = arr[j];</span><br><span class="line">				arr[j] = arr[j + <span class="number">1</span>];</span><br><span class="line">				arr[j + <span class="number">1</span>] = tmp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; arr[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>두 방법 모두 한번 탐색한 집은 배열에서 삭제하므로 다음 분기에서 중복탐색하지 않는다.<br>덕분에 bfs에서 삭제 횟수가 해당 단지의 집 수가 된다.<br><br></p>
+<p>bfs는 처음으로 집을 발견한 위치를 기준으로 상하좌우를 탐색하며 큐에 넣는다.<br>탐색하며 삭제한 집의 갯수가 곧 단지내의 집 수이기 때문에 그 값을 리턴한다.<br>리턴된 값을 벡터에 넣고 정렬 후 출력한다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, v[<span class="number">27</span>][<span class="number">27</span>], sx, sy, sc, cnt;</span><br><span class="line"><span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; qx, qy;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">	cnt = <span class="number">0</span>;</span><br><span class="line">	qx.push(x), qy.push(y);</span><br><span class="line">	<span class="keyword">while</span>(!(qx.empty() &amp;&amp; qy.empty())) &#123;</span><br><span class="line">		sx = qx.front(); qx.pop();</span><br><span class="line">		sy = qy.front(); qy.pop();</span><br><span class="line">		<span class="keyword">if</span>(!v[sy][sx]) <span class="keyword">continue</span>;</span><br><span class="line">		v[sy][sx] = <span class="number">0</span>; cnt++;</span><br><span class="line">		<span class="keyword">if</span>(v[sy - <span class="number">1</span>][sx]) qx.push(sx), qy.push(sy - <span class="number">1</span>);</span><br><span class="line">		<span class="keyword">if</span>(v[sy + <span class="number">1</span>][sx]) qx.push(sx), qy.push(sy + <span class="number">1</span>);</span><br><span class="line">		<span class="keyword">if</span>(v[sy][sx - <span class="number">1</span>]) qx.push(sx - <span class="number">1</span>), qy.push(sy);</span><br><span class="line">		<span class="keyword">if</span>(v[sy][sx + <span class="number">1</span>]) qx.push(sx + <span class="number">1</span>), qy.push(sy);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%1d"</span>, &amp;v[i][j]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">			<span class="keyword">if</span>(v[i][j]) ans.push_back(bfs(j, i));</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	sort(ans.begin(), ans.end());</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ans.size(); i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; ans[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>시간 복잡도는 선택정렬과 동일하다.<br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/022f41f8c29a0da175bc0d4f84c53a8046e6cb8f" alt="wikipedia"><br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/5042a309a9d1de0d8c89443c1950dd1e28a802e3" alt="wikipedia"><br>O(n^2) 가 된다.<br><br><br>하지만 선택 정렬보다 느리게 작동한다.<br>버블정렬은 매번 인접한 원소의 자리를 바꿔줘야 하지만 선택정렬은 배열에서 가장 작은 원소의 자리만 바꿔주면 되기 때문에 연산하는 양에서 차이가 발생한다.</p>
 <br>
 
-<p>위 코드에 실행 중 스왑이 안 발생할 시 break 해주면 성능을 높일 수 있다.</p>
-<table>
-<thead>
-<tr>
-<th align="center">algorithm</th>
-<th align="center">average</th>
-<th align="center">worst</th>
-<th align="center">best</th>
-<th align="center">space</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">bubble</td>
-<td align="center">O(N^2)</td>
-<td align="center">O(N^2)</td>
-<td align="center">O(N^2)</td>
-<td align="center">O(1)</td>
-</tr>
-</tbody></table>
+<p>dfs를 사용한 방법도 마찬가지로 지도 전체를 돌며 집을 발견한 위치를 시작점으로 탐색을 수행한다.<br>상하좌우 더 이상 이동할 공간이 없을때까지 재귀적으로 탐색하고 1씩 더해나간다.<br>최종적으로 dfs 탐색과정을 트리를 그리면 최하단 노드에는 1이 담기고 각 부모노드에는 자식노드 들의 합이 담겨있는 형태가 될 것이다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, arr[<span class="number">27</span>][<span class="number">27</span>];</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(!arr[y][x]) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	arr[y][x] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> dfs(x - <span class="number">1</span>, y) + dfs(x + <span class="number">1</span>, y) + dfs(x, y - <span class="number">1</span>) + dfs(x, y + <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%1d"</span>, &amp;arr[i][j]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">			<span class="keyword">if</span>(arr[i][j]) ans.push_back(dfs(j, i));</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ans.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	sort(ans.begin(), ans.end());</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ans.size(); i++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; ans[i] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
         </div>
         
@@ -208,7 +192,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="has-link-grey -link" href="/tags/sort/" rel="tag">sort</a>, <a class="has-link-grey -link" href="/tags/theory/" rel="tag">theory</a>
+                    <a class="has-link-grey -link" href="/tags/BOJ/" rel="tag">BOJ</a>, <a class="has-link-grey -link" href="/tags/C/" rel="tag">C++</a>, <a class="has-link-grey -link" href="/tags/algorithm/" rel="tag">algorithm</a>, <a class="has-link-grey -link" href="/tags/bfs/" rel="tag">bfs</a>, <a class="has-link-grey -link" href="/tags/dfs/" rel="tag">dfs</a>
                 </div>
             </div>
         </div>
@@ -225,17 +209,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/03/09/20200309-algorithm-theory3/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">삽입 정렬(Insertion Sort)</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/03/09/20200309-algorithm-theory1/">
-                <span class="level-item">선택 정렬(Selection Sort)</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/05/19/20200519-boj2178/">
+                <span class="level-item">[C++]BOJ 2178 - 미로 탐색</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -966,7 +943,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/ideaico.png" alt="버블 정렬(Bubble Sort)" height="28">
+                    <img src="/images/ideaico.png" alt="[C++]BOJ 2667 - 단지번호붙이기" height="28">
                 
                 </a>
                 <p class="is-size-7">
