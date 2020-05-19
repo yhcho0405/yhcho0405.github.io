@@ -9,14 +9,14 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>내가 보려고 쓰는 블로그</description>
-    <pubDate>Tue, 19 May 2020 13:50:00 GMT</pubDate>
+    <pubDate>Tue, 19 May 2020 09:10:00 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>[C++]BOJ 2178 - 미로 탐색</title>
       <link>https://yhcho0405.github.io/2020/05/19/20200519-boj2178/</link>
       <guid>https://yhcho0405.github.io/2020/05/19/20200519-boj2178/</guid>
-      <pubDate>Tue, 19 May 2020 13:50:00 GMT</pubDate>
+      <pubDate>Tue, 19 May 2020 09:10:00 GMT</pubDate>
       <description>
       
         &lt;p&gt;각 칸에서 이동할 수 있는 칸으로 탐색해나가 도착점에 도달하면 그 이동 거리가 최소 거리가 되므로 bfs를 사용하면 빠르게 해결할 수 있다.&lt;br&gt;dfs로도 해결할 수 있지만 한번 방문한 칸은 다신 방문하지 않는 bfs와는 다르게 모든 경로를 탐색하므로 작동시간이 다소 오래걸린다.&lt;/p&gt;
