@@ -3,6 +3,41 @@
 
 
     <url>
+        <loc>https://yhcho0405.github.io/tags/dfs/</loc>
+        <lastmod>2020-05-19T13:50:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/bfs/</loc>
+        <lastmod>2020-05-19T13:50:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/BOJ/</loc>
+        <lastmod>2020-05-19T13:50:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/C/</loc>
+        <lastmod>2020-05-19T13:50:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://yhcho0405.github.io/tags/algorithm/</loc>
+        <lastmod>2020-05-19T13:50:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://yhcho0405.github.io/tags/crawling/</loc>
         <lastmod>2020-04-15T13:50:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -38,36 +73,8 @@
     </url>
 
     <url>
-        <loc>https://yhcho0405.github.io/tags/BOJ/</loc>
-        <lastmod>2020-04-08T03:29:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://yhcho0405.github.io/tags/DP/</loc>
         <lastmod>2020-04-08T03:29:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/C/</loc>
-        <lastmod>2020-04-08T03:29:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/algorithm/</loc>
-        <lastmod>2020-04-08T03:29:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/dfs/</loc>
-        <lastmod>2020-04-03T05:11:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -123,13 +130,6 @@
 
     <url>
         <loc>https://yhcho0405.github.io/tags/search/</loc>
-        <lastmod>2020-03-18T09:00:00.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://yhcho0405.github.io/tags/bfs/</loc>
         <lastmod>2020-03-18T09:00:00.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
