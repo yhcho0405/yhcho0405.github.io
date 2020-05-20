@@ -9,8 +9,25 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>내가 보려고 쓰는 블로그</description>
-    <pubDate>Wed, 20 May 2020 06:04:00 GMT</pubDate>
+    <pubDate>Wed, 20 May 2020 06:54:00 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>[C++]BOJ 1697 - 숨바꼭질</title>
+      <link>https://yhcho0405.github.io/2020/05/20/20200520-boj1697/</link>
+      <guid>https://yhcho0405.github.io/2020/05/20/20200520-boj1697/</guid>
+      <pubDate>Wed, 20 May 2020 06:54:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt; bfs로 n + 1, n - 1, n * 2의 경우를 계속 탐색해나가며 동생의 위치에 가장 먼저 도달한 경우의 횟수를 출력하면 된다.&lt;br&gt; 트리를 그려보면 알겠지만 중복되는 경우가 자주 등장해서 메모이제이션을 사용하지 않으면 메모리 초과가 뜬다.&lt;br&gt; 방문을 저장할 배열 하나를 만들어준다.  &lt;/p&gt;
+      
+      </description>
+      
+      
+      <content:encoded><![CDATA[<p> bfs로 n + 1, n - 1, n * 2의 경우를 계속 탐색해나가며 동생의 위치에 가장 먼저 도달한 경우의 횟수를 출력하면 된다.<br> 트리를 그려보면 알겠지만 중복되는 경우가 자주 등장해서 메모이제이션을 사용하지 않으면 메모리 초과가 뜬다.<br> 방문을 저장할 배열 하나를 만들어준다.  </p><a id="more"></a><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, k, sn, sc, ans, v[<span class="number">101010</span>];</span><br><span class="line"><span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q, cnt;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; n &gt;&gt; k;</span><br><span class="line">q.push(n), cnt.push(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">sn = q.front(); q.pop();</span><br><span class="line">sc = cnt.front(); cnt.pop();</span><br><span class="line"><span class="keyword">if</span>(sn &lt; <span class="number">0</span> || sn &gt; <span class="number">100000</span>) <span class="keyword">continue</span>; <span class="keyword">if</span>(v[sn]) <span class="keyword">continue</span>; <span class="comment">// runtime</span></span><br><span class="line">v[sn] = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span>(sn == k) &#123;</span><br><span class="line">ans = sc;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">q.push(sn * <span class="number">2</span>), cnt.push(sc + <span class="number">1</span>);</span><br><span class="line">q.push(sn + <span class="number">1</span>), cnt.push(sc + <span class="number">1</span>);</span><br><span class="line">q.push(sn - <span class="number">1</span>), cnt.push(sc + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content:encoded>
+      
+      <comments>https://yhcho0405.github.io/2020/05/20/20200520-boj1697/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>[C++]BOJ 7576 - 토마토</title>
@@ -338,28 +355,6 @@
       <content:encoded><![CDATA[<p>숫자 i 다음 으로 나올 수 있는 수는 i-1과 i+1이다.<br>하지만 0과 9는 다음으로 나올 수 있는 수가 각각 1과 8이다.<br>이 부분에 대해 예외처리를 하려 했으나 dp가 전역으로 정의돼있기 때문에 필요가 없었다.  </p><a id="more"></a><p>i번째 자릿수에 나올 수 있는 숫자 j를 2차원 배열 dp에 저장한다.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">long</span> mod = <span class="number">1e9</span>;</span><br><span class="line"><span class="keyword">int</span> n, dp[<span class="number">101</span>][<span class="number">11</span>];</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">dp[<span class="number">1</span>][i] = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++)</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">10</span>; j++)</span><br><span class="line">dp[i][j] = (dp[i - <span class="number">1</span>][j - <span class="number">1</span>] + dp[i - <span class="number">1</span>][j + <span class="number">1</span>]) % mod;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">ans += dp[n][i];</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; ans % mod;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content:encoded>
       
       <comments>https://yhcho0405.github.io/2020/03/27/20200327-boj10844/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>[C++]BOJ 1912 - 연속합</title>
-      <link>https://yhcho0405.github.io/2020/03/27/20200327-boj1912/</link>
-      <guid>https://yhcho0405.github.io/2020/03/27/20200327-boj1912/</guid>
-      <pubDate>Fri, 27 Mar 2020 07:30:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;합이 가장 큰 연속된 부분집합을 찾는 문제로 dp[i - 1] + i번째 수와 i번째 수 중 큰 것을 dp[i]에 저장한다.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;dp[i - 1] + i번째 수&lt;/li&gt;
-&lt;li&gt;i번째 수&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;1번이 더 크다면 dp[i - 1]가 양수고, 2번이 더 크다면 dp[i - 1]가 음수다.&lt;/p&gt;
-      
-      </description>
-      
-      
-      <content:encoded><![CDATA[<p>합이 가장 큰 연속된 부분집합을 찾는 문제로 dp[i - 1] + i번째 수와 i번째 수 중 큰 것을 dp[i]에 저장한다.</p><ol><li>dp[i - 1] + i번째 수</li><li>i번째 수</li></ol><p>1번이 더 크다면 dp[i - 1]가 양수고, 2번이 더 크다면 dp[i - 1]가 음수다.</p><a id="more"></a><p>가장 큰 부분합이 마지막 원소를 포함하지 않는다면 마지막 위치에 저장되지 않을 수 있으므로 dp[]를 정렬해서 부분합 중 가장 큰 것을 고른다.</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, dp[<span class="number">100001</span>] = &#123;<span class="number">-1001</span>, &#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; n;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n &amp;&amp; <span class="built_in">cin</span> &gt;&gt; m; i++)</span><br><span class="line">dp[i] = max(dp[i - <span class="number">1</span>] + m, m);</span><br><span class="line">sort(dp, dp + n + <span class="number">1</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content:encoded>
-      
-      <comments>https://yhcho0405.github.io/2020/03/27/20200327-boj1912/#disqus_thread</comments>
     </item>
     
   </channel>
