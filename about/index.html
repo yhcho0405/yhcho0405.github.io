@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>CRC 과제 안전지수 계산</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<style>
 		form {
 			max-width: 600px;
@@ -29,8 +30,34 @@
 			border-radius: 4px;
 			cursor: pointer;
 		}
+        .hr {
+			border-top: 1px solid #ccc;
+			margin: 20px 0;
+		}
 	</style>
 	<script>
+        function pearsonCorrelation(x, y) {
+            if (x.length !== y.length) {
+                //throw "same length";
+            }
+
+            var n = x.length;
+
+            var sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
+            for (var i = 0; i < n; i++) {
+                sumX += x[i];
+                sumY += y[i];
+                sumXY += x[i] * y[i];
+                sumX2 += x[i] * x[i];
+                sumY2 += y[i] * y[i];
+            }
+
+            var numerator = (n * sumXY) - (sumX * sumY);
+            var denominator = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
+
+            return numerator / denominator;
+        }
+
 		function onSubmit() {
             /*
 			alert("Values submitted:\n"
@@ -43,9 +70,36 @@
 				+ "Question 7: " + document.getElementById("q7").value + "\n"
 				+ "Question 8: " + document.getElementById("q8").value);
 */
+                var q1 = parseInt(document.getElementById("q1").value);
+                var q2 = parseInt(document.getElementById("q2").value);
+                var q3 = parseInt(document.getElementById("q3").value);
+                var q4 = parseInt(document.getElementById("q4").value);
+                var q5 = parseInt(document.getElementById("q5").value);
+                var q6 = parseInt(document.getElementById("q6").value);
+                var q7 = parseInt(document.getElementById("q7").value);
+                var q8 = parseInt(document.getElementById("q8").value);
+
+                // dummy data = 3(avg)
+                var A = [q1, q2, q3];
+                var B = [2, 3, 4];
+                var C = [q4, q5, 3];
+                var D = [q6, q7, q8];
+
+                var a = pearsonCorrelation(A, D);
+                var b = pearsonCorrelation(A, B);
+                var c = pearsonCorrelation(A, C);
+                var d = pearsonCorrelation(B, D);
+                var e = pearsonCorrelation(B, C);
+                var f = pearsonCorrelation(C, D);
+                //생체-환경
+                //생체-사물
+                //사물-환경
+
                 document.getElementById("survey").style.display = "none";
                 document.getElementById("result").style.display = "block";
-		}
+
+
+        }
 	</script>
 </head>
 <body>
@@ -63,37 +117,37 @@
             <form>
                 <label style="font-weight: bold;">생존신호정보 중 생체지표에 관련된 항목입니다.</label>            </br>
                 <label for="q1">현재 심박수(bpm)</label>
-                <input type="number" id="q1">
+                <input type="number" id="q1" required/>
 
                 <label for="q2">현재 체온(°C)</label>
-                <input type="number" id="q2">
+                <input type="number" id="q2"required/>
 
                 <label for="q3">산소포화도 센서의 값(%)</label>
-                <input type="number" id="q3">
+                <input type="number" id="q3" required/>
             </br>            </br>
                 <label style="font-weight: bold;">생존신호정보 중 사물손상지표에 관련된 항목입니다.</label>            </br>
                 <label for="q4">안전모에 가해진 충격량(N)</label>
-                <input type="number" id="q4">
+                <input type="number" id="q4" required/>
 
                 <label for="q5">낙상 감지 시 가속도계 측정 값(m/s²)</label>
-                <input type="number" id="q5">
+                <input type="number" id="q5" required/>
             </br>            </br>
                 <label style="font-weight: bold;">생존신호정보 중 환경지표에 관련된 항목입니다.</label>            </br>
                 <label for="q6">공기오염도(CAI)</label>
-                <input type="number" id="q6">
+                <input type="number" id="q6" required/>
 
                 <label for="q7">현재 온도(°C)</label>
-                <input type="number" id="q7">
+                <input type="number" id="q7" required/>
 
                 <label for="q8">현재 고도(m)</label>
-                <input type="number" id="q8">
+                <input type="number" id="q8" required/>
             </br>
-                <button type="button" onclick="onSubmit()">Submit</button>
+                <button type="submit" onclick="onSubmit()">Submit</button>
             </form>
 
         </div>
         <div id="result" style="display:none">
-            결과창
+            <canvas id="myChart"></canvas>
         </div>
 	</div>
 </body>
