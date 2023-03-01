@@ -4,6 +4,12 @@
 	<title>CRC 과제 안전지수 계산</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<style>
+        canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+        }
 		form {
 			max-width: 600px;
 			margin: 0 auto;
@@ -34,6 +40,9 @@
 			border-top: 1px solid #ccc;
 			margin: 20px 0;
 		}
+        canvas {
+            max-width: 300px;
+        }
 	</style>
 	<script>
         function pearsonCorrelation(x, y) {
@@ -95,10 +104,164 @@
                 //생체-사물
                 //사물-환경
 
-                document.getElementById("survey").style.display = "none";
+                document.getElementById("survey").innerHTML= "";
                 document.getElementById("result").style.display = "block";
+                document.getElementById("label1").innerText = "생체-환경 상관계수 : " + a;
+                document.getElementById("label2").innerText = "생체-사물손상 상관계수 : " + c;
+                document.getElementById("label3").innerText = "사물손상-환경 상관계수 : " + f;
 
+                var ctx1 = document.getElementById("myChart1").getContext("2d");
+                var myChart = new Chart(ctx1, {
+                    data: {
+                            type: "scatter",
+                        datasets: [{
+                            type: "scatter",
+                            label: "f(생체) = 환경",
+                            data: [{
+                                x: A[0],
+                                y: D[0]
+                            }, {
+                                x: A[1],
+                                y: D[1]
+                            }, {
+                                x: A[2],
+                                y: D[2]
+                            }],
+                            pointBackgroundColor: "blue",
+                            pointRadius: 8, // Set point size
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                title: {
+                                    display: true,
+                                    text: "생체지표"
+                                },
+                                type: "linear",
+                                position: "bottom",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "생체지표"
+                                }
+                            }],
+                            yAxes: [{
+                                title: {
+                                    display: true,
+                                    text: "환경지표"
+                                },
+                                type: "linear",
+                                position: "left",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "환경지표"
+                                }
+                            }]
+                        }
+                    }
+                });
+                
+                var ctx2 = document.getElementById("myChart2").getContext("2d");
+                var myChart = new Chart(ctx2, {
+                    data: {
+                            type: "scatter",
+                        datasets: [{
+                            type: "scatter",
+                            label: "f(생체) = 사물손상",
+                            data: [{
+                                x: A[0],
+                                y: C[0]
+                            }, {
+                                x: A[1],
+                                y: C[1]
+                            }, {
+                                x: A[2],
+                                y: C[2]
+                            }],
+                            pointBackgroundColor: "blue",
+                            pointRadius: 8, // Set point size
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                title: {
+                                    display: true,
+                                    text: "생체지표"
+                                },
+                                type: "linear",
+                                position: "bottom",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "생체지표"
+                                }
+                            }],
+                            yAxes: [{
+                                title: {
+                                    display: true,
+                                    text: "사물손상지표"
+                                },
+                                type: "linear",
+                                position: "left",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "사물손상지표"
+                                }
+                            }]
+                        }
+                    }
+                });
 
+                var ctx3 = document.getElementById("myChart3").getContext("2d");
+                var myChart = new Chart(ctx3, {
+                    data: {
+                            type: "scatter",
+                        datasets: [{
+                            type: "scatter",
+                            label: "f(사물손상) = 환경",
+                            data: [{
+                                x: C[0],
+                                y: D[0]
+                            }, {
+                                x: C[1],
+                                y: D[1]
+                            }, {
+                                x: C[2],
+                                y: D[2]
+                            }],
+                            pointBackgroundColor: "blue",
+                            pointRadius: 8, // Set point size
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                title: {
+                                    display: true,
+                                    text: "사물손상지표"
+                                },
+                                type: "linear",
+                                position: "bottom",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "사물손상지표"
+                                }
+                            }],
+                            yAxes: [{
+                                title: {
+                                    display: true,
+                                    text: "환경지표"
+                                },
+                                type: "linear",
+                                position: "left",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: "환경지표"
+                                }
+                            }]
+                        }
+                    }
+                });
         }
 	</script>
 </head>
@@ -147,7 +310,12 @@
 
         </div>
         <div id="result" style="display:none">
-            <canvas id="myChart"></canvas>
+            <canvas id="myChart1" width="700" height="450"></canvas>
+            <strong id="label1"></strong> </br></br></br>
+            <canvas id="myChart2" width="700" height="450"></canvas>
+            <strong id="label2"></strong></br></br></br>
+            <canvas id="myChart3" width="700" height="450"></canvas>
+            <strong id="label3"></strong></br></br></br>
         </div>
 	</div>
 </body>
