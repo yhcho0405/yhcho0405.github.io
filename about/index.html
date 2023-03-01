@@ -64,9 +64,29 @@
             var numerator = (n * sumXY) - (sumX * sumY);
             var denominator = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
 
-            return numerator / denominator;
+            return numerator / (denominator + Math.random()/100); // xxx
         }
+        function calc_index(A, B, C, D, a, b, c) {
+            var answer = 0;
 
+            for(var i = 0; i < A.length; i++)
+                answer += parseInt(A[i]);
+            var AA = answer / A.length;
+            answer = 0;
+            for(var i = 0; i < B.length; i++)
+                answer += parseInt(B[i]);
+            var BB = answer / B.length;
+            answer = 0;
+            for(var i = 0; i < C.length; i++)
+                answer += parseInt(C[i]);
+            var CC = answer / C.length;
+            answer = 0;
+            for(var i = 0; i < D.length; i++)
+                answer += parseInt(D[i]);
+            var DD = answer / D.length;
+            
+            return Math.sqrt(AA**2 + (a*BB)**2 + (b*CC)**2 + (c*DD)**2);
+        }
 		function onSubmit() {
             /*
 			alert("Values submitted:\n"
@@ -103,12 +123,23 @@
                 //생체-환경
                 //생체-사물
                 //사물-환경
+                var newA = calc_index(A, D, B, C, a, b, c);
+                var newB = calc_index(B, A, D, C, b, d, e);
+                var newC = calc_index(C, B, C, D, c, e, f);
+                var newD = calc_index(D, A, D, B, a, d, f);
 
+                var temp;
+                if (Math.max(newA, newB, newC, newD) > 10)
+                    temp = 10;
+                else
+                    temp = (newA+newB+newC+newD) / 4;
+                temp = 10 - temp;
                 document.getElementById("survey").innerHTML= "";
                 document.getElementById("result").style.display = "block";
                 document.getElementById("label1").innerText = "생체-환경 상관계수 : " + a;
                 document.getElementById("label2").innerText = "생체-사물손상 상관계수 : " + c;
                 document.getElementById("label3").innerText = "사물손상-환경 상관계수 : " + f;
+                document.getElementById("label4").innerText = "안전지수(0~10) : " + temp;
 
                 var ctx1 = document.getElementById("myChart1").getContext("2d");
                 var myChart = new Chart(ctx1, {
@@ -310,12 +341,15 @@
 
         </div>
         <div id="result" style="display:none">
+            <img width="400" src="https://i.imgur.com/95FzMrL.png"></br>
             <canvas id="myChart1" width="700" height="450"></canvas>
             <strong id="label1"></strong> </br></br></br>
             <canvas id="myChart2" width="700" height="450"></canvas>
             <strong id="label2"></strong></br></br></br>
             <canvas id="myChart3" width="700" height="450"></canvas>
-            <strong id="label3"></strong></br></br></br>
+            <strong id="label3"></strong></br></br></br></br></br>
+
+            <strong id="label4"></strong></br></br></br>
         </div>
 	</div>
 </body>
