@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CRC 과제 안전지수 계산</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<style>
+        canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+        }
+		form {
+			max-width: 600px;
+			margin: 0 auto;
+			text-align: left;
+		}
+		label {
+			display: block;
+			margin-bottom: 10px;
+		}
+		input {
+			display: block;
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+			margin-bottom: 20px;
+		}
+		button {
+			background-color: #4CAF50;
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+        .hr {
+			border-top: 1px solid #ccc;
+			margin: 20px 0;
+		}
+        .container1 {
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: center; 
+            justify-content: space-around;
+            
+        }
+        .container2 {
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: center; 
+            justify-content: space-around;
+            
+        }
+        .container3 {
+            flex-wrap: wrap;
+            display: flex;
+            flex-direction: row;
+            justify-content: center; 
+            justify-content: space-around;
+            
+        }
+        .container_radio
+        {
+            white-space:nowrap;
+            display: flex;
+            flex-direction: row;
+            
+            align-items: center;
+            max-width: 300px;
+            height: auto;
+        }
+        .container_radio input {
+            transform: translateY(25%);
+        }
+
+        /* notice */
+        .notice {
+            position: relative;
+            margin: 1em;
+            background: #F9F9F9;
+            padding: 1em 1em 1em 2em;
+            border-left: 4px solid #DDD;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.125);
+        }
+        .item {
+	        flex: 1 1 0;
+        }
+        .item_g {
+	        flex: auto auto auto;
+        }
+
+        .notice:before {
+            position: absolute;
+            top: 50%;
+            margin-top: -17px;
+            left: -17px;
+            background-color: #DDD;
+            color: #FFF;
+            width: 30px;
+            height: 30px;
+            border-radius: 100%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            font-family: Georgia;
+            text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+        }
+        .info {
+        border-color: #0074D9;
+        }
+
+        .info:before {
+        content: "i";
+        background-color: #0074D9;
+        }
+
+        .success {
+        border-color: #2ECC40;
+        }
+
+        .success:before {
+        content: "√";
+        background-color: #2ECC40;
+        }
+
+        .warning {
+        border-color: #FFDC00;
+        }
+
+        .warning:before {
+        content: "!";
+        background-color: #FFDC00;
+        }
+
+        .error {
+        border-color: #FF4136;
+        }
+
+        .error:before {
+        content: "X";
+        background-color: #FF4136;
+        }
+
+        .sign-page {
+            flex-wrap: wrap;
+            height: auto;
+            /* background-color: ; */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        .question-page {
+            flex-wrap: wrap;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            justify-content: space-around;
+        }
+
+        .question-page_Biomarkers
+        {
+            height: auto;
+            width: auto;
+            flex-wrap: wrap;
+            display: flex;
+            flex-direction: row;
+        }
+	</style>
+    
+	
+</head>
+<body>
+	<div style="text-align:center;">
+		<h1>CRC과제 안전지수 계산</h1>
+        <div id="survey">
+            <div class="question-page">
+            <p style="font-weight: bold;"> 이 페이지는 CRC과제에 대한 연구 목적으로 작성 되었으며, 웨어러블 기기의 측정 값을 토대로 안전지수를 산출하기 위한 과정을 보여줍니다. </br>
+                질문 내용은 측정 가능한 데이터를 임의로 선정한 것이며, 실제와 상이할 수 있습니다. </br>
+                작성한 임의의 센서 측정 값을 토대로 안전지수 산출 공식에 의해 안전지수(0~10)를 도출합니다. </br>
+                작성한 데이터는 어디에도 저장되지 않습니다.</br>
+            </div>
+            </p>
+            <hr class="hr">
+        </br>
+            <form>
+                
+                <div class="question-page">
+                    <label style="font-weight: bold;">생존신호정보 중 생체지표에 관련된 항목입니다.</label>            </br>
+                    <label for="q1">심박수(bpm)</label>
+                    <input type="number" id="q1" required/>
+
+                    <label for="q2">체온(°C)</label>
+                    <input type="number" id="q2"required/>
+
+                    <label for="q3">산소포화도 센서의 값(%)</label>
+                    <input type="number" id="q3" required/>
+
+                    <label for="q13">수면 시간(hour)</label>
+                    <div class="container_radio">
+                        <input type="radio" name = q13_n id="q13" value= 0 >
+                        <label for="q13">1. 8시간 이상</label>
+                        <input type="radio" name = q13_n id="q13" value= "1" >
+                        <label for="q13">2. 7~8시간</label>
+                        <input type="radio" name = q13_n id="q13" value= "2" >
+                        <label for="q13">3. 6~7시간</label>
+                        <input type="radio" name = q13_n id="q13" value= "3.5" >
+                        <label for="q13">4. 5~6시간</label>
+                        <input type="radio" name = q13_n id="q13" value= "5" >
+                        <label for="q13">5. 5시간 이하</label>
+                    </div>
+                </br>
+                    <label for="q14">과거병력, 수술력 여부(times)</label>
+                    <div class="container_radio">
+                        <input type="radio" name = q14_n id="q14" value= 0 >
+                        <label for="q14">1. 없음</label>
+                        <input type="radio" name = q14_n id="q14" value= "1" >
+                        <label for="q14">2. 단순 맹장/충수염 절제술, 편도절제술 (또는 기타 수술 1회)</label>
+                    </div><div class="container_radio">
+                        <input type="radio" name = q14_n id="q14" value= "3" >
+                        <label for="q14">3. 담낭제거, 제왕절개 등 (또는 기타 수술 2회)</label>
+                    </div><div class="container_radio">
+                        <input type="radio" name = q14_n id="q14" value= "4" >
+                        <label for="q14">4. 심장우회술, 고관절교체술 등 (또는 기타 수술 3회)</label>
+                    </div><div class="container_radio">
+                        <input type="radio" name = q14_n id="q14" value= "5" >
+                        <label for="q14">5. 신장이식, 척추유합술, 기흉 등 (또는 기타 수술 4회 이상)</label>
+                    </div>
+                    </br>            </br>
+                
+                <label style="font-weight: bold;">생존신호정보 중 사물손상지표에 관련된 항목입니다.</label>            </br>
+                <label for="q4">안전모에 가해진 충격량(N)</label>
+                <input type="number" id="q4" required/>
+
+                <label for="q5">낙상 감지 시 가속도계 측정 값(m/s²)</label>
+                <input type="number" id="q5" required/>
+
+                <label for="q9">낙하물이나 파편으로 인해 안전모에 가해진 현재 충격 지속 시간(초)</label>
+                <input type="number" id="q9" required/>
+
+                <label for="q15">충격이 가해진 위치</label>
+                <div class="container_radio">
+                    <input type="radio" name = q15_n id="q15" value= 0 >
+                    <label for="q15">1. 사지 말단</label>
+                    <input type="radio" name = q15_n id="q15" value= "1" >
+                    <label for="q15">2. 사지</label>
+                    <input type="radio" name = q15_n id="q15" value= "3" >
+                    <label for="q15">3. 복부</label>
+                    <input type="radio" name = q15_n id="q15" value= "4" >
+                    <label for="q15">4. 흉부</label>
+                    <input type="radio" name = q15_n id="q15" value= "5" >
+                    <label for="q15">5. 안면/안전모</label>
+                </div>
+            </br>
+                <label for="q16">충격체의 질량</label>
+                <div class="container_radio">
+                    <input type="radio" name = q16_n id="q16" value= 0 >
+                    <label for="q16">1. 500g이하</label>
+                    <input type="radio" name = q16_n id="q16" value= "1" >
+                    <label for="q16">2. 500~1000g</label>
+                    <input type="radio" name = q16_n id="q16" value= "3" >
+                    <label for="q16">3. 1000~3000g</label>
+                    <input type="radio" name = q16_n id="q16" value= "4" >
+                    <label for="q16">4. 3000g~7000g</label>
+                    <input type="radio" name = q16_n id="q16" value= "5" >
+                    <label for="q16">5. 7000g이상</label>
+                </div>
+            </br>            </br>
+                <label style="font-weight: bold;">생존신호정보 중 환경지표에 관련된 항목입니다.</label>            </br>
+                <label for="q6">공기오염도(CAI)</label>
+                <input type="number" id="q6" required/>
+
+                <label for="q7">기온(°C)</label>
+                <input type="number" id="q7" required/>
+
+                <label for="q8">고도(m)</label>
+                <input type="number" id="q8" required/>
+
+                <label for="q17">자외선 지수(UV Index)</label>
+                <div class="container_radio">
+                    <input type="radio" name = q17_n id="q17" value= 0 >
+                    <label for="q17">2이하</label>
+                    <input type="radio" name = q17_n id="q17" value= "1" >
+                    <label for="q17">3~5</label>
+                    <input type="radio" name = q17_n id="q17" value= "2" >
+                    <label for="q17">6~7</label>
+                    <input type="radio" name = q17_n id="q17" value= "3.5" >
+                    <label for="q17">8~10</label>
+                    <input type="radio" name = q17_n id="q17" value= "5" >
+                    <label for="q17">11 이상</label>
+                </div>
+            </br>
+                <label for="q18">열지수/열파지수(Heat Index)</label>
+                <div class="container_radio">
+                    <input type="radio" name = q18_n id="q18" value= 0 >
+                    <label for="q18">27이하</label>
+                    <input type="radio" name = q18_n id="q18" value= "2" >
+                    <label for="q18">27~32</label>
+                    <input type="radio" name = q18_n id="q18" value= "2.5" >
+                    <label for="q18">32~41</label>
+                    <input type="radio" name = q18_n id="q18" value= "4" >
+                    <label for="q18">41~54</label>
+                    <input type="radio" name = q18_n id="q18" value= "5" >
+                    <label for="q18">54 이상</label>
+                </div>
+            </br>            </br>
+            <label style="font-weight: bold;">생존신호정보 중 심리지표에 관련된 항목입니다.</label>            </br>
+            <label for="q10">지금 얼마나 불안하다고 느끼십니까?</label>
+            <div class="container_radio">
+                <input type="radio" name = q10_n id="q10" value= 0 >
+                <label for="q10">0.전혀 그렇지 않음</label>
+                <input type="radio" name = q10_n id="q10" value= "1" >
+                <label for="q10">1.약간</label>
+                <input type="radio" name = q10_n id="q10" value= "2" >
+                <label for="q10">2.다소</label>
+                <input type="radio" name = q10_n id="q10" value= "3" >
+                <label for="q10">3.보통</label>
+                <input type="radio" name = q10_n id="q10" value= "4" >
+                <label for="q10">4.매우 그렇다</label>
+                <input type="radio" name = q10_n id="q10" value= "5" >
+                <label for="q10">5.극심하게 그렇다</label>
+            </div>
+        </br>
+            <label for="q11">현재 스트레스를 얼마나 느끼십니까?</label>
+            <div class="container_radio">
+                <input type="radio" name = q11_n id="q11" value= "0" >
+                <label for="q11">0.전혀 그렇지 않음</label>
+                <input type="radio" name = q11_n id="q11" value= "1" >
+                <label for="q11">1.약간</label>
+                <input type="radio" name = q11_n id="q11" value= "2" >
+                <label for="q11">2.다소</label>
+                <input type="radio" name = q11_n id="q11" value= "3" >
+                <label for="q11">3.보통</label>
+                <input type="radio" name = q11_n id="q11" value= "4" >
+                <label for="q11">4.매우 그렇다</label>
+                <input type="radio" name = q11_n id="q11" value= "5" >
+                <label for="q11">5.극심하게 그렇다</label>
+            </div>
+        </br>
+            <label for="q12">0~5점 척도 중 현재 얼마나 피로감을 느끼십니까?</label>
+            <div class="container_radio">
+                <input type="radio" name = q12_n id="q12" value= "0" >
+                <label for="q12">0.전혀 그렇지 않음</label>
+                <input type="radio" name = q12_n id="q12" value= "1" >
+                <label for="q12">1.약간</label>
+                <input type="radio" name = q12_n id="q12" value= "2" >
+                <label for="q12">2.다소</label>
+                <input type="radio" name = q12_n id="q12" value= "3" >
+                <label for="q12">3.보통</label>
+                <input type="radio" name = q12_n id="q12" value= "4" >
+                <label for="q12">4.매우 그렇다</label>
+                <input type="radio" name = q12_n id="q12" value= "5" >
+                <label for="q12">5.극심하게 그렇다</label>
+            </div>
+        </br>            
+        <label for="q19">현재 우을증, 우울감 정도는 어떻습니까?</label>
+            <div class="container_radio">
+                <input type="radio" name = q19_n id="q19" value= "0" >
+                <label for="q19">0.전혀 그렇지 않음</label>
+                <input type="radio" name = q19_n id="q19" value= "1" >
+                <label for="q19">1.약간</label>
+                <input type="radio" name = q19_n id="q19" value= "2" >
+                <label for="q19">2.다소</label>
+                <input type="radio" name = q19_n id="q19" value= "3" >
+                <label for="q19">3.보통</label>
+                <input type="radio" name = q19_n id="q19" value= "4" >
+                <label for="q19">4.매우 그렇다</label>
+                <input type="radio" name = q19_n id="q19" value= "5" >
+                <label for="q19">5.극심하게 그렇다</label>
+            </div>
+        </br>
+        <label for="q20">복용력 또는 현재 복용중인 약물이 있습니까?</label>
+            <div class="container_radio">
+                <input type="radio" name = q20_n id="q20" value= "0" >
+                <label for="q20">0.없다</label>
+                <input type="radio" name = q20_n id="q20" value= "1" >
+                <label for="q20">1.과거 복용력이 있다</label>
+                <input type="radio" name = q20_n id="q20" value= "2" >
+                <label for="q20">2.감기약또는 진통제를 복용중이다</label>
+            </div><div class="container_radio">
+                <input type="radio" name = q20_n id="q20" value= "3" >
+                <label for="q20">3.스테로이드성 약물, 항히스타민 계열(졸음을 유발하는 약물) 등을 복용중이다</label>
+            </div><div class="container_radio">
+                <input type="radio" name = q20_n id="q20" value= "4" >
+                <label for="q20">4.고혈압, 당뇨 관련 약물을 복용중이다</label>
+                <input type="radio" name = q20_n id="q20" value= "5" >
+                <label for="q20">5.위에 해당하는 약물/전문의약품을 장기간 처방받아 복용/투약중이다</label>
+            </div>
+        </br>
+                <button type="submit" onclick="onSubmit()">Submit</button>
+            </div>  
+            </form>
+        </div>
+        <div id="result" style="display:none">
+            <script>
+             <!-- src="./submit.js"> -->
+
+
+
+function on_triger(con)
+        {		
+            con.style.display = 'block'; 
+                	
+        }
+
+        function off_triger(con)
+        {
+            con.style.display = 'none'; 
+        }
+
+        
+
+        function safe_result(s_result)
+        {
+            if (0 <= s_result && s_result < 2.5){
+                off_triger(document.getElementById("success"));
+                off_triger(document.getElementById("info"));
+                off_triger(document.getElementById("warning"));
+                on_triger(document.getElementById("error"));
+            }
+            else if(2.5 <= s_result && s_result < 5)
+            {
+                off_triger(document.getElementById("success"));
+                off_triger(document.getElementById("info"));
+                on_triger(document.getElementById("warning"));
+                off_triger(document.getElementById("error"));
+            }
+            else if(5 <= s_result && s_result < 7.5) {
+                off_triger(document.getElementById("success"));
+                on_triger(document.getElementById("info"));
+                off_triger(document.getElementById("warning"));
+                off_triger(document.getElementById("error"));
+            }
+            else{
+                on_triger(document.getElementById("success"));
+                off_triger(document.getElementById("info"));
+                off_triger(document.getElementById("warning"));
+                off_triger(document.getElementById("error"));
+            }
+            
+        }
+
+        
+        function scalingBpm(heart_rate) {
+            if (heart_rate >= 60 && heart_rate <= 100) {
+                return(0);
+            } else if (heart_rate >= 100 && heart_rate < 110) {
+                return (1);
+            } else if (heart_rate >= 110 && heart_rate < 120) {
+                return (2);
+            } else if (heart_rate >= 120 && heart_rate < 140) {
+                return (3);
+            } else if (heart_rate >= 140 && heart_rate < 160) {
+                return (4);
+            } else {
+                return (5);
+            }
+
+        }
+
+        function scalingBodyTemperture(btmp) {
+
+            if (btmp >= 35 && btmp <= 37.5) {
+                return(0);
+            } else if (btmp >= 37.6 && btmp < 38) {
+                return(1);
+            } else if (btmp >= 38.1 && btmp < 38.5) {
+                return(2);
+            } else if (btmp >= 38.6 && btmp < 39) {
+                return(3);
+            } else if (btmp >= 39.1 && btmp < 40) {
+                return(4);
+            } else {
+                return(5);
+            }
+        }
+
+        function scalingOxygen(oxygen_saturation) {
+            if (oxygen_saturation >= 95) {
+                return (0);
+                
+            } else if (oxygen_saturation >= 92 && oxygen_saturation < 95) {
+                return (1);
+                
+            } else if (oxygen_saturation >= 90 && oxygen_saturation < 92) {
+                return (2);
+                
+            } else if (oxygen_saturation >= 85 && oxygen_saturation < 90) {
+                return (3);
+                
+            } else if (oxygen_saturation >= 80 && oxygen_saturation < 85) {
+                return (4);
+                
+            } else {
+                return (5);
+            }
+        }
+        function scalingImpulse(impact_force) {
+            if (impact_force >= 0 && impact_force < 80) {
+                return (0); // negligible impact force
+            } else if (impact_force >= 80 && impact_force < 180) {
+                return (1); // minor impact force
+            } else if (impact_force >= 180 && impact_force < 380) {
+                return (2); // moderate impact force
+            } else if (impact_force >= 380 && impact_force < 580) {
+                return (3); // significant impact force
+            } else if (impact_force >= 580 && impact_force < 780) {
+                return (4); // severe impact force
+            } else {
+                return (5); // extremely dangerous impact force
+            }
+        }
+        function scalingAcceleration(acceleration) {
+            if (acceleration <= 0) {
+                return (0);
+            } else if (acceleration <= 2.5) {
+                return (1);
+            } else if (acceleration <= 5) {
+                return (2);
+            } else if (acceleration <= 7.5) {
+                return (3);
+            } else if (acceleration <= 10) {
+                return (4);
+            } else {
+                return (5);
+            }
+
+        }
+
+        function scalingImpactDuration(impact_duration)
+        {
+            if (impact_duration <= 0.5) {
+                return (0);
+            } else if (impact_duration <= 1) {
+                return (1);
+            } else if (impact_duration <= 2) {
+                return (2);
+            } else if (impact_duration <= 3) {
+                return (3);
+            } else if (impact_duration <= 4) {
+                return (4);
+            } else {
+                return (5);
+            }
+        }
+
+        function scalingCAI(cai) {
+            if (cai >= 0 && cai < 50) {
+                return (0); 
+            } else if (cai >= 50 && cai < 100) {
+                return (1); 
+            } else if (cai >= 100 && cai < 150) {
+                return (2); 
+            } else if (cai >= 150 && cai < 200) {
+                return (3); 
+            } else if (cai >= 250 && cai < 300) {
+                return (4); 
+            } else {
+                return (5); 
+            }
+        }
+
+        function scalingAmbientTemperture(ambtmp) {
+            if (ambtmp >= 15 && ambtmp <= 30) {
+                return(0); // normal temperature
+            } else if (ambtmp >= 10 && ambtmp < 15) {
+                return(1); // slightly abnormal temperature
+            } else if ((ambtmp >= 5 && ambtmp < 10) || (ambtmp > 30 && ambtmp <= 35)) {
+                return(2); // moderately abnormal temperature
+            } else if ((ambtmp >= -5 && ambtmp < 5) || (ambtmp > 35 && ambtmp <= 40)) {
+                return(3); // significantly abnormal temperature
+            } else if ((ambtmp >= -10 && ambtmp < -5) || (ambtmp > 40 && ambtmp <= 45)) {
+                return(4); // dangerously abnormal temperature
+            } else {
+                return(5); // extreme temperature, potentially fatal
+            }
+            
+        }
+
+        function scalingAltitude(altitude) {
+            if (altitude >= 0 && altitude < 1000) {
+                return(0); // normal
+            } else if (altitude >= 1000 && altitude < 2000) {
+                return(1);
+            } else if (altitude >= 2000 && altitude < 3000) {
+                return(2);
+            } else if (altitude >= 3000 && altitude < 4000) {
+                return(3);
+            } else if (altitude >= 4000 && altitude < 5000) {
+                return(4);
+            } else {
+                return(5); // abnormal and dangerous
+            }
+        }
+        
+        function pearsonCorrelation(x, y) {
+            if (x.length !== y.length) {
+                //throw "same length";
+            }
+
+            var n = x.length;
+
+            var sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0, sumY2 = 0;
+            for (var i = 0; i < n; i++) {
+                sumX += x[i];
+                sumY += y[i];
+                sumXY += x[i] * y[i];
+                sumX2 += x[i] * x[i];
+                sumY2 += y[i] * y[i];
+            }
+
+            var numerator = (n * sumXY) - (sumX * sumY);
+            var denominator = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
+
+            return numerator / (denominator + Math.random()/100); // Migaehada
+        }
+
+        function calc_index(A, B, C, D, a, b, c) {
+            var answer = 0;
+
+            for(var i = 0; i < A.length; i++)
+                answer += parseInt(A[i]);
+            var AA = answer / A.length;
+            answer = 0;
+            for(var i = 0; i < B.length; i++)
+                answer += parseInt(B[i]);
+            var BB = answer / B.length;
+            answer = 0;
+            for(var i = 0; i < C.length; i++)
+                answer += parseInt(C[i]);
+            var CC = answer / C.length;
+            answer = 0;
+            for(var i = 0; i < D.length; i++)
+                answer += parseInt(D[i]);
+            var DD = answer / D.length;
+            
+            return Math.sqrt(AA**2 + (a*BB)**2 + (b*CC)**2 + (c*DD)**2);
+        }
+
+        function sign_check(flag)
+        {
+            if (flag == 0)
+                return (0);
+            else
+                return (1);
+        }
+
+
+		function onSubmit() {
+            
+                var q1_b = parseInt(document.getElementById("q1").value); //심박수 40~120 6/1
+                var q2_b = parseInt(document.getElementById("q2").value); //온도  
+                var q3_b = parseInt(document.getElementById("q3").value); //산소포화도 < 95, >95
+                var q4_b = parseInt(document.getElementById("q4").value); 
+                var q5_b = parseInt(document.getElementById("q5").value);
+                var q6_b = parseInt(document.getElementById("q6").value);
+                var q7_b = parseInt(document.getElementById("q7").value);
+                var q8_b = parseInt(document.getElementById("q8").value);
+                var q9_b = parseInt(document.getElementById("q9").value);
+                var q10_b = document.querySelector('input[name="q10_n"]:checked').value;
+                var q11_b = document.querySelector('input[name="q11_n"]:checked').value;
+                var q12_b = document.querySelector('input[name="q12_n"]:checked').value;
+                var q13_b = document.querySelector('input[name="q13_n"]:checked').value;
+                var q14_b = document.querySelector('input[name="q14_n"]:checked').value;
+                var q15_b = document.querySelector('input[name="q15_n"]:checked').value;
+                var q16_b = document.querySelector('input[name="q16_n"]:checked').value;
+                var q17_b = document.querySelector('input[name="q17_n"]:checked').value;
+                var q18_b = document.querySelector('input[name="q18_n"]:checked').value;
+                var q19_b = document.querySelector('input[name="q19_n"]:checked').value;
+                var q20_b = document.querySelector('input[name="q20_n"]:checked').value;
+                
+                
+                
+                var q1 = scalingBpm(q1_b)//+ Math.random()/100;
+                var q2 = scalingBodyTemperture(q2_b)// + Math.random()/100;
+                var q3 = scalingOxygen(q3_b)// + Math.random()/100;
+                var q4 = scalingImpulse(q4_b)// + Math.random()/100;
+                var q5 = scalingAcceleration(q5_b)// + Math.random()/100;
+                var q6 = scalingCAI(q6_b)// + Math.random()/100;
+                var q7 = scalingAmbientTemperture(q7_b)// + Math.random()/100;
+                var q8 = scalingAltitude(q8_b)// + Math.random()/100;
+                var q9 = scalingImpactDuration(q9_b)// + Math.random()/100;
+                var q10 = Number(q10_b)// + Math.random()/100;
+                var q11 = Number(q11_b)/// + Math.random()/100;
+                var q12 = Number(q12_b)// + Math.random()/100;
+                var q13 = Number(q13_b)/// + Math.random()/100;
+                var q14 = Number(q14_b)// + Math.random()/100;
+                var q15 = Number(q15_b)// + Math.random()/100;
+                var q16 = Number(q16_b)// + Math.random()/100;
+                var q17 = Number(q17_b)// + Math.random()/100;
+                var q18 = Number(q18_b)/// + Math.random()/100;
+                var q19 = Number(q19_b)// + Math.random()/100;
+                var q20 = Number(q20_b)// + Math.random()/100;
+                
+                
+                
+                //console.log(q7);
+                //console.log(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12);
+                var A = [q1, q2, q3, q13, q14];
+                var B = [q10, q11, q12, q19, q20];
+                var C = [q4, q5, q9, q15, q16];
+                var D = [q6, q7, q8, q17, q18];
+
+                
+                var a = pearsonCorrelation(A, D);
+                var b = pearsonCorrelation(A, B);//생체-심리
+                var c = pearsonCorrelation(A, C);
+                var d = pearsonCorrelation(B, D);//심리-환경
+                var e = pearsonCorrelation(B, C);//심리-사물손상
+                var f = pearsonCorrelation(C, D);
+                //생체-환경
+                //생체-사물
+                //사물-환경
+                var newA = calc_index(A, D, B, C, 1, 1, 1)//a, b, c);
+                var newB = calc_index(B, A, D, C, 1, 1, 1)// b, d, e);
+                var newC = calc_index(C, B, C, D, 1, 1, 1)// c, e, f);
+                var newD = calc_index(D, A, D, B, 1, 1, 1)// a, d, f);
+                console.log(newA, newB, newC, newD);
+                var temp;
+                if (Math.max(newA, newB, newC, newD) >= 8 || Math.max(q4+q5+q9+q15+q16, q6+q7+q8+q17+q18, q10+q11+q12+q19+q20, q1+q2+q3+q13+q14) >= 14){
+                    temp = 0;
+                }
+                else{
+                    temp = (newA+newB+newC+newD) / 4;
+                    temp = 10 - temp;
+                }
+                
+                safe_result(temp.toFixed(2));
+                
+                document.getElementById("survey").innerHTML= "";
+                document.getElementById("result").style.display = "block";
+                document.getElementById("label1").innerText = "생체-환경 상관계수 : " + a.toFixed(2);
+                document.getElementById("label2").innerText = "생체-사물손상 상관계수 : " + c.toFixed(2);
+                document.getElementById("label3").innerText = "사물손상-환경 상관계수 : " + f.toFixed(2);
+                document.getElementById("label5").innerText = "생체-심리 상관계수 : " + b.toFixed(2);
+                document.getElementById("label6").innerText = "심리-환경 상관계수 : " + d.toFixed(2);
+                document.getElementById("label7").innerText = "심리-사물손상 상관계수 : " + e.toFixed(2);
+                document.getElementById("label4").innerText = "안전지수(0~10) : " + temp.toFixed(2);
+                document.getElementById("label8").innerText = '정상: 안전지수가 ['+  temp.toFixed(2) +'] 이므로 정상입니다.';
+                document.getElementById("label9").innerText = '주의: 안전지수가 ['+  temp.toFixed(2) +'] 이므로 주의하시길 바랍니다.';
+                document.getElementById("label10").innerText = '경고: 안전지수가 ['+  temp.toFixed(2) +'] 이므로 병원에서 진료하시길 바랍니다.';
+                document.getElementById("label11").innerText = '위험: 안전지수가 ['+ temp.toFixed(2) +'] 이므로 근처 병원이나 119에 신고하여 응급처치를 받으시길 바랍니다.';
+                
+    
+
+                var ctx1 = document.getElementById("myChart1").getContext("2d");
+                var myChart = new Chart(ctx1, {
+                    data: {
+                            type: "scatter",
+                        datasets: [{
+                            type: "scatter",
+                            label: "(생체) = 환경",
+                            data: [{
+                                x: A[0],
+                                y: D[0]
+                            }, {
+                                x: A[1],
+                                y: D[1]
+                            }, {
+                                x: A[2],
+                                y: D[2]
+                            }],
+                            pointBackgroundColor: "red",
+                            pointRadius: 8, // Set point size
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                title: {
+                                    display: true,
+                                    text: ""
+                                },
+                                type: "linear",
+                                position: "bottom",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ""
+                                }
+                            }],
+                            yAxes: [{
+                                title: {
+                                    display: true,
+                                    text: ""
+                                },
+                                type: "linear",
+                                position: "left",
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: ""
+                                }
+                            }]
+                        }
+                    }
+                });
+                
+                var ctx2 = document.getElementById("myChart2").getContext("2d");
+                var myChart = new Chart(ctx2, {
+                    data: {
+                            type: "scatter",
+                        datasets: [{
+                            type: "scatter",
+                            label: "(생체) = 사물손상",
+                            data: [{
+                                x: A[0],
+                                y: C[0]
+                            }, {
+                                x: A[1],
+                                y: C[1]
+                            }, {
+                                x: A[2],
+                                y: C[2]
+                            }],
+                            pointBackgroundColor: "orange",
+                            pointRadius: 8, // Set point size
+                        }]
+                    },
+                    
+                });
+
+                var ctx3 = document.getElementById("myChart3").getContext("2d");
+                var myChart = new Chart(ctx3, {
+                    data: {
+                            type: "scatter",
+                        datasets: [{
+                            type: "scatter",
+                            label: "(사물손상) = 환경",
+                            data: [{
+                                x: C[0],
+                                y: D[0]
+                            }, {
+                                x: C[1],
+                                y: D[1]
+                            }, {
+                                x: C[2],
+                                y: D[2]
+                            }],
+                            pointBackgroundColor: "yellow",
+                            pointRadius: 8, // Set point size
+                        }]
+                    },
+                    
+                });
+
+                var ctx4 = document.getElementById("myChart4").getContext("2d");
+                var myChart = new Chart(ctx4, {
+                    data: {
+                            type: "scatter",
+                        datasets: [{
+                            type: "scatter",
+                            label: "(생체) = 심리",
+                            data: [{
+                                x: A[0],
+                                y: B[0]
+                            }, {
+                                x: A[1],
+                                y: B[1]
+                            }, {
+                                x: A[2],
+                                y: B[2]
+                            }],
+                            pointBackgroundColor: "green",
+                            pointRadius: 8, // Set point size
+                        }]
+                    },
+                    
+                });
+
+                var ctx5 = document.getElementById("myChart5").getContext("2d");
+                var myChart = new Chart(ctx5, {
+                    data: {
+                            type: "scatter",
+                        datasets: [{
+                            type: "scatter",
+                            label: "(심리) = 환경",
+                            data: [{
+                                x: B[0],
+                                y: D[0]
+                            }, {
+                                x: B[1],
+                                y: D[1]
+                            }, {
+                                x: B[2],
+                                y: D[2]
+                            }],
+                            pointBackgroundColor: "blue",
+                            pointRadius: 8, // Set point size
+                        }]
+                    },
+                
+                });
+
+                var ctx6 = document.getElementById("myChart6").getContext("2d");
+                var myChart = new Chart(ctx6, {
+                    data: {
+                            type: "scatter",
+                        datasets: [{
+                            type: "scatter",
+                            label: "(심리) = 사물손상",
+                            data: [{
+                                x: B[0],
+                                y: C[0]
+                            }, {
+                                x: B[1],
+                                y: C[1]
+                            }, {
+                                x: B[2],
+                                y: C[2]
+                            }],
+                            pointBackgroundColor: "purple",
+                            pointRadius: 8, // Set point size
+                        }]
+                    },
+                    
+                });
+
+                // Get the canvas element
+                const polarChartCanvas = document.getElementById('polarChart');
+
+                // Create a function to update the data for the chart
+                // function updatePolarChart() {
+                //   // Get the data for each range from your functions
+                //   const heartRateData = q1;
+                //   const bodyTemperatureData = q2;
+                //   const oxygenSaturationData = q3;
+                //   const helmetImpactData = q4;
+                //   const fallAccelerationData = q5;
+                //   const airPollutionData = q6;
+                //   const ambientTemperatureData = q7;
+                //   const altitudeData = q8;
+                //   const ImpactDuration = q9;
+                //   const Anxiety = q10;
+                //   const stress = q11;
+                //   const fatigue = q12;
+
+                //   // Set the data for the chart
+                //   polarChart.data.datasets[0].data = [
+                //     heartRateData,
+                //     bodyTemperatureData,
+                //     oxygenSaturationData,
+                //     helmetImpactData,
+                //     fallAccelerationData,
+                //     airPollutionData,
+                //     ambientTemperatureData,
+                //     altitudeData,
+                //     ImpactDuration,
+                //     Anxiety,
+                //     stress,
+                //     fatigue
+                //   ];
+
+                //   // Update the chart
+                //   polarChart.update();
+                  
+                // }
+                
+                // Define the chart data and options
+                const polarData = {
+                  labels: ['심박수', '체온', '산소포화도', '헬멧충격량', '낙상','헬멧충격지속시간', '공기오염도', '기온', '고도', '불안함', '스트레스', '피로감'],
+                  datasets: [{
+                    data: [q1, q2, q3, q4, q5, q9, q6, q7, q8, q10, q11, q12],
+                    backgroundColor : ['#FF4136', '#FF6347', '#FF7F50', '#FFA07A', '#FFC0CB', '#DC143C', '#2ECC40', '#3D9970', '#32CD32', '#00FF00', '#ADFF2F', '#228B22', '#0074D9', '#7FDBFF', '#39CCCC', '#85144b', '#F012BE', '#B10DC9', '#FFD700', '#8B4513', '#CD5C5C', '#00BFFF']
+
+
+
+                  }]
+                };
+
+                const polarChartOptions = {
+                    title: {
+                        display: true,
+                        text: 'Polar Area Chart'
+                    },
+                    scale: {
+                        ticks: {
+                        beginAtZero: true,
+                        fontSize: 100, // or any other size that works for your chart
+                        fontColor: '#333',
+                        max: 10
+                        }
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                };
+
+                // Create the chart
+                const polarChart = new Chart(polarChartCanvas, {
+                  type: 'polarArea',
+                  data: polarData,
+                  //options: polarChartOptions
+                });
+
+                // Call the updatePolarChart function to update the chart with new data every 5 seconds
+                polarChart.update();
+        }
+
+        
+
+
+
+
+
+
+
+            </script>
+            <img width="400" src="https://i.imgur.com/95FzMrL.png"></br>
+        
+        </br></br>
+        <div class="container1">
+            <div class="item_g">
+                <canvas id="myChart1" width="350" height="250" ></canvas>
+                </br><strong id="label1"></strong>
+            </div>
+            <div class="item_g">
+                <canvas id="myChart2" width="350" height="250" ></canvas>
+                </br><strong id="label2"></strong>
+            </div>
+            <div class="item_g">
+                <canvas id="myChart3"  width="350" height="250"></canvas>
+                </br><strong id="label3"></strong>
+            </div>
+        </div>
+    </br>
+        <div class="container2">
+            <div class="item_g">
+                <canvas id="myChart4"  width="350" height="250"></canvas>
+                </br><strong id="label5"></strong>
+            </div>
+            <div class="item_g">
+                <canvas id="myChart5"  width="350" height="250"></canvas>
+                </br><strong id="label6"></strong>
+            </div>
+            <div class="item_g">
+                <canvas id="myChart6"  width="350" height="250"></canvas>
+                </br><strong id="label7"></strong>
+            </div>
+        </div>
+        <div class="container3">
+            <div class="item">
+                <canvas id="polarChart"  width="500" height="500"></canvas>
+            </br><strong id="label4"></strong>  
+            </div>
+            <div class="item">
+            </br></br></br></br>
+            <div id = success> 
+                <div class="sign-page">
+                    <img src="https://imgur.com/XkM8Yhb.gif" width="300" height="300"></br>
+                    <div class="notice success"><strong id = "label8"></strong></div>
+                </div>
+            </div>
+            <div id = info> 
+                <div class="sign-page">
+                    <img src="https://imgur.com/f797Ddj.png" width="300" height="300"></br>
+                    <div class="notice info"><strong id = "label9"></strong></div>
+                </div>
+            </div>
+            <div id = warning> 
+                <div class="sign-page">
+                    <img src="https://imgur.com/pqbVHje.gif" width="300" height="300"></br>
+                    <div class="notice warning"><strong id = "label10"></strong></div>
+                </div>
+            </div>
+            
+            <div id = error>
+                <div class="sign-page">
+                    <img src="https://imgur.com/cCsTSNV.gif" width="300" height="300"></br>
+                    <div class="notice error"><strong id = "label11"></strong></div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        
+        
+            
+	</div>
+</body>
+</html>
