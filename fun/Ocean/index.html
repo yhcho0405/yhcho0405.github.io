@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Ocean V9: Hyper Reality</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000; user-select: none; }
+        
+        /* UI 토글 버튼 */
+        #toggle-btn {
+            position: absolute; top: 15px; right: 15px; z-index: 2000;
+            background: rgba(0, 10, 20, 0.9);
+            border: 1px solid #00aaff; color: #00aaff;
+            padding: 8px 12px; font-family: monospace; font-weight: bold;
+            cursor: pointer; transition: 0.2s;
+        }
+        #toggle-btn:hover { background: #00aaff; color: #000; box-shadow: 0 0 10px #00aaff; }
+
+        /* GUI 고정 */
+        .lil-gui.root { 
+            position: absolute !important; top: 60px !important; right: 15px !important;
+            width: 380px !important; min-width: 380px !important;
+            max-height: 85vh !important; overflow-y: auto !important;
+            transform: none !important; 
+        }
+        
+        /* 플래시 효과 */
+        #flash-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; opacity: 0; pointer-events: none; z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        /* GUI 스타일 */
+        .lil-gui { 
+            --background-color: rgba(2, 5, 10, 0.95);
+            --text-color: #e0f0ff;
+            --title-background-color: #002244;
+            --widget-color: #113355;
+            --hover-color: #225588;
+            --focus-color: #00ffff;
+            --number-color: #00ffff;
+            --string-color: #ffaa00;
+            font-family: 'Consolas', monospace; font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="flash-overlay"></div>
+    <button id="toggle-btn" onclick="toggleUI()">[-] HIDE ALL CONTROLS</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lil-gui@0.17.0/dist/lil-gui.umd.min.js"></script>
+
+    <script>
+        let scene, camera, renderer;
+        let cubes = [];
+        let balls = [];
+        let ripples = [];
+        let tsunamis = [];
+        let gui;
+        let isUIOpen = true;
+        let dirLight, ambientLight;
+
+        // --- 🎛️ V9 파라미터 (궁극의 커스터마이징) ---
+        const params = {
+            // 1. 인터랙션 모드
+            cursorMode: 'Drop Ball', // Drop, Brush, Moses
+            autoFire: false,
+            fireRate: 0.1,           // 연사 속도
+            explosiveBall: false,
+            antiGravity: false,
+            
+            // 2. 파동 물리학 (Hyper Physics)
+            waveSpeed: 700,
+            impactStrength: 2.0,
+            waveWidth: 1.5,      // 파동 두께
+            frequency: 0.8,      // 파장 빈도
+            
+            // [NEW] 에너지 보존 & 지속성
+            energyPreservation: 0.99, // 1.0에 가까울수록 거리 감쇠 없음 (무한 퍼짐)
+            timeDamping: 0.02,        // 시간 경과에 따른 에너지 손실 (낮을수록 오래감)
+            
+            // [NEW] 표면 장력/탄성
+            elasticity: 1.0,          // 물의 탄성 (높으면 통통 튐)
+            turbulence: 0.0,          // 난류 (노이즈 추가)
+
+            // 3. 공 물리
+            gravity: 0.5,
+            sinkSpeed: 1.2,
+            drag: 0.95,          // 물속 저항
+            
+            // 4. 월드 & 렌더링
+            gridSize: 70,
+            spacing: 55,
+            shadowSoftness: 2048,// 그림자 해상도 (성능)
+            
+            // 5. 환경/시각
+            sunX: 800, sunZ: 1200, sunY: 2000,
+            lightIntensity: 1.2,
+            oceanColor: '#005588',
+            foamColor: '#ffffff',
+            foamHeight: 40,
+            rainMode: false,
+            discoMode: false,
+            timeScale: 1.0,
+            autoOrbit: false,    // 카메라 자동 회전
+
+            // 6. 스킬
+            nuke: () => triggerNuke(),
+            tsunami: () => triggerTsunami(),
+            rebuild: () => createOcean(),
+            clearAll: () => { balls.forEach(b=>scene.remove(b.mesh)); balls=[]; ripples=[]; tsunamis=[]; }
+        };
+
+        let time = 0;
+        let raycaster, pointer;
+        let isCharging = false, chargeStartTime = 0;
+        let isBrushing = false;
+        let previewBall;
+        
+        let isMiddleMouseDown = false;
+        let camRadius = 4200; 
+        let camTheta = 0, camPhi = 60;
+        let prevMouseX = 0, prevMouseY = 0;
+        let shakeIntensity = 0;
+        let nukeActive = false, nukeTime = 0;
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x050505);
+            scene.fog = new THREE.Fog(0x050505, 2000, 12000);
+
+            // 조명
+            ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            dirLight = new THREE.DirectionalLight(0xffffff, params.lightIntensity);
+            dirLight.position.set(params.sunX, params.sunY, params.sunZ);
+            dirLight.castShadow = true;
+            updateShadowMap();
+            const d = 4000;
+            dirLight.shadow.camera.left = -d; dirLight.shadow.camera.right = d;
+            dirLight.shadow.camera.top = d; dirLight.shadow.camera.bottom = -d;
+            scene.add(dirLight);
+
+            camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 25000);
+            updateCamera();
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.body.appendChild(renderer.domElement);
+
+            createOcean();
+
+            // 프리뷰 공
+            const pGeo = new THREE.SphereGeometry(1, 32, 32);
+            const pMat = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.5, emissive: 0x111111 });
+            previewBall = new THREE.Mesh(pGeo, pMat);
+            previewBall.visible = false;
+            scene.add(previewBall);
+
+            setupGUI();
+            raycaster = new THREE.Raycaster();
+            pointer = new THREE.Vector2();
+            
+            window.addEventListener('resize', onResize);
+            document.addEventListener('mousedown', onMouseDown);
+            document.addEventListener('mouseup', onMouseUp);
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('wheel', onWheel, { passive: false });
+            document.addEventListener('contextmenu', e => e.preventDefault());
+        }
+
+        window.toggleUI = function() {
+            const g = document.querySelector('.lil-gui.root');
+            const b = document.getElementById('toggle-btn');
+            isUIOpen = !isUIOpen;
+            g.style.display = isUIOpen ? 'block' : 'none';
+            b.innerText = isUIOpen ? '[-] HIDE ALL CONTROLS' : '[+] SHOW ALL CONTROLS';
+        }
+
+        function setupGUI() {
+            gui = new lil.GUI({ title: '🌌 OCEAN V9: HYPER REALITY' });
+
+            const fAct = gui.addFolder('1. Interaction');
+            fAct.add(params, 'cursorMode', ['Drop Ball', 'God Brush', 'Moses Split']);
+            fAct.add(params, 'autoFire').name('🔫 Auto Fire');
+            fAct.add(params, 'fireRate', 0.01, 0.5).name('🔫 Fire Rate');
+            fAct.add(params, 'explosiveBall').name('💣 Explosive');
+            fAct.add(params, 'antiGravity').name('🕳️ Black Hole');
+
+            const fWave = gui.addFolder('2. Wave Physics (Core)');
+            fWave.add(params, 'energyPreservation', 0.8, 1.0).name('🔋 Dist. Preservation').listen(); 
+            fWave.add(params, 'timeDamping', 0.0, 0.2).name('⏳ Time Decay').listen();
+            fWave.add(params, 'impactStrength', 0.1, 5.0).name('💥 Power');
+            fWave.add(params, 'waveWidth', 0.5, 5.0).name('🌊 Width');
+            fWave.add(params, 'frequency', 0.1, 3.0).name('〰️ Freq');
+            fWave.add(params, 'waveSpeed', 100, 2500).name('🚀 Speed');
+            fWave.add(params, 'elasticity', 0.1, 2.0).name('🏀 Elasticity');
+            fWave.add(params, 'turbulence', 0.0, 20.0).name('🌪️ Turbulence');
+
+            const fBall = gui.addFolder('3. Ball Physics');
+            fBall.add(params, 'gravity', 0.1, 2.0);
+            fBall.add(params, 'sinkSpeed', 0.1, 5.0);
+            fBall.add(params, 'drag', 0.8, 1.0).name('Water Drag');
+
+            const fEnv = gui.addFolder('4. Graphics & Env');
+            fEnv.add(params, 'sunX', -3000, 3000).onChange(updateSun);
+            fEnv.add(params, 'sunZ', -3000, 3000).onChange(updateSun);
+            fEnv.add(params, 'sunY', 500, 5000).onChange(updateSun);
+            fEnv.add(params, 'lightIntensity', 0, 3).onChange(v=>dirLight.intensity=v);
+            fEnv.addColor(params, 'oceanColor');
+            fEnv.addColor(params, 'foamColor');
+            fEnv.add(params, 'foamHeight', 0, 100);
+            fEnv.add(params, 'autoOrbit').name('📷 Auto Camera');
+            fEnv.add(params, 'shadowSoftness', [1024, 2048, 4096]).name('Shadow Quality').onChange(updateShadowMap);
+
+            const fWorld = gui.addFolder('5. System');
+            fWorld.add(params, 'nuke').name('☢️ NUKE');
+            fWorld.add(params, 'tsunami').name('🌊 TSUNAMI');
+            fWorld.add(params, 'rainMode');
+            fWorld.add(params, 'discoMode');
+            fWorld.add(params, 'timeScale', 0, 2.0);
+            fWorld.add(params, 'gridSize', 40, 100, 1).onChange(params.rebuild);
+            fWorld.add(params, 'spacing', 30, 100).onChange(params.rebuild);
+            fWorld.add(params, 'rebuild').name('♻️ Rebuild World');
+            fWorld.add(params, 'clearAll').name('🧹 Clear All');
+
+            fWave.open(); 
+        }
+
+        function updateSun() {
+            dirLight.position.set(params.sunX, params.sunY, params.sunZ);
+        }
+        function updateShadowMap() {
+            const size = parseInt(params.shadowSoftness);
+            dirLight.shadow.mapSize.width = size;
+            dirLight.shadow.mapSize.height = size;
+            dirLight.shadow.map?.dispose();
+            dirLight.shadow.map = null; 
+        }
+
+        function createOcean() {
+            if(cubes.length>0) { cubes.forEach(c=>{scene.remove(c);c.geometry.dispose();}); cubes=[]; }
+            const geo = new THREE.BoxGeometry(params.spacing*0.85, 250, params.spacing*0.85);
+            const mat = new THREE.MeshStandardMaterial({ color: params.oceanColor, roughness: 0.2, metalness: 0.3 });
+            const offset = (params.gridSize * params.spacing)/2;
+
+            for(let i=0; i<params.gridSize; i++){
+                for(let j=0; j<params.gridSize; j++){
+                    const cube = new THREE.Mesh(geo, mat.clone());
+                    cube.position.set(i*params.spacing-offset, -125, j*params.spacing-offset);
+                    cube.castShadow=true; cube.receiveShadow=true;
+                    cube.userData = { baseX:cube.position.x, baseZ:cube.position.z, ix:i, iz:j };
+                    scene.add(cube); cubes.push(cube);
+                }
+            }
+        }
+
+        function triggerNuke() {
+            const flash = document.getElementById('flash-overlay');
+            flash.style.opacity = 1; setTimeout(()=>flash.style.opacity=0, 1000);
+            shakeIntensity = 100;
+            ripples.push({
+                x: 0, z: 0, startTime: performance.now(),
+                amplitude: 250, wavelength: 2000, speed: 2500, radius: 30000,
+                timeDamping: 0.005, energyPreservation: 1.0, // 거의 무한 지속
+                isNuke: true
+            });
+            nukeActive = true; nukeTime = performance.now();
+            setTimeout(()=>nukeActive=false, 6000);
+        }
+
+        function triggerTsunami() {
+            tsunamis.push({
+                startTime: performance.now(), directionX: 1,
+                speed: 800, amplitude: 120, wavelength: 1200, position: -5000
+            });
+        }
+
+        function getInteractPoint(e) {
+            pointer.x = (e.clientX/window.innerWidth)*2-1;
+            pointer.y = -(e.clientY/window.innerHeight)*2+1;
+            raycaster.setFromCamera(pointer, camera);
+            const plane = new THREE.Plane(new THREE.Vector3(0,1,0), 0);
+            const target = new THREE.Vector3();
+            raycaster.ray.intersectPlane(plane, target);
+            return target;
+        }
+
+        function onMouseDown(e) {
+            if(e.target.closest('button') || e.target.closest('.lil-gui')) return;
+            if(e.button===1) isMiddleMouseDown=true;
+            else if(e.button===0) {
+                const target = getInteractPoint(e);
+                if(params.cursorMode === 'Drop Ball') {
+                    isCharging = true; chargeStartTime = performance.now();
+                    if(target) { previewBall.visible=true; previewBall.position.set(target.x,1000,target.z); }
+                } else if (['God Brush','Moses Split'].includes(params.cursorMode)) isBrushing = true;
+            }
+            prevMouseX=e.clientX; prevMouseY=e.clientY;
+        }
+
+        function onMouseMove(e) {
+            const target = getInteractPoint(e);
+            if(isMiddleMouseDown) {
+                const dx = e.clientX-prevMouseX; const dy = e.clientY-prevMouseY;
+                camTheta -= dx*0.4; camPhi -= dy*0.4; camPhi = Math.max(10, Math.min(170, camPhi));
+                updateCamera();
+            }
+            if(params.cursorMode === 'Drop Ball' && isCharging && target) {
+                const dt = (performance.now()-chargeStartTime)/1000;
+                if(params.autoFire && dt > params.fireRate) {
+                    fireBall(target, 30 + Math.random()*30); chargeStartTime = performance.now();
+                } else {
+                    const size = Math.min(30 + dt*150, 400);
+                    previewBall.position.set(target.x, 1000, target.z);
+                    previewBall.scale.set(size,size,size);
+                    let c = 0xffffff;
+                    if(params.antiGravity) c = 0xaa00ff;
+                    if(params.explosiveBall) c = 0xff3300;
+                    previewBall.material.color.setHex(c);
+                }
+            }
+            if(target && isBrushing) {
+                if(params.cursorMode === 'God Brush') {
+                    ripples.push({
+                        x: target.x, z: target.z, startTime: performance.now(),
+                        amplitude: 30 * (params.antiGravity?-1:1),
+                        wavelength: 250, speed: 600, radius: 2500, 
+                        timeDamping: 0.1, energyPreservation: 0.9 // 붓은 금방 사라짐
+                    });
+                } else if(params.cursorMode === 'Moses Split') {
+                    ripples.push({
+                        x: target.x, z: target.z, startTime: performance.now(),
+                        amplitude: -80, wavelength: 800, speed: 0, radius: 800, decayFast: true
+                    });
+                }
+            }
+            prevMouseX=e.clientX; prevMouseY=e.clientY;
+        }
+
+        function onMouseUp(e) {
+            if(e.button===1) isMiddleMouseDown=false;
+            if(e.button===0) {
+                if(params.cursorMode === 'Drop Ball' && isCharging) {
+                    isCharging = false; previewBall.visible=false;
+                    if(!params.autoFire) fireBall(previewBall.position, previewBall.scale.x);
+                }
+                isBrushing = false;
+            }
+        }
+
+        function fireBall(pos, radius) {
+            const ballGeo = new THREE.SphereGeometry(1, 32, 32);
+            let c = 0xffffff; let em = 0x111111;
+            if(params.antiGravity) { c=0x220044; em=0x440088; }
+            else if(params.explosiveBall) { c=0xff3300; em=0x551100; }
+
+            const ballMat = new THREE.MeshStandardMaterial({ color: c, metalness: 0.9, roughness: 0.1, emissive: em });
+            const b = new THREE.Mesh(ballGeo, ballMat);
+            b.position.copy(pos); b.scale.set(radius, radius, radius); b.castShadow=true;
+            scene.add(b);
+            
+            balls.push({ 
+                mesh: b, velocity: 0, radius: radius, 
+                isBlackHole: params.antiGravity, isExplosive: params.explosiveBall,
+                state: 'falling'
+            });
+        }
+
+        function updateCamera() {
+            let sx=0, sy=0, sz=0;
+            if(shakeIntensity > 0) {
+                sx = (Math.random()-0.5)*shakeIntensity; sy = (Math.random()-0.5)*shakeIntensity; sz = (Math.random()-0.5)*shakeIntensity;
+                shakeIntensity *= 0.92; if(shakeIntensity<0.5) shakeIntensity=0;
+            }
+            
+            if(params.autoOrbit && !isMiddleMouseDown) {
+                camTheta += 0.1;
+            }
+
+            const rPhi = THREE.MathUtils.degToRad(camPhi);
+            const rTheta = THREE.MathUtils.degToRad(camTheta);
+            camera.position.x = camRadius * Math.sin(rPhi) * Math.cos(rTheta) + sx;
+            camera.position.y = camRadius * Math.cos(rPhi) + sy;
+            camera.position.z = camRadius * Math.sin(rPhi) * Math.sin(rTheta) + sz;
+            camera.lookAt(0,0,0);
+        }
+
+        function onWheel(e) {
+            if(!e.target.closest('.lil-gui')) {
+                camRadius += e.deltaY*3; camRadius = Math.max(500, Math.min(20000, camRadius));
+                updateCamera();
+            }
+        }
+        function onResize() {
+            camera.aspect = window.innerWidth/window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const dt = 0.02 * params.timeScale;
+            time += dt;
+            const now = performance.now();
+
+            if(params.rainMode && Math.random()>0.75) {
+                const r = (params.gridSize*params.spacing)/2;
+                ripples.push({
+                    x:(Math.random()*2-1)*r, z:(Math.random()*2-1)*r, startTime:now,
+                    amplitude:5, wavelength:80, speed:300, radius:1000, 
+                    timeDamping: 0.1, energyPreservation: 0.8
+                });
+            }
+
+            // 공 물리
+            for(let i=balls.length-1; i>=0; i--) {
+                const b = balls[i];
+                if(params.timeScale > 0) {
+                    if(b.state === 'falling') {
+                        b.velocity -= params.gravity * params.timeScale;
+                        b.mesh.position.y += b.velocity * params.timeScale;
+
+                        if(b.mesh.position.y < -100) {
+                            let amp = Math.pow(b.radius, 0.85) * 5 * params.impactStrength;
+                            if(b.isBlackHole) amp *= -1;
+                            if(b.isExplosive) amp *= 2; 
+
+                            // V9 파동 생성: GUI 값 반영
+                            ripples.push({
+                                x: b.mesh.position.x, z: b.mesh.position.z, startTime: now,
+                                amplitude: amp,
+                                wavelength: b.radius * 4 * params.waveWidth + 200,
+                                speed: params.waveSpeed, 
+                                radius: 50000, // 무한에 가까운 거리
+                                
+                                // 핵심 물리 변수 (GUI에서 가져옴)
+                                timeDamping: params.timeDamping,          // 시간 감쇠
+                                energyPreservation: params.energyPreservation // 거리 보존
+                            });
+                            
+                            if(b.isExplosive) {
+                                shakeIntensity = b.radius * 0.8;
+                                scene.remove(b.mesh); balls.splice(i,1); continue;
+                            }
+                            b.state = 'sinking'; b.velocity *= 0.2;
+                        }
+                    } else if (b.state === 'sinking') {
+                        b.velocity -= params.sinkSpeed * 0.1 * params.timeScale;
+                        b.velocity *= params.drag; 
+                        b.mesh.position.y += b.velocity * params.timeScale;
+                        b.mesh.rotation.x += 0.01; b.mesh.rotation.z += 0.01;
+                        if(b.mesh.position.y < -5000) { scene.remove(b.mesh); balls.splice(i,1); continue; }
+                    }
+                }
+            }
+
+            // 쓰나미
+            tsunamis.forEach(t => { if(params.timeScale>0) t.position += t.speed*dt; });
+
+            // 렌더링
+            const cBase = new THREE.Color(params.oceanColor);
+            const cFoam = new THREE.Color(params.foamColor);
+            const cNuke = new THREE.Color(0xff3300);
+
+            const cubeCount = cubes.length;
+            for(let i=0; i<cubeCount; i++) {
+                const cube = cubes[i];
+                
+                // 기본 잔물결 + 난류(Turbulence)
+                let turbulence = 0;
+                if(params.turbulence > 0) {
+                    turbulence = (Math.sin(cube.userData.ix*0.5 + time*2) + Math.cos(cube.userData.iz*0.5 + time*1.5)) * params.turbulence;
+                }
+                
+                let y = Math.sin((cube.userData.ix*0.2)+time)*10 + Math.cos((cube.userData.iz*0.2)+time)*10 + turbulence;
+
+                // 원형 리플 (V9 Physics)
+                for(let j=ripples.length-1; j>=0; j--) {
+                    const r = ripples[j];
+                    const life = (now - r.startTime) * 0.001; 
+
+                    const dist = Math.sqrt((cube.userData.baseX-r.x)**2 + (cube.userData.baseZ-r.z)**2);
+                    const waveFront = life * r.speed;
+                    const distDiff = dist - waveFront;
+                    
+                    // 감쇠 계산 (V9 핵심)
+                    // 1. 시간 감쇠 (Time Damping)
+                    const decayTime = Math.exp(-r.timeDamping * life * 2); 
+                    
+                    // 2. 거리 보존 (Energy Preservation) -> 1.0이면 거리 감쇠 없음
+                    // 거리가 멀어질수록 1/r 로 줄어드는 자연법칙을 슬라이더로 조절
+                    let decayDist = 1.0;
+                    if(r.radius > 0 && dist < r.radius) {
+                        // preservation이 1이면 distFactor는 항상 1
+                        // preservation이 0이면 distFactor는 거리에 반비례
+                        const preservation = r.energyPreservation ?? params.energyPreservation;
+                        // 간단한 모델링: 거리가 멀어질수록 에너지가 퍼짐
+                        // 하지만 preservation이 높으면 이를 무시함
+                        const naturalDecay = Math.max(0, 1 - (dist / 20000)); // 아주 먼 거리 기준
+                        decayDist = naturalDecay * preservation + (1 - preservation) * (1/(dist/500 + 1));
+                        if(decayDist > 1) decayDist = 1;
+                    }
+                    
+                    // 패킷 너비 체크
+                    if(Math.abs(distDiff) < r.wavelength * params.waveWidth) {
+                        const k = (6.28 / r.wavelength) * params.frequency; 
+                        
+                        // 탄성(Elasticity) 적용: 값이 크면 파형이 뾰족해짐(사인파 변형)
+                        let val = Math.sin(dist * k - life * 8);
+                        if(params.elasticity !== 1.0) {
+                             // sign을 유지하며 power 연산
+                             val = Math.sign(val) * Math.pow(Math.abs(val), 2 - params.elasticity); 
+                        }
+
+                        const env = Math.exp(-Math.pow(distDiff, 2) / (2 * Math.pow(r.wavelength * 0.4 * params.waveWidth, 2)));
+                        
+                        y += val * r.amplitude * decayTime * decayDist * env;
+                    }
+                }
+
+                // 쓰나미
+                tsunamis.forEach(t => {
+                    const dist = Math.abs(cube.userData.baseX - t.position);
+                    if(dist < t.wavelength*2) {
+                        const val = Math.sin((cube.userData.baseX - t.position)/(t.wavelength/6.28));
+                        const env = Math.exp(-Math.pow(dist,2)/(2*Math.pow(t.wavelength/3, 2)));
+                        y += val * t.amplitude * env;
+                    }
+                });
+
+                cube.position.y = y;
+
+                // 색상
+                if(nukeActive) {
+                    const mix = Math.sin((now-nukeTime)*0.01)*0.5+0.5;
+                    cube.material.color.lerpColors(cBase, cNuke, mix*0.8);
+                } else if(params.discoMode) {
+                    cube.material.color.setHSL(((cube.userData.ix+cube.userData.iz)*0.02+time*0.2)%1, 0.8, 0.5);
+                } else {
+                    cube.material.color.copy(cBase);
+                    if(y > params.foamHeight) {
+                        let mix = (y-params.foamHeight)/40; mix=Math.min(1, Math.max(0,mix));
+                        cube.material.color.lerp(cFoam, mix);
+                    } else if (y < -params.foamHeight*1.5 && params.antiGravity) {
+                        cube.material.color.lerp(new THREE.Color(0x000000), 0.6);
+                    }
+                }
+            }
+
+            // 에너지 0에 가까워지면 삭제
+            ripples = ripples.filter(r => {
+                const life = (now - r.startTime) * 0.001;
+                // 100초 지나거나 에너지가 극도로 작아지면 삭제
+                return life < 100 && Math.exp(-r.timeDamping * life) > 0.01;
+            });
+            tsunamis = tsunamis.filter(t => t.position < 20000);
+
+            updateCamera();
+            renderer.render(scene, camera);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
