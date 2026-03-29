@@ -2,26 +2,58 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Apple Drop Idle Survival</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>사과 박스 타이쿤</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="page">
-    <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">IDLE SURVIVAL ORCHARD</p>
-        <h1>Apple Drop Idle</h1>
-        <p class="subtitle">사과는 중앙에서 자동으로 떨어지고, 점수는 돈이 됩니다. 플레이어는 런 상점과 연구실 업그레이드만 조정하며 가능한 오래 살아남아 최대 점수를 노립니다.</p>
+  <main class="app-shell">
+    <section class="stage-shell">
+      <div class="canvas-shell">
+        <canvas id="game" width="900" height="980" aria-label="사과 상자 시뮬레이션"></canvas>
+
+        <div id="overlay" class="overlay hidden" role="dialog" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="hud-cache" aria-hidden="true">
+      <span id="scoreValue">0</span>
+      <span id="cashValue">0</span>
+      <span id="bankValue">0</span>
+      <span id="dangerValue">0%</span>
+      <strong id="appraisalValue">0</strong>
+      <p id="statusText">컨베이어에서 사과가 자동으로 굴러옵니다. 상자와 과수원을 키워 더 비싼 경매를 노리세요.</p>
+      <span id="sellHint">경매 버튼을 누르면 상자를 경매장에 올립니다. 실제 경매 등급은 판매 순간 결정됩니다.</span>
+      <div id="automationBadges"></div>
+    </section>
+
+    <section class="control-dock" aria-label="게임 조작">
+      <div class="action-row">
+        <button id="sellButton" class="action-button sell-button dock-sell">경매 올리기</button>
+        <button id="pauseButton" class="tool-button dock-tool" type="button">멈춤</button>
+        <button id="restartButton" class="tool-button dock-tool" type="button">새 런</button>
+        <button id="guideButton" class="tool-button accent dock-tool" type="button">설명</button>
       </div>
 
-      <div class="hero-actions">
-        <div class="hero-action-row">
-          <button id="restartButton" class="action-button primary">새 런 시작</button>
-          <button id="pauseButton" class="action-button">일시정지</button>
+      <nav id="menuTabs" class="dock-tabs" aria-label="게임 메뉴">
+        <button class="dock-tab" data-menu="automation">경매장</button>
+        <button class="dock-tab" data-menu="run">상점</button>
+        <button class="dock-tab" data-menu="lab">연구소</button>
+        <button class="dock-tab" data-menu="ladder">도감</button>
+      </nav>
+    </section>
+
+    <section id="bottomSheet" class="bottom-sheet" aria-live="polite">
+      <div class="sheet-handle"></div>
+
+      <div class="sheet-toolbar">
+        <div class="sheet-copy">
+          <p class="sheet-eyebrow">과수원 메뉴</p>
+          <h2 id="sheetTitle">경매장</h2>
         </div>
+
         <div class="dev-speed-card">
-          <span class="dev-speed-label">Dev Speed</span>
+          <span class="dev-speed-label">개발 배속</span>
           <div id="devSpeedControls" class="speed-toggle" role="group" aria-label="Development simulation speed">
             <button class="speed-button is-active" data-speed="1">x1</button>
             <button class="speed-button" data-speed="2">x2</button>
@@ -30,95 +62,55 @@
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="layout">
-      <section class="board-panel">
-        <div class="metric-grid" aria-label="Idle survival metrics">
-          <article class="metric-card">
-            <span class="metric-label">Score</span>
-            <strong id="scoreValue">0</strong>
-          </article>
-          <article class="metric-card">
-            <span class="metric-label">Run Cash</span>
-            <strong id="cashValue">0</strong>
-          </article>
-          <article class="metric-card">
-            <span class="metric-label">Bank</span>
-            <strong id="bankValue">0</strong>
-          </article>
-          <article class="metric-card danger-card">
-            <span class="metric-label">Danger</span>
-            <strong id="dangerValue">0%</strong>
-          </article>
+      <section class="panel-card compact menu-pane" data-menu-pane="automation">
+        <div class="panel-head">
+          <p>지금 경매에 붙는 조건과 과수원 자동화 상태를 확인합니다.</p>
         </div>
-
-        <div class="canvas-shell">
-          <canvas id="game" width="900" height="980" aria-label="Apple Drop idle survival canvas"></canvas>
-          <div id="overlay" class="overlay hidden" role="dialog" aria-live="polite"></div>
-        </div>
-
-        <div class="board-footer">
-          <p id="statusText" class="status-text">자동 드롭이 시작되면 상점 구매로 생존 시간을 늘릴 수 있습니다.</p>
-          <div class="sell-bar">
-            <div class="sell-copy">
-              <span class="sell-label">Current Appraisal</span>
-              <strong id="appraisalValue">0</strong>
-              <span id="sellHint" class="sell-hint">45초 이후 조건을 만족하면 상자를 통째로 매각할 수 있습니다.</span>
-            </div>
-            <button id="sellButton" class="action-button sell-button">Sell Crate</button>
-          </div>
-          <div id="automationBadges" class="badge-row" aria-label="Automation status"></div>
-        </div>
+        <dl id="automationList" class="stat-list"></dl>
       </section>
 
-      <aside class="side-panel">
-        <nav id="menuTabs" class="menu-tabs" aria-label="Idle game menus">
-          <button class="menu-tab is-active" data-menu="automation">Auto</button>
-          <button class="menu-tab" data-menu="run">Run</button>
-          <button class="menu-tab" data-menu="lab">Lab</button>
-          <button class="menu-tab" data-menu="ladder">Ladder</button>
-        </nav>
+      <section class="panel-card menu-pane" data-menu-pane="run">
+        <div class="panel-head">
+          <p>이번 판에서만 쓰는 설비를 사서 상자를 더 오래 버티게 합니다.</p>
+        </div>
+        <div id="runShop" class="upgrade-list" aria-label="런 업그레이드"></div>
+      </section>
 
-        <section class="panel-card compact menu-pane is-active" data-menu-pane="automation">
-          <div class="panel-head">
-            <h2>Automation</h2>
-            <p>현재 런의 자동화 수치와 위험 관리 상태입니다.</p>
-          </div>
-          <dl id="automationList" class="stat-list"></dl>
-        </section>
+      <section class="panel-card menu-pane" data-menu-pane="lab">
+        <div class="panel-head">
+          <p>연구 자금으로 과수원을 손봐 다음 판 수입과 사과 품질을 영구 강화합니다.</p>
+        </div>
+        <div id="labShop" class="upgrade-list" aria-label="연구 업그레이드"></div>
+      </section>
 
-        <section class="panel-card menu-pane" data-menu-pane="run">
-          <div class="panel-head">
-            <h2>Run Shop</h2>
-            <p>현재 런 자금으로만 사는 업그레이드입니다.</p>
-          </div>
-          <div id="runShop" class="upgrade-list" aria-label="Run upgrades"></div>
-        </section>
-
-        <section class="panel-card menu-pane" data-menu-pane="lab">
-          <div class="panel-head">
-            <h2>Lab</h2>
-            <p>영구 은행 자금으로 과수원을 영구 강화합니다.</p>
-          </div>
-          <div id="labShop" class="upgrade-list" aria-label="Meta upgrades"></div>
-        </section>
-
-        <section class="panel-card menu-pane" data-menu-pane="ladder">
-          <div class="panel-head">
-            <h2>Merge Ladder</h2>
-            <p>상위 단계일수록 점수와 은행 성장 속도가 커집니다.</p>
-          </div>
-          <div id="appleLegend" class="legend-list"></div>
-        </section>
-      </aside>
+      <section class="panel-card menu-pane" data-menu-pane="ladder">
+        <div class="panel-head">
+          <p>단계별 사과와 특성을 한눈에 확인합니다.</p>
+        </div>
+        <div id="appleLegend" class="legend-list"></div>
+      </section>
     </section>
   </main>
 
+  <div id="guideModal" class="modal-shell hidden" role="dialog" aria-live="polite" aria-modal="true">
+    <div class="modal-card guide-modal-card">
+      <div class="guide-head">
+        <div>
+          <p class="modal-eyebrow">과수원 설명서</p>
+          <h2>과수원 설명서</h2>
+        </div>
+        <button id="guideCloseButton" class="tool-button" type="button">닫기</button>
+      </div>
+      <div id="guideTabs" class="guide-tabs"></div>
+      <div id="guideContent" class="guide-content"></div>
+    </div>
+  </div>
+
   <div id="offlineModal" class="modal-shell hidden" role="dialog" aria-live="polite" aria-modal="true">
     <div class="modal-card">
-      <p class="modal-eyebrow">OFFLINE HARVEST</p>
-      <h2>과수원이 비어 있던 동안</h2>
+      <p class="modal-eyebrow">오프라인 수확</p>
+      <h2>비운 사이에 모였습니다</h2>
       <p id="offlineText" class="modal-text">오프라인 보상 집계 중입니다.</p>
       <button id="offlineDismissButton" class="action-button primary">확인</button>
     </div>

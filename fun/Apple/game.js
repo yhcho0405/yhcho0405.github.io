@@ -23,15 +23,23 @@ const ui = {
   sellButton: document.getElementById("sellButton"),
   devSpeedControls: document.getElementById("devSpeedControls"),
   menuTabs: document.getElementById("menuTabs"),
+  bottomSheet: document.getElementById("bottomSheet"),
+  sheetTitle: document.getElementById("sheetTitle"),
+  guideButton: document.getElementById("guideButton"),
+  guideDockButton: document.getElementById("guideDockButton"),
+  guideModal: document.getElementById("guideModal"),
+  guideTabs: document.getElementById("guideTabs"),
+  guideContent: document.getElementById("guideContent"),
+  guideCloseButton: document.getElementById("guideCloseButton"),
 };
 
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
 const BASE_ORCHARD = {
-  x: 110,
-  y: 150,
-  w: 680,
-  h: 760,
+  x: 92,
+  y: 144,
+  w: 716,
+  h: 776,
 };
 
 const PHYSICS = {
@@ -44,6 +52,29 @@ const PHYSICS = {
 const IS_DEV_HOST = window.location.hostname === "127.0.0.1";
 const DEV_SPEED_OPTIONS = [1, 2, 4, 8];
 const MENU_PANES = ["automation", "run", "lab", "ladder"];
+const GUIDE_PANES = ["basics", "auction", "traits", "specials"];
+const UPGRADE_ASSET_PATHS = {
+  dropMotor: "assets/belt_accel.png",
+  crateExpansion: "assets/box_expand.png",
+  bombSeeder: "assets/bomb_drop.png",
+  prismSeeder: "assets/prism_culture.png",
+  shockEngine: "assets/impact_amplification.png",
+  autoSpinner: "assets/auto_flip.png",
+  dangerBuffer: "assets/danger_buffer.png",
+  valuePress: "assets/value_press.png",
+  dropTier: "assets/breed_upgrade.png",
+  starterFund: "assets/start_grant.png",
+  durableCrate: "assets/durable_wood.png",
+  bombOrchard: "assets/bomb_orchard.png",
+  prismOrchard: "assets/prism_research.png",
+  expansionEngineering: "assets/expansion_engineering.png",
+  brokerageOffice: "assets/fee_negotiation.png",
+  twinConveyor: "assets/belt_accel.png",
+  goldenMulch: "assets/research_liquid.png",
+  sortingShed: "assets/durable_wood.png",
+  offlineOrchard: "assets/research_liquid.png",
+  mergeLedger: "assets/research_liquid.png",
+};
 
 const BALANCE = {
   version: 2,
@@ -57,10 +88,13 @@ const BALANCE = {
   baseDropInterval: 78,
   minDropInterval: 12,
   maxSpecialTotal: 0.30,
-  sellGateFrames: 45 * 60,
-  sellGateScore: 2500,
-  sellGateApples: 18,
-  sellGateTier: 6,
+  dangerZoneHeightRatio: 0.12,
+  dangerZoneBaseBottomRatio: 0.14,
+  dangerZoneMaxBottomRatio: 0.30,
+  sellGateFrames: 72 * 60,
+  sellGateValue: 1200,
+  sellGateApples: 22,
+  sellGateTier: 7,
   redLineRatio: 0.068,
   redLineHoldFrames: 2 * 60,
   boxExpandFrames: 39,
@@ -70,12 +104,17 @@ const BALANCE = {
     rotateFrames: 300,
     openFrames: 24,
   },
+  sale: {
+    packFrames: 58,
+    shipFrames: 92,
+    burstGapFrames: 3,
+  },
   conveyor: {
-    width: 72,
-    startXOffset: -42,
-    startYOffset: -118,
-    endXOffset: 236,
-    endYOffset: -40,
+    width: 68,
+    laneOuterOffset: 150,
+    laneEndOffset: 26,
+    startYOffset: -192,
+    endYOffset: -62,
     minFrames: 8,
     maxFrames: 24,
     slatGap: 22,
@@ -106,99 +145,257 @@ const BALANCE = {
 
 const RUN_UPGRADES = {
   dropMotor: {
-    label: "Drop Motor",
-    tag: "RUN",
-    note: "드롭 주기를 줄여 벨트 투입 속도를 높입니다.",
+    label: "급송 벨트",
+    tag: "런",
+    icon: "MTR",
+    asset: "belt",
+    note: "사과가 벨트에서 더 자주 굴러 나오게 합니다.",
   },
   crateExpansion: {
-    label: "Crate Expansion",
-    tag: "RUN",
-    note: "상자 크기를 키워 버티는 시간을 늘립니다.",
+    label: "넉넉한 상자",
+    tag: "런",
+    icon: "BOX",
+    asset: "crate",
+    note: "상자 안 공간을 넓혀 더 오래 버티게 합니다.",
   },
   bombSeeder: {
-    label: "Bomb Seeder",
-    tag: "RUN",
-    note: "폭탄 사과 출현률을 장기적으로 밀어 올립니다.",
+    label: "폭탄 접목",
+    tag: "런",
+    icon: "BMB",
+    asset: "bomb",
+    note: "배치를 흔드는 폭탄 사과가 드물게 섞여 들어옵니다.",
   },
   prismSeeder: {
-    label: "Prism Seeder",
-    tag: "RUN",
-    note: "프리즘 사과를 섞어 상위 단계 도달을 앞당깁니다.",
+    label: "무지개 접목",
+    tag: "런",
+    icon: "PRM",
+    asset: "prism",
+    note: "등급을 끌어올리는 프리즘 사과를 더 자주 섞습니다.",
   },
   shockEngine: {
-    label: "Shock Engine",
-    tag: "RUN",
-    note: "폭탄의 흔들기 성능을 강화합니다.",
+    label: "충격 교반기",
+    tag: "런",
+    icon: "SHK",
+    asset: "shock",
+    note: "폭탄 사과가 더 넓고 세게 더미를 흔듭니다.",
   },
   autoSpinner: {
-    label: "Auto Spinner",
-    tag: "RUN",
-    note: "위험도가 치솟을 때 자동 회전을 더 빨리 꺼냅니다.",
+    label: "자동 뒤집개",
+    tag: "런",
+    icon: "SPN",
+    asset: "spin",
+    note: "위험 구역이 차오르면 상자를 자동으로 돌려 정리합니다.",
+  },
+  dangerBuffer: {
+    label: "안전 여유",
+    tag: "런",
+    icon: "DNG",
+    asset: "zone",
+    note: "자동 회전이 반응하는 위험 구역을 더 아래로 늦춥니다.",
   },
   valuePress: {
-    label: "Value Press",
-    tag: "RUN",
-    note: "모든 점수와 런 자금 수급을 늘립니다.",
+    label: "프리미엄 선별",
+    tag: "런",
+    icon: "VAL",
+    asset: "value",
+    note: "사과를 더 잘 골라 이번 런 점수와 재화가 함께 늘어납니다.",
   },
   dropTier: {
-    label: "Drop Tier",
-    tag: "RUN",
-    note: "매우 비싼 대가로 기본 드롭 사과 단계를 끌어올립니다.",
+    label: "우량 품종",
+    tag: "런",
+    icon: "TIR",
+    asset: "tier",
+    note: "아주 비싼 값으로 더 좋은 품종이 벨트에 실리기 시작합니다.",
   },
 };
 
 const META_UPGRADES = {
   starterFund: {
-    label: "Starter Fund",
-    tag: "LAB",
-    note: "새 런 시작 자금을 장기적으로 늘립니다.",
+    label: "종잣돈",
+    tag: "연구",
+    icon: "STA",
+    asset: "start",
+    note: "다음 런의 초반 투자 속도를 크게 올립니다.",
   },
   durableCrate: {
-    label: "Durable Crate",
-    tag: "LAB",
-    note: "danger limit을 영구적으로 키웁니다.",
+    label: "단단한 상자틀",
+    tag: "연구",
+    icon: "DRB",
+    asset: "wood",
+    note: "자동 판매선 압박을 더 빨리 회복하도록 돕습니다.",
   },
   bombOrchard: {
-    label: "Bomb Orchard",
-    tag: "LAB",
+    label: "폭탄 과수원",
+    tag: "연구",
+    icon: "ORB",
+    asset: "bomb",
     cap: 6,
-    note: "폭탄 사과를 해금하고 기본 확률을 키웁니다.",
+    note: "폭탄 사과를 해금하고 기본 확률을 강화합니다.",
   },
   prismOrchard: {
-    label: "Prism Orchard",
-    tag: "LAB",
+    label: "무지개 육종실",
+    tag: "연구",
+    icon: "ORP",
+    asset: "prism",
     cap: 5,
-    note: "프리즘 사과를 해금하고 기본 확률을 키웁니다.",
+    note: "프리즘 사과를 해금하고 기본 출현률을 높입니다.",
   },
   expansionEngineering: {
-    label: "Expansion Engineering",
-    tag: "LAB",
-    note: "상자 확장 비용 할인과 카메라 안정화를 제공합니다.",
+    label: "상자 개량소",
+    tag: "연구",
+    icon: "ENG",
+    asset: "eng",
+    note: "상자 확장 비용을 낮추고 화면 안정화를 제공합니다.",
+  },
+  brokerageOffice: {
+    label: "경매 중개소",
+    tag: "연구",
+    icon: "FEE",
+    asset: "fee",
+    note: "자동 판매 수수료를 줄여 놓친 런의 손실을 줄입니다.",
+  },
+  twinConveyor: {
+    label: "보조 벨트",
+    tag: "연구",
+    icon: "TWN",
+    asset: "dual",
+    cap: 1,
+    note: "오른쪽 보조 컨베이어를 설치해 양방향 공급을 엽니다.",
+  },
+  goldenMulch: {
+    label: "황금 거름",
+    tag: "연구",
+    icon: "GLD",
+    asset: "gold",
+    note: "황금 사과 등장률과 황금 보너스를 조금씩 키웁니다.",
+  },
+  sortingShed: {
+    label: "선별 작업장",
+    tag: "연구",
+    icon: "ROT",
+    asset: "sort",
+    note: "썩은 사과 등장률을 줄여 상자 감액을 막습니다.",
   },
   offlineOrchard: {
-    label: "Offline Orchard",
-    tag: "LAB",
-    note: "오프라인 은행 보상을 장기적으로 키웁니다.",
+    label: "부재중 수확",
+    tag: "연구",
+    icon: "OFF",
+    asset: "idle",
+    note: "접속하지 않은 동안 쌓이는 연구 자금을 늘립니다.",
   },
   mergeLedger: {
-    label: "Merge Ledger",
-    tag: "LAB",
-    note: "메타 단계의 영구 가치 계수를 올립니다.",
+    label: "고급 농약",
+    tag: "연구",
+    icon: "MED",
+    asset: "spray",
+    note: "더 좋은 약을 써서 모든 사과의 점수와 런 재화 가치를 바로 끌어올립니다.",
   },
 };
 
 const SPECIAL_TYPES = {
   bomb: {
     name: "폭탄사과",
-    shortLabel: "BOMB",
+    shortLabel: "폭",
     accent: "#ff6b39",
     glow: "rgba(255, 120, 70, 0.9)",
   },
   prism: {
     name: "프리즘사과",
-    shortLabel: "PRISM",
+    shortLabel: "빛",
     accent: "#7a6bff",
     glow: "rgba(127, 226, 255, 0.95)",
+  },
+};
+
+const TRAIT_TYPES = {
+  golden: {
+    name: "황금사과",
+    shortLabel: "금",
+    accent: "#ffd24b",
+    glow: "rgba(255, 214, 92, 0.95)",
+  },
+  rotten: {
+    name: "썩은사과",
+    shortLabel: "썩",
+    accent: "#8bb651",
+    glow: "rgba(137, 182, 83, 0.9)",
+  },
+};
+
+const AUCTION_HOUSES = [
+  {
+    key: "roadside",
+    name: "길가 좌판",
+    shortLabel: "좌판",
+    multiplier: 0.92,
+    color: "#d39d61",
+  },
+  {
+    key: "town",
+    name: "동네 경매장",
+    shortLabel: "동네",
+    multiplier: 1,
+    color: "#76b169",
+  },
+  {
+    key: "night",
+    name: "야시장 경매",
+    shortLabel: "야시장",
+    multiplier: 1.12,
+    color: "#6d92e8",
+  },
+  {
+    key: "golden",
+    name: "황금 사과 경매",
+    shortLabel: "황금장",
+    multiplier: 1.26,
+    color: "#f0be48",
+  },
+  {
+    key: "royal",
+    name: "왕실 과수원 경매",
+    shortLabel: "왕실",
+    multiplier: 1.42,
+    color: "#b782ff",
+  },
+];
+
+const GUIDE_DATA = {
+  basics: {
+    label: "기본",
+    items: [
+      { icon: "RUN", title: "이번 런 목표", body: "사과는 자동으로 떨어집니다. 상자 안 사과의 경매 가치를 키우고, 적절한 타이밍에 경매장에 넘기는 것이 핵심입니다." },
+      { icon: "BOX", title: "상자 상태", body: "위험 구역이 차오르면 자동 뒤집기가 작동하고, 빨간 자동 판매선에 오래 걸리면 수수료를 떼고 강제 경매됩니다." },
+      { icon: "R$", title: "런 재화", body: "점수와 함께 쌓이며 이번 런 상점에서만 사용합니다. 런이 끝나면 사라집니다." },
+      { icon: "L$", title: "과수원 자금", body: "경매가 끝날 때 들어오는 영구 자금입니다. 연구소 업그레이드를 사서 다음 런을 더 강하게 만듭니다." },
+    ],
+  },
+  auction: {
+    label: "경매",
+    items: [
+      { icon: "BID", title: "경매 등급", body: "박스를 팔 때마다 좌판, 동네, 야시장, 황금장, 왕실 경매 중 하나가 랜덤으로 붙습니다. 등급이 높을수록 배수가 커집니다." },
+      { icon: "GAV", title: "상자 예상가", body: "화면에 보이는 값은 경매 전 예상가입니다. 실제 판매 순간 경매 등급, 황금 보너스, 썩은 감액이 합산됩니다." },
+      { icon: "FEE", title: "자동 판매", body: "상자가 너무 넘치면 자동으로 경매장에 끌려가며 수수료를 뗍니다. 수수료 협상 연구로 손해를 줄일 수 있습니다." },
+      { icon: "PRE", title: "도파민 정산", body: "판매할 때 고급 사과 보너스가 하나씩 빠르게 튀어나오고, 마지막에 경매장이 총액을 확정합니다." },
+    ],
+  },
+  traits: {
+    label: "속성",
+    items: [
+      { icon: "GLD", title: "황금 사과", body: "경매에서 따로 큰 보너스를 줍니다. 황금 사과끼리 합치거나 일반 사과와 합치면 계속 황금 속성이 유지됩니다." },
+      { icon: "ROT", title: "썩은 사과", body: "박스 전체 경매가를 퍼센트로 깎아먹습니다. 썩은 사과끼리 합치거나 일반 사과와 합치면 계속 썩은 속성이 남습니다." },
+      { icon: "CLR", title: "속성 해제", body: "황금 사과와 썩은 사과가 서로 합쳐지면 두 속성이 상쇄되어 일반 사과로 돌아옵니다." },
+      { icon: "SEL", title: "선별 창고", body: "연구소의 선별 창고를 키우면 썩은 사과 등장률을 계속 낮출 수 있습니다." },
+    ],
+  },
+  specials: {
+    label: "특수",
+    items: [
+      { icon: "BMB", title: "폭탄 사과", body: "주변 사과를 흔들어 배치를 다시 섞습니다. 없애는 용도가 아니라 꼬인 더미를 푸는 용도입니다." },
+      { icon: "PRM", title: "프리즘 사과", body: "닿은 사과를 한 단계 올려 줍니다. 고등급 박스를 빠르게 만드는 핵심 장치입니다." },
+      { icon: "SPN", title: "자동 뒤집기", body: "위험 구역이 많이 차면 뚜껑을 덮고 상자를 회전시켜 더미를 재배치합니다." },
+      { icon: "MED", title: "황금 농약", body: "연구소에서 더 좋은 약을 쓰면 모든 사과의 점수와 런 재화 가치가 바로 올라갑니다." },
+    ],
   },
 };
 
@@ -797,6 +994,14 @@ function formatNumber(value) {
   return new Intl.NumberFormat("ko-KR").format(Math.round(value));
 }
 
+function formatRunCurrency(value) {
+  return `R$ ${formatNumber(value)}`;
+}
+
+function formatLabCurrency(value) {
+  return `L$ ${formatNumber(value)}`;
+}
+
 function formatPercent(value) {
   return `${(value * 100).toFixed(value >= 0.1 ? 1 : 2)}%`;
 }
@@ -822,7 +1027,7 @@ function emptyUpgradeLevels(definitions) {
 }
 
 function getDefaultMenuPane() {
-  return "run";
+  return "automation";
 }
 
 function sanitizeDevSpeed(speed) {
@@ -837,6 +1042,10 @@ function sanitizeMenuPane(menu) {
   return MENU_PANES.includes(menu) ? menu : getDefaultMenuPane();
 }
 
+function sanitizeGuidePane(pane) {
+  return GUIDE_PANES.includes(pane) ? pane : "basics";
+}
+
 function createMetaState() {
   return {
     balanceVersion: BALANCE.version,
@@ -846,6 +1055,7 @@ function createMetaState() {
     stats: {
       runs: 0,
       soldRuns: 0,
+      autoSoldRuns: 0,
       failedRuns: 0,
       totalBankEarned: 0,
       totalOfflineBank: 0,
@@ -903,6 +1113,8 @@ function createFreshState() {
     hiddenAt: null,
     devSpeed: 1,
     activeMenu: getDefaultMenuPane(),
+    sheetOpen: false,
+    guidePane: "basics",
     shake: 0,
     time: 0,
     beltTime: 0,
@@ -923,6 +1135,31 @@ function createFreshState() {
       to: 1,
       pulse: 0,
     },
+    sale: {
+      active: false,
+      reason: "",
+      phase: "idle",
+      frame: 0,
+      appraisal: 0,
+      baseAppraisal: 0,
+      premiumValue: 0,
+      goldenValue: 0,
+      rottenPenaltyRate: 0,
+      rottenPenaltyValue: 0,
+      premium: 0,
+      feeRate: 0,
+      feeAmount: 0,
+      bankGain: 0,
+      auctionName: "",
+      auctionShortLabel: "",
+      auctionMultiplier: 1,
+      shippedX: 0,
+      premiumBurstsDone: false,
+      premiumBursts: [],
+      burstIndex: 0,
+      burstTicker: 0,
+      displayedBonus: 0,
+    },
     offlineSummary: null,
     uiSnapshot: "",
     automationSnapshot: "",
@@ -930,6 +1167,8 @@ function createFreshState() {
     runShopSnapshot: "",
     labShopSnapshot: "",
     controlSnapshot: "",
+    overlayAutoAdvanceTimer: 0,
+    overlayAutoAdvanceEndsAt: 0,
     lastSeenAt: Date.now(),
   };
 }
@@ -962,6 +1201,7 @@ function createApple(level, x, y, options) {
     id: nextId++,
     level,
     special: config.special || null,
+    trait: config.trait || null,
     x,
     y,
     r: appleType.radius,
@@ -988,6 +1228,7 @@ function sanitizeMeta(rawMeta) {
   if (rawMeta.stats && typeof rawMeta.stats === "object") {
     meta.stats.runs = Math.max(0, Number(rawMeta.stats.runs) || 0);
     meta.stats.soldRuns = Math.max(0, Number(rawMeta.stats.soldRuns) || 0);
+    meta.stats.autoSoldRuns = Math.max(0, Number(rawMeta.stats.autoSoldRuns) || 0);
     meta.stats.failedRuns = Math.max(0, Number(rawMeta.stats.failedRuns) || 0);
     meta.stats.totalBankEarned = Math.max(0, Number(rawMeta.stats.totalBankEarned) || 0);
     meta.stats.totalOfflineBank = Math.max(0, Number(rawMeta.stats.totalOfflineBank) || 0);
@@ -1009,7 +1250,7 @@ function sanitizeRun(rawRun, meta) {
   }
 
   run.alive = rawRun.alive !== false;
-  run.exitReason = rawRun.exitReason === "sold" || rawRun.exitReason === "game_over" ? rawRun.exitReason : "";
+  run.exitReason = rawRun.exitReason === "sold" || rawRun.exitReason === "auto_sold" ? rawRun.exitReason : "";
   run.score = Math.max(0, Number(rawRun.score) || 0);
   run.cash = Math.max(0, Number(rawRun.cash) || 0);
   run.upgrades = sanitizeUpgrades(rawRun.upgrades, RUN_UPGRADES);
@@ -1042,8 +1283,10 @@ function sanitizeApples(rawApples) {
   return rawApples.map((rawApple) => {
     const level = clamp(Number(rawApple.level) || 0, 0, APPLE_TYPES.length - 1);
     const special = rawApple.special === "bomb" || rawApple.special === "prism" ? rawApple.special : null;
+    const trait = rawApple.trait === "golden" || rawApple.trait === "rotten" ? rawApple.trait : null;
     const apple = createApple(level, Number(rawApple.x) || BASE_ORCHARD.x, Number(rawApple.y) || BASE_ORCHARD.y, {
       special,
+      trait,
       vx: Number(rawApple.vx) || 0,
       vy: Number(rawApple.vy) || 0,
       spin: Number(rawApple.spin) || 0,
@@ -1062,8 +1305,10 @@ function sanitizeInfeed(rawInfeed) {
   }
 
   return {
+    lane: rawInfeed.lane === "right" ? "right" : "left",
     level: clamp(Number(rawInfeed.level) || 0, 0, APPLE_TYPES.length - 1),
     special: rawInfeed.special === "bomb" || rawInfeed.special === "prism" ? rawInfeed.special : null,
+    trait: rawInfeed.trait === "golden" || rawInfeed.trait === "rotten" ? rawInfeed.trait : null,
     frame: Math.max(0, Number(rawInfeed.frame) || 0),
     beltFrames: Math.max(BALANCE.conveyor.minFrames, Number(rawInfeed.beltFrames) || BALANCE.conveyor.minFrames),
   };
@@ -1074,6 +1319,7 @@ function serializeApple(apple) {
     id: apple.id,
     level: apple.level,
     special: apple.special,
+    trait: apple.trait,
     x: apple.x,
     y: apple.y,
     vx: apple.vx,
@@ -1091,8 +1337,10 @@ function serializeInfeed() {
   }
 
   return {
+    lane: state.infeed.lane,
     level: state.infeed.level,
     special: state.infeed.special,
+    trait: state.infeed.trait,
     frame: state.infeed.frame,
     beltFrames: state.infeed.beltFrames,
   };
@@ -1156,6 +1404,7 @@ function migrateLegacySave(parsed) {
   migrated.run.infeed = null;
   migrated.meta.balanceVersion = BALANCE.version;
   migrated.meta.stats.soldRuns = migrated.meta.stats.soldRuns || 0;
+  migrated.meta.stats.autoSoldRuns = migrated.meta.stats.autoSoldRuns || 0;
   migrated.meta.stats.failedRuns = migrated.meta.stats.failedRuns || 0;
   migrated.meta.stats.totalAppraisalGain = migrated.meta.stats.totalAppraisalGain || 0;
   migrated.meta.stats.lastSaleAppraisal = migrated.meta.stats.lastSaleAppraisal || 0;
@@ -1212,7 +1461,7 @@ function loadState() {
   }
 
   if (!state.run.alive) {
-    showRunResultOverlay(state.run.exitReason || "game_over", state.run.sellPreview, Math.round(state.run.score + (state.run.exitReason === "sold" ? state.run.sellPreview : 0)));
+    showRunResultOverlay(state.run.exitReason || "sold", getPendingSaleData(state.run.exitReason || "sold", state.apples));
   }
 
   if (usedLegacy) {
@@ -1228,7 +1477,7 @@ function getStarterCash(meta) {
   if (level <= 0) {
     return 0;
   }
-  return safeRound(40 * Math.pow(level, 0.9));
+  return safeRound(80 * Math.pow(level, 1));
 }
 
 function getDangerLimit(meta) {
@@ -1242,6 +1491,16 @@ function getDangerLimit(meta) {
 function getRedLineRecoveryFrames(meta) {
   const level = meta ? meta.upgrades.durableCrate : state.meta.upgrades.durableCrate;
   return 3 + Math.floor(level * 0.35);
+}
+
+function getAutoSaleFeeRate(meta) {
+  const level = meta ? meta.upgrades.brokerageOffice : state.meta.upgrades.brokerageOffice;
+  return Math.max(0.08, 0.5 - softPow(level, 0.055, 0.92));
+}
+
+function hasTwinConveyor(meta) {
+  const currentMeta = meta || state.meta;
+  return currentMeta.upgrades.twinConveyor > 0;
 }
 
 function getExpansionDiscount(meta) {
@@ -1265,7 +1524,7 @@ function getOfflineMultiplier(meta) {
 
 function getMetaValueMultiplier(meta) {
   const level = meta ? meta.upgrades.mergeLedger : state.meta.upgrades.mergeLedger;
-  return 1 + softPow(level, 0.06, 0.9);
+  return 1 + softPow(level, 0.18, 0.97);
 }
 
 function getBoxScaleForLevel(level) {
@@ -1274,7 +1533,7 @@ function getBoxScaleForLevel(level) {
 
 function getRunValueMultiplier(run) {
   const currentRun = run || state.run;
-  return 1 + softPow(currentRun.upgrades.valuePress, 0.14, 0.88);
+  return 1 + softPow(currentRun.upgrades.valuePress, 0.12, 0.86);
 }
 
 function getCombinedValueMultiplier(meta, run) {
@@ -1312,6 +1571,16 @@ function getDropTierInfo(run) {
   };
 }
 
+function getDangerZoneBottomRatio(run) {
+  const currentRun = run || state.run;
+  const shift = sat(currentRun.upgrades.dangerBuffer, 0.16, 0.08);
+  return clamp(BALANCE.dangerZoneBaseBottomRatio + shift, BALANCE.dangerZoneHeightRatio, BALANCE.dangerZoneMaxBottomRatio);
+}
+
+function getDangerZoneTopRatio(run) {
+  return Math.max(0, getDangerZoneBottomRatio(run) - BALANCE.dangerZoneHeightRatio);
+}
+
 function getShockMultiplier(run) {
   const currentRun = run || state.run;
   return 1 + softPow(currentRun.upgrades.shockEngine, 0.2, 0.78);
@@ -1333,7 +1602,7 @@ function getBaseBombChance(meta) {
   if (level <= 0) {
     return 0;
   }
-  return 0.005 + sat(level - 1, 0.025, 0.32);
+  return 0.01 + sat(level - 1, 0.04, 0.34);
 }
 
 function getBasePrismChance(meta) {
@@ -1342,7 +1611,22 @@ function getBasePrismChance(meta) {
   if (level <= 0) {
     return 0;
   }
-  return 0.002 + sat(level - 1, 0.012, 0.28);
+  return 0.004 + sat(level - 1, 0.016, 0.3);
+}
+
+function getGoldenAppleChance(meta) {
+  const currentMeta = meta || state.meta;
+  return 0.0085 + sat(currentMeta.upgrades.goldenMulch, 0.015, 0.15);
+}
+
+function getGoldenBonusScale(meta) {
+  const currentMeta = meta || state.meta;
+  return 1 + softPow(currentMeta.upgrades.goldenMulch, 0.08, 0.92);
+}
+
+function getRottenAppleChance(meta) {
+  const currentMeta = meta || state.meta;
+  return Math.max(0.005, 0.0095 - sat(currentMeta.upgrades.sortingShed, 0.0045, 0.17));
 }
 
 function getSpecialChances(meta, run) {
@@ -1390,21 +1674,23 @@ function getRunUpgradeCost(key, level, meta) {
 
   switch (key) {
     case "dropMotor":
-      return costFormula(30, 1.18, targetLevel, 8, 1.25);
+      return costFormula(36, 1.21, targetLevel, 8, 1.28);
     case "crateExpansion":
-      return safeRound(costFormula(120, 1.22, targetLevel, 7, 1.3) * getExpansionDiscountFactor(currentMeta));
+      return safeRound(costFormula(132, 1.25, targetLevel, 7, 1.34) * getExpansionDiscountFactor(currentMeta));
     case "bombSeeder":
-      return costFormula(90, 1.2, targetLevel, 8, 1.25);
+      return costFormula(108, 1.22, targetLevel, 8, 1.28);
     case "prismSeeder":
-      return costFormula(160, 1.24, targetLevel, 8, 1.3);
+      return costFormula(190, 1.26, targetLevel, 8, 1.34);
     case "shockEngine":
-      return costFormula(110, 1.21, targetLevel, 8, 1.25);
+      return costFormula(128, 1.23, targetLevel, 8, 1.28);
     case "autoSpinner":
-      return costFormula(220, 1.27, targetLevel, 6, 1.4);
+      return costFormula(240, 1.28, targetLevel, 6, 1.44);
+    case "dangerBuffer":
+      return costFormula(150, 1.27, targetLevel, 7, 1.32);
     case "valuePress":
-      return costFormula(70, 1.19, targetLevel, 8, 1.25);
+      return costFormula(82, 1.23, targetLevel, 8, 1.28);
     case "dropTier":
-      return costFormula(4000, 3.25, targetLevel, 4, 2.4);
+      return costFormula(4800, 3.4, targetLevel, 4, 2.46);
     default:
       return Number.MAX_SAFE_INTEGER;
   }
@@ -1415,19 +1701,27 @@ function getMetaUpgradeCost(key, level) {
 
   switch (key) {
     case "starterFund":
-      return costFormula(250, 1.2, targetLevel, 10, 1.18);
+      return costFormula(180, 1.16, targetLevel, 10, 1.14);
     case "durableCrate":
-      return costFormula(320, 1.23, targetLevel, 10, 1.22);
+      return costFormula(240, 1.18, targetLevel, 10, 1.16);
     case "bombOrchard":
-      return safeRound(420 * Math.pow(1.82, targetLevel));
+      return safeRound(360 * Math.pow(1.72, targetLevel));
     case "prismOrchard":
-      return safeRound(700 * Math.pow(1.95, targetLevel));
+      return safeRound(580 * Math.pow(1.84, targetLevel));
     case "expansionEngineering":
-      return costFormula(520, 1.24, targetLevel, 8, 1.28);
+      return costFormula(360, 1.19, targetLevel, 8, 1.2);
+    case "brokerageOffice":
+      return costFormula(420, 1.2, targetLevel, 8, 1.18);
+    case "twinConveyor":
+      return safeRound(1200 * Math.pow(1.68, targetLevel));
+    case "goldenMulch":
+      return costFormula(520, 1.21, targetLevel, 8, 1.18);
+    case "sortingShed":
+      return costFormula(360, 1.17, targetLevel, 9, 1.12);
     case "offlineOrchard":
-      return costFormula(380, 1.22, targetLevel, 9, 1.2);
+      return costFormula(300, 1.18, targetLevel, 9, 1.14);
     case "mergeLedger":
-      return costFormula(460, 1.23, targetLevel, 9, 1.22);
+      return costFormula(320, 1.18, targetLevel, 9, 1.16);
     default:
       return Number.MAX_SAFE_INTEGER;
   }
@@ -1441,6 +1735,8 @@ function getOrchardBounds(scaleValue) {
   const h = BASE_ORCHARD.h * scale;
   const x = baseCenterX - w / 2;
   const y = baseBottom - h;
+  const dangerBottomY = y + h * getDangerZoneBottomRatio();
+  const dangerTopY = y + h * getDangerZoneTopRatio();
 
   return {
     x,
@@ -1450,7 +1746,8 @@ function getOrchardBounds(scaleValue) {
     bottom: y + h,
     centerX: x + w / 2,
     centerY: y + h / 2,
-    dangerY: y + h * 0.138,
+    dangerTopY,
+    dangerY: dangerBottomY,
     redLineY: y + h * BALANCE.redLineRatio,
     rimY: y + h * 0.024,
     spawnY: y - h * 0.01,
@@ -1466,9 +1763,21 @@ function getViewportAnchor() {
 
 function getCameraScale() {
   const orchard = getOrchardBounds();
+  let minX = orchard.x - 22;
+  let maxX = orchard.x + orchard.w + 22;
+  let minY = orchard.y - 76;
+  let maxY = orchard.bottom + 44;
+
+  for (const lane of getActiveConveyorLanes()) {
+    const geometry = getConveyorGeometry(lane);
+    minX = Math.min(minX, geometry.startX - geometry.width, geometry.endX - geometry.width);
+    maxX = Math.max(maxX, geometry.startX + geometry.width, geometry.endX + geometry.width);
+    minY = Math.min(minY, geometry.startY - geometry.width, geometry.endY - geometry.width);
+  }
+
   const formulaScale = Math.min(1, 1 / Math.pow(state.run.boxScale, getCameraExponent()));
-  const safeScaleX = (WIDTH - 64) / (orchard.w + 88);
-  const safeScaleY = (HEIGHT - 64) / (orchard.h + 132);
+  const safeScaleX = (WIDTH - 24) / Math.max(1, maxX - minX);
+  const safeScaleY = (HEIGHT - 34) / Math.max(1, maxY - minY);
   return Math.min(1, formulaScale, safeScaleX, safeScaleY);
 }
 
@@ -1490,12 +1799,31 @@ function getHorizontalBounds(radius) {
   };
 }
 
-function getConveyorGeometry() {
-  const orchard = getOrchardBounds(1);
+function getActiveConveyorLanes(meta) {
+  return hasTwinConveyor(meta) ? ["left", "right"] : ["left"];
+}
+
+function getConveyorGeometry(lane) {
+  const orchard = getOrchardBounds();
+  const gapScale = Math.min(2.2, 1 + Math.max(0, state.run.boxScale - 1) * 0.9);
+  const outerOffset = BALANCE.conveyor.laneOuterOffset * gapScale;
+  const endOffset = BALANCE.conveyor.laneEndOffset * gapScale;
+  if (lane === "right") {
+    return {
+      lane: "right",
+      startX: orchard.x + orchard.w + outerOffset,
+      startY: orchard.y + BALANCE.conveyor.startYOffset,
+      endX: orchard.x + orchard.w + endOffset,
+      endY: orchard.y + BALANCE.conveyor.endYOffset,
+      width: BALANCE.conveyor.width,
+    };
+  }
+
   return {
-    startX: orchard.x + BALANCE.conveyor.startXOffset,
+    lane: "left",
+    startX: orchard.x - outerOffset,
     startY: orchard.y + BALANCE.conveyor.startYOffset,
-    endX: orchard.x + BALANCE.conveyor.endXOffset,
+    endX: orchard.x - endOffset,
     endY: orchard.y + BALANCE.conveyor.endYOffset,
     width: BALANCE.conveyor.width,
   };
@@ -1544,6 +1872,23 @@ function resetTransientEffects() {
   state.boxAnimation.from = state.run.boxScale;
   state.boxAnimation.to = state.run.boxScale;
   state.boxAnimation.pulse = 0;
+  state.sale.active = false;
+  state.sale.reason = "";
+  state.sale.phase = "idle";
+  state.sale.frame = 0;
+  state.sale.baseAppraisal = 0;
+  state.sale.goldenValue = 0;
+  state.sale.rottenPenaltyRate = 0;
+  state.sale.rottenPenaltyValue = 0;
+  state.sale.auctionName = "";
+  state.sale.auctionShortLabel = "";
+  state.sale.auctionMultiplier = 1;
+  state.sale.shippedX = 0;
+  state.sale.premiumBurstsDone = false;
+  state.sale.premiumBursts = [];
+  state.sale.burstIndex = 0;
+  state.sale.burstTicker = 0;
+  state.sale.displayedBonus = 0;
 }
 
 function startNewRun() {
@@ -1558,68 +1903,358 @@ function startNewRun() {
   saveState();
 }
 
-function getAppraisalMultiplier(level) {
-  return clamp(0.16 + 0.025 * Math.sqrt(level + 1), 0.16, 0.42);
+function getSalePremiumMultiplier(level) {
+  if (level < 4) {
+    return 0;
+  }
+  return 0.045 * Math.pow(level - 3, 1.14);
+}
+
+function chooseAuctionHouse(apples, breakdown) {
+  const source = apples || state.apples;
+  const topTier = source.reduce((highest, apple) => Math.max(highest, apple.level), 0);
+  const goldenBias = breakdown.goldenCount * 1.15;
+  const rottenBias = breakdown.rottenCount * 0.85;
+  const qualityScore = topTier * 0.75 + breakdown.qualityMultiplier * 2.8 + goldenBias - rottenBias;
+  const weights = AUCTION_HOUSES.map((house) => {
+    switch (house.key) {
+      case "roadside":
+        return Math.max(0.05, 0.34 - qualityScore * 0.018);
+      case "town":
+        return Math.max(0.08, 0.32 - Math.max(0, qualityScore - 5) * 0.01);
+      case "night":
+        return 0.2 + Math.max(0, qualityScore - 3) * 0.012;
+      case "golden":
+        return 0.08 + Math.max(0, qualityScore - 6) * 0.016 + breakdown.goldenCount * 0.04;
+      case "royal":
+        return 0.03 + Math.max(0, qualityScore - 10) * 0.014 + breakdown.goldenCount * 0.02;
+      default:
+        return 0.1;
+    }
+  });
+
+  const total = weights.reduce((sum, weight) => sum + weight, 0);
+  let roll = Math.random() * Math.max(0.001, total);
+
+  for (let index = 0; index < AUCTION_HOUSES.length; index += 1) {
+    roll -= weights[index];
+    if (roll <= 0) {
+      return AUCTION_HOUSES[index];
+    }
+  }
+
+  return AUCTION_HOUSES[1];
+}
+
+function getCrateSaleBreakdown(apples) {
+  const source = apples || state.apples;
+  const valueMultiplier = getCombinedValueMultiplier();
+  if (source.length === 0) {
+    return {
+      baseValue: 0,
+      premiumValue: 0,
+      goldenValue: 0,
+      rottenPenaltyRate: 0,
+      rottenPenaltyValue: 0,
+      qualityMultiplier: 1,
+      totalValue: 0,
+      premiumBursts: [],
+      goldenCount: 0,
+      rottenCount: 0,
+    };
+  }
+
+  let baseValue = 0;
+  let premiumValue = 0;
+  let goldenValue = 0;
+  let qualityMass = 0;
+  let premiumDensity = 0;
+  let rottenPenaltyWeight = 0;
+  let goldenCount = 0;
+  let rottenCount = 0;
+  const premiumBursts = [];
+
+  for (const apple of source) {
+    const points = APPLE_TYPES[apple.level].points * valueMultiplier;
+    baseValue += points * (0.082 + 0.019 * Math.sqrt(apple.level + 1));
+    qualityMass += Math.pow(apple.level + 1, 1.34);
+    premiumDensity += Math.max(0, apple.level - 3) * 0.1;
+
+    const premium = points * getSalePremiumMultiplier(apple.level);
+    if (premium > 0) {
+      premiumValue += premium;
+      premiumBursts.push({
+        x: apple.x,
+        y: apple.y - apple.r * 0.2,
+        value: safeRound(premium),
+        name: APPLE_TYPES[apple.level].name,
+      });
+    }
+
+    if (apple.trait === "golden") {
+      goldenCount += 1;
+      const goldenBonus = points * (0.28 + 0.04 * Math.sqrt(apple.level + 1)) * getGoldenBonusScale();
+      goldenValue += goldenBonus;
+      premiumBursts.push({
+        x: apple.x,
+        y: apple.y - apple.r * 0.45,
+        value: safeRound(goldenBonus),
+        name: `황금 ${APPLE_TYPES[apple.level].name}`,
+      });
+    } else if (apple.trait === "rotten") {
+      rottenCount += 1;
+      rottenPenaltyWeight += 0.08 + apple.level * 0.018;
+    }
+  }
+
+  premiumBursts.sort((left, right) => right.value - left.value);
+  const qualityMultiplier = 1
+    + clamp(Math.log1p(qualityMass) / 4.6, 0, 1.18)
+    + clamp(premiumDensity / Math.max(6, source.length * 1.5), 0, 0.34);
+  const subtotal = baseValue * qualityMultiplier + premiumValue + goldenValue;
+  const rottenPenaltyRate = clamp(rottenPenaltyWeight / Math.max(5, source.length * 1.26), 0, 0.62);
+  const rottenPenaltyValue = safeRound(subtotal * rottenPenaltyRate);
+  const totalValue = safeRound(subtotal - rottenPenaltyValue);
+
+  return {
+    baseValue: safeRound(baseValue),
+    premiumValue: safeRound(premiumValue),
+    goldenValue: safeRound(goldenValue),
+    rottenPenaltyRate,
+    rottenPenaltyValue,
+    qualityMultiplier,
+    totalValue,
+    premiumBursts: premiumBursts.slice(0, 14),
+    goldenCount,
+    rottenCount,
+  };
 }
 
 function getAppraisalValue(apples) {
-  const source = apples || state.apples;
-  return safeRound(source.reduce((total, apple) => {
-    return total + APPLE_TYPES[apple.level].points * getAppraisalMultiplier(apple.level);
-  }, 0));
+  return getCrateSaleBreakdown(apples).totalValue;
+}
+
+function isSaleActive() {
+  return state.sale.active;
+}
+
+function getPendingSaleData(reason, apples) {
+  const breakdown = getCrateSaleBreakdown(apples);
+  const auctionHouse = chooseAuctionHouse(apples, breakdown);
+  const auctionValue = safeRound(breakdown.totalValue * auctionHouse.multiplier);
+  const feeRate = reason === "auto_sold" ? getAutoSaleFeeRate() : 0;
+  const feeAmount = safeRound(auctionValue * feeRate);
+  return {
+    reason,
+    appraisal: auctionValue,
+    baseAppraisal: breakdown.totalValue,
+    baseValue: breakdown.baseValue,
+    premiumValue: breakdown.premiumValue,
+    goldenValue: breakdown.goldenValue,
+    rottenPenaltyRate: breakdown.rottenPenaltyRate,
+    rottenPenaltyValue: breakdown.rottenPenaltyValue,
+    qualityMultiplier: breakdown.qualityMultiplier,
+    premiumBursts: breakdown.premiumBursts,
+    auctionName: auctionHouse.name,
+    auctionShortLabel: auctionHouse.shortLabel,
+    auctionMultiplier: auctionHouse.multiplier,
+    feeRate,
+    feeAmount,
+    bankGain: Math.max(0, auctionValue - feeAmount),
+  };
 }
 
 function canSellCrate() {
-  if (!state.run.alive) {
+  if (!state.run.alive || isSaleActive()) {
     return false;
   }
 
   const topTier = state.apples.reduce((highest, apple) => Math.max(highest, apple.level), state.run.topTier);
+  const appraisal = getAppraisalValue();
   if (state.run.elapsedFrames < BALANCE.sellGateFrames) {
     return false;
   }
 
   return (
-    state.run.score >= BALANCE.sellGateScore
+    appraisal >= BALANCE.sellGateValue
     || state.apples.length >= BALANCE.sellGateApples
     || topTier >= BALANCE.sellGateTier
   );
 }
 
 function getSellGateText() {
+  const appraisal = getAppraisalValue();
+
   if (!state.run.alive) {
     return "런이 종료되었습니다.";
   }
 
+  if (isSaleActive()) {
+    return state.sale.reason === "auto_sold"
+      ? `상자가 자동 경매 중입니다. 수수료 ${Math.round(state.sale.feeRate * 100)}% 적용`
+      : "상자를 포장하고 경매장으로 보내는 중입니다.";
+  }
+
   if (canSellCrate()) {
-    return `지금 매각 시 은행 +${formatNumber(state.run.score + state.run.sellPreview)}`;
+    return `지금 경매에 올리면 현재 예상가 ${formatLabCurrency(appraisal)}부터 시작합니다. 황금 사과가 많을수록 더 비싸집니다.`;
   }
 
   const secondsLeft = Math.max(0, Math.ceil((BALANCE.sellGateFrames - state.run.elapsedFrames) / 60));
-  const remainingScore = Math.max(0, BALANCE.sellGateScore - state.run.score);
+  const remainingValue = Math.max(0, BALANCE.sellGateValue - appraisal);
   const remainingApples = Math.max(0, BALANCE.sellGateApples - state.apples.length);
   const remainingTier = Math.max(0, BALANCE.sellGateTier - state.run.topTier);
 
   if (state.run.elapsedFrames < BALANCE.sellGateFrames) {
-    return `${secondsLeft}s 뒤에 매각 가능. 이후 점수 ${formatNumber(remainingScore)} 또는 사과 ${remainingApples}개 또는 ${remainingTier}단계 더미를 만들면 됩니다.`;
+    return `${secondsLeft}s 뒤에 경매 가능. 이후 예상가 ${formatLabCurrency(remainingValue)} 또는 사과 ${remainingApples}개 또는 ${remainingTier}단계 더미가 더 필요합니다.`;
   }
 
-  return `점수 ${formatNumber(remainingScore)} 또는 사과 ${remainingApples}개 또는 상위 단계 ${remainingTier}레벨이 더 필요합니다.`;
+  return `예상가 ${formatLabCurrency(remainingValue)} 또는 사과 ${remainingApples}개 또는 상위 단계 ${remainingTier}레벨이 더 필요합니다.`;
+}
+
+function startSaleSequence(reason) {
+  if (!state.run.alive || isSaleActive()) {
+    return false;
+  }
+
+  const saleData = getPendingSaleData(reason);
+  state.sale.active = true;
+  state.sale.reason = saleData.reason;
+  state.sale.phase = "packing";
+  state.sale.frame = 0;
+  state.sale.appraisal = saleData.appraisal;
+  state.sale.baseAppraisal = saleData.baseAppraisal;
+  state.sale.baseValue = saleData.baseValue;
+  state.sale.premiumValue = saleData.premiumValue;
+  state.sale.goldenValue = saleData.goldenValue;
+  state.sale.rottenPenaltyRate = saleData.rottenPenaltyRate;
+  state.sale.rottenPenaltyValue = saleData.rottenPenaltyValue;
+  state.sale.premium = saleData.premiumValue;
+  state.sale.qualityMultiplier = saleData.qualityMultiplier;
+  state.sale.auctionName = saleData.auctionName;
+  state.sale.auctionShortLabel = saleData.auctionShortLabel;
+  state.sale.auctionMultiplier = saleData.auctionMultiplier;
+  state.sale.feeRate = saleData.feeRate;
+  state.sale.feeAmount = saleData.feeAmount;
+  state.sale.bankGain = saleData.bankGain;
+  state.sale.shippedX = 0;
+  state.sale.premiumBursts = saleData.premiumBursts;
+  state.sale.premiumBurstsDone = false;
+  state.sale.burstIndex = 0;
+  state.sale.burstTicker = 0;
+  state.sale.displayedBonus = 0;
+  state.run.sellPreview = saleData.appraisal;
+  state.run.timers.drop = 0;
+  state.infeed = null;
+  flashScreen(reason === "auto_sold" ? "rgba(255, 176, 136, 0.24)" : "rgba(255, 230, 178, 0.22)", 0.16);
+  spawnFloatingText(
+    getOrchardBounds().centerX,
+    getOrchardBounds().y - 22,
+    reason === "auto_sold" ? "자동 경매" : "경매 출발",
+    "#fff2d6",
+    48,
+  );
+  audioManager.play("sell");
+  syncUi(true);
+  return true;
+}
+
+function getSaleShiftX() {
+  if (!isSaleActive() || state.sale.phase !== "shipping") {
+    return 0;
+  }
+  const progress = clamp(state.sale.frame / BALANCE.sale.shipFrames, 0, 1);
+  return Math.pow(progress, 1.1) * 460;
+}
+
+function updateSaleSequence() {
+  if (!isSaleActive()) {
+    return false;
+  }
+
+  state.sale.frame += 1;
+
+  if (state.sale.phase === "packing") {
+    state.sale.burstTicker += 1;
+
+    if (state.sale.frame === 10) {
+      spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 12, "포장 시작", "#fff4d2", 48);
+    }
+
+    if (state.sale.frame === 18) {
+      spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().centerY - 30, `${state.sale.auctionName} 입장`, "#fff0cf", 50);
+    }
+
+    while (
+      state.sale.burstIndex < state.sale.premiumBursts.length
+      && state.sale.burstTicker >= BALANCE.sale.burstGapFrames
+    ) {
+      const burst = state.sale.premiumBursts[state.sale.burstIndex];
+      state.sale.burstTicker -= BALANCE.sale.burstGapFrames;
+      state.sale.burstIndex += 1;
+      state.sale.displayedBonus += burst.value;
+      spawnFloatingText(
+        burst.x + (Math.random() - 0.5) * 18,
+        burst.y - state.sale.burstIndex * 4,
+        `${burst.name} +${formatLabCurrency(burst.value)}`,
+        "#ffe59b",
+        44,
+      );
+      spawnParticles(burst.x, burst.y, "#ffd87c", 8, 3.8);
+    }
+
+    state.sale.premiumBurstsDone = state.sale.burstIndex >= state.sale.premiumBursts.length;
+  }
+
+  if (state.sale.phase === "packing" && state.sale.frame >= BALANCE.sale.packFrames) {
+    state.sale.phase = "shipping";
+    state.sale.frame = 0;
+    spawnFloatingText(
+      getOrchardBounds().centerX,
+      getOrchardBounds().centerY,
+      `${state.sale.auctionName} x${state.sale.auctionMultiplier.toFixed(2)}`,
+      "#fff6dc",
+      46,
+    );
+    if (state.sale.rottenPenaltyRate > 0) {
+      spawnFloatingText(
+        getOrchardBounds().centerX,
+        getOrchardBounds().centerY + 34,
+        `썩은 감액 -${Math.round(state.sale.rottenPenaltyRate * 100)}%`,
+        "#d8f0af",
+        44,
+      );
+    }
+    return true;
+  }
+
+  if (state.sale.phase === "shipping") {
+    state.sale.shippedX = getSaleShiftX();
+    if (state.sale.frame >= BALANCE.sale.shipFrames) {
+      finishRun(state.sale.reason);
+    }
+  }
+
+  return true;
 }
 
 function finishRun(reason) {
-  if (!state.run.alive) {
+  if (!state.run.alive && !isSaleActive()) {
     return;
   }
 
-  const exitReason = reason === "sold" ? "sold" : "game_over";
-  const appraisal = exitReason === "sold" ? getAppraisalValue() : 0;
-  const bankGain = safeRound(state.run.score + appraisal);
+  const exitReason = reason === "auto_sold" ? "auto_sold" : "sold";
+  const saleData = isSaleActive() ? state.sale : getPendingSaleData(exitReason);
+  const appraisal = saleData.appraisal;
+  const bankGain = saleData.bankGain;
 
   state.run.alive = false;
   state.run.exitReason = exitReason;
   state.run.sellPreview = appraisal;
   state.paused = false;
+  state.sale.active = false;
+  state.sale.phase = "idle";
+  state.sale.shippedX = 0;
+  state.sale.frame = 0;
 
   state.meta.bank += bankGain;
   state.meta.bestScore = Math.max(state.meta.bestScore, state.run.score);
@@ -1636,12 +2271,13 @@ function finishRun(reason) {
     state.meta.stats.lastSaleAppraisal = appraisal;
     audioManager.play("sell");
   } else {
-    state.meta.stats.failedRuns += 1;
-    state.meta.stats.lastSaleAppraisal = 0;
-    audioManager.play("game-over");
+    state.meta.stats.autoSoldRuns += 1;
+    state.meta.stats.totalAppraisalGain += appraisal;
+    state.meta.stats.lastSaleAppraisal = bankGain;
+    audioManager.play("sell");
   }
 
-  showRunResultOverlay(exitReason, appraisal, bankGain);
+  showRunResultOverlay(exitReason, saleData);
   syncUi(true);
   saveState();
 }
@@ -1651,11 +2287,11 @@ function attemptSellCrate() {
     audioManager.play("ui-denied");
     return;
   }
-  finishRun("sold");
+  startSaleSequence("sold");
 }
 
 function togglePause(forceValue) {
-  if (!state.run.alive) {
+  if (!state.run.alive || isSaleActive()) {
     audioManager.play("ui-denied");
     return;
   }
@@ -1663,7 +2299,7 @@ function togglePause(forceValue) {
   state.paused = typeof forceValue === "boolean" ? forceValue : !state.paused;
   audioManager.play("pause", { paused: state.paused });
   if (state.paused) {
-    showOverlay("Paused", "컨베이어와 물리 업데이트를 잠시 멈췄습니다. 버튼이나 P 키로 다시 이어갈 수 있습니다.");
+    showOverlay("잠시 멈춤", "컨베이어와 상자 물리를 잠시 멈췄습니다. 버튼이나 P 키로 다시 이어갈 수 있습니다.");
   } else {
     hideOverlay();
   }
@@ -1671,10 +2307,11 @@ function togglePause(forceValue) {
 }
 
 function showOverlay(title, text, buttonMarkup) {
+  clearOverlayAutoAdvance();
   const content = buttonMarkup || "";
   ui.overlay.innerHTML = `
     <div>
-      <p class="modal-eyebrow">APPLE DROP IDLE</p>
+      <p class="modal-eyebrow">과수원 정산</p>
       <h2>${title}</h2>
       <p>${text}</p>
       ${content}
@@ -1683,15 +2320,21 @@ function showOverlay(title, text, buttonMarkup) {
   ui.overlay.classList.remove("hidden");
 }
 
-function showRunResultOverlay(reason, appraisal, bankGain) {
-  const title = reason === "sold" ? "Crate Sold" : "Run Lost";
-  const buttonLabel = reason === "sold" ? "다음 런" : "재시작";
+function showRunResultOverlay(reason, saleData) {
+  const title = reason === "auto_sold" ? "자동 판매 완료" : "박스 판매 완료";
+  const buttonLabel = "다음 런";
   const summaryText = [
     `최종 점수 ${formatNumber(state.run.score)}`,
-    reason === "sold" ? `감정가 ${formatNumber(appraisal)}` : "감정가 0",
-    `은행 유입 ${formatNumber(bankGain)}`,
+    `경매장 ${saleData.auctionName} x${saleData.auctionMultiplier.toFixed(2)}`,
+    `망치가 ${formatLabCurrency(saleData.appraisal)}`,
+    `고품질 프리미엄 ${formatLabCurrency(saleData.premiumValue)}`,
+    `황금 보너스 ${formatLabCurrency(saleData.goldenValue)}`,
+    `썩은 감액 ${Math.round(saleData.rottenPenaltyRate * 100)}%`,
+    reason === "auto_sold" ? `자동판매 수수료 ${Math.round(saleData.feeRate * 100)}%` : "수동 판매 보너스",
+    `실수령 연구 자금 ${formatLabCurrency(saleData.bankGain)}`,
     `생존 시간 ${formatDuration(state.run.elapsedFrames / 60)}`,
     `최고 단계 ${state.run.topTier >= 0 ? APPLE_TYPES[state.run.topTier].name : "-"}`,
+    `5초 뒤 자동으로 다음 런`,
   ].join(" · ");
 
   showOverlay(
@@ -1699,21 +2342,56 @@ function showRunResultOverlay(reason, appraisal, bankGain) {
     summaryText,
     `<button id="overlayRestartButton" class="action-button primary">${buttonLabel}</button>`,
   );
+  scheduleOverlayAutoAdvance();
 }
 
 function hideOverlay() {
+  clearOverlayAutoAdvance();
   ui.overlay.classList.add("hidden");
+}
+
+function clearOverlayAutoAdvance() {
+  if (state.overlayAutoAdvanceTimer) {
+    window.clearInterval(state.overlayAutoAdvanceTimer);
+    state.overlayAutoAdvanceTimer = 0;
+  }
+  state.overlayAutoAdvanceEndsAt = 0;
+}
+
+function scheduleOverlayAutoAdvance() {
+  clearOverlayAutoAdvance();
+  state.overlayAutoAdvanceEndsAt = Date.now() + 5000;
+  state.overlayAutoAdvanceTimer = window.setInterval(() => {
+    const button = document.getElementById("overlayRestartButton");
+    if (!button) {
+      clearOverlayAutoAdvance();
+      return;
+    }
+
+    const secondsLeft = Math.max(0, Math.ceil((state.overlayAutoAdvanceEndsAt - Date.now()) / 1000));
+    button.textContent = secondsLeft > 0 ? `다음 런 (${secondsLeft})` : "다음 런";
+    if (secondsLeft <= 0) {
+      clearOverlayAutoAdvance();
+      startNewRun();
+    }
+  }, 150);
 }
 
 function getStatusText() {
   if (!state.run.alive) {
-    return state.run.exitReason === "sold"
-      ? "상자를 매각했습니다. 연구실 투자 후 다음 런으로 이어갈 수 있습니다."
-      : "danger line에 밀려 런을 잃었습니다. 점수만 은행으로 전환되었습니다.";
+    return state.run.exitReason === "auto_sold"
+      ? "상자가 꽉 차 자동 판매되었습니다. 수수료가 적용된 연구 자금만 회수했습니다."
+      : "박스를 수동 판매했습니다. 연구소를 강화하고 다음 런으로 이어가십시오.";
   }
 
   if (state.paused) {
     return "컨베이어와 물리가 일시정지 상태입니다.";
+  }
+
+  if (isSaleActive()) {
+    return state.sale.reason === "auto_sold"
+      ? `상자를 자동 포장해 경매장으로 보내는 중입니다. 수수료 ${Math.round(state.sale.feeRate * 100)}% 적용`
+      : `상자를 ${state.sale.auctionName || "경매장"}에 올리고 정산 중입니다.`;
   }
 
   if (state.boxAnimation.active) {
@@ -1725,7 +2403,7 @@ function getStatusText() {
   }
 
   if (state.spin.phase === "rotating") {
-    return "Auto Spinner가 상자를 회전시키며 배치를 다시 흔들고 있습니다.";
+    return "자동 뒤집기가 상자를 회전시키며 배치를 다시 흔드는 중입니다.";
   }
 
   if (state.spin.phase === "opening") {
@@ -1733,11 +2411,11 @@ function getStatusText() {
   }
 
   if (canSellCrate()) {
-    return `상자를 지금 매각할 수 있습니다. 매각 시 은행 +${formatNumber(state.run.score + state.run.sellPreview)}를 즉시 확보합니다.`;
+    return `지금 경매 가능. 현재 예상가는 ${formatLabCurrency(state.run.sellPreview)}이며, 실제 경매 등급에 따라 더 높게 받을 수 있습니다.`;
   }
 
   if (state.run.redLineFrames > 0) {
-    return "상단 FAIL LINE에 사과가 걸렸습니다. 두 개 이상이 2초 유지되면 즉시 런이 종료됩니다.";
+    return `자동 경매선 경고입니다. 2초 더 걸리면 강제 경매되고 ${Math.round(getAutoSaleFeeRate() * 100)}% 수수료가 붙습니다.`;
   }
 
   if (IS_DEV_HOST && state.devSpeed > 1) {
@@ -1746,10 +2424,10 @@ function getStatusText() {
 
   const dangerRatio = clamp(state.run.dangerRatio, 0, 1);
   if (dangerRatio >= 0.72) {
-    return "위험도가 높습니다. Auto Spinner, Crate Expansion, Sell Crate 선택을 함께 보십시오.";
+    return "위험도가 높습니다. 상자 확장과 자동 회전, 수동 경매 타이밍을 함께 보십시오.";
   }
 
-  return "사과는 컨베이어 벨트에서 굴러 떨어집니다. 런 업그레이드로 버티고, 적절한 시점에 상자를 매각해 장기적으로 성장하세요.";
+  return "사과는 컨베이어에서 자동 공급됩니다. 상자 장비로 버티고, 과수원 연구로 다음 경매 수입을 점점 키우세요.";
 }
 
 function getRunUpgradeDetail(key) {
@@ -1762,23 +2440,25 @@ function getRunUpgradeDetail(key) {
       return `상자 배율 x${state.run.boxScale.toFixed(2)} · 할인 ${Math.round(getExpansionDiscount() * 100)}%`;
     case "bombSeeder":
       return state.meta.upgrades.bombOrchard <= 0
-        ? "Bomb Orchard 해금 필요"
+        ? "폭탄 과수원 해금 필요"
         : `현재 폭탄 확률 ${formatPercent(getSpecialChances().bomb)}`;
     case "prismSeeder":
       return state.meta.upgrades.prismOrchard <= 0
-        ? "Prism Orchard 해금 필요"
+        ? "무지개 육종실 해금 필요"
         : `현재 프리즘 확률 ${formatPercent(getSpecialChances().prism)}`;
     case "shockEngine":
       return `충격 배율 x${getShockMultiplier().toFixed(2)}`;
     case "autoSpinner": {
       const spec = getAutoSpinnerSpec();
       if (!spec) {
-        return "자동 회전 미해금";
+        return "자동 뒤집기 미해금";
       }
       return `위험도 ${Math.round(spec.threshold * 100)}% / 쿨다운 ${formatSeconds(spec.cooldownSeconds)}`;
     }
+    case "dangerBuffer":
+      return `위험 구역 하단 ${Math.round(getDangerZoneBottomRatio() * 100)}%`;
     case "valuePress":
-      return `런 가치 배율 x${getRunValueMultiplier().toFixed(2)}`;
+      return `이번 런 점수/재화 x${getRunValueMultiplier().toFixed(2)}`;
     case "dropTier": {
       const nextLabel = tierInfo.base < APPLE_TYPES.length - 1
         ? ` · 다음 ${tierInfo.base + 2}단계 ${Math.round(tierInfo.nextChance * 100)}%`
@@ -1793,22 +2473,34 @@ function getRunUpgradeDetail(key) {
 function getMetaUpgradeDetail(key) {
   switch (key) {
     case "starterFund":
-      return `다음 런 시작 자금 ${formatNumber(getStarterCash())}`;
+      return `다음 런 시작 자금 ${formatRunCurrency(getStarterCash())}`;
     case "durableCrate":
-      return `fail-line 복구 ${getRedLineRecoveryFrames()}f/tick`;
+      return `자동 판매선 회복 속도 +${getRedLineRecoveryFrames()}`;
     case "bombOrchard":
       return `기본 폭탄 확률 ${formatPercent(getBaseBombChance())}`;
     case "prismOrchard":
       return `기본 프리즘 확률 ${formatPercent(getBasePrismChance())}`;
     case "expansionEngineering":
-      return `할인 ${Math.round(getExpansionDiscount() * 100)}% · camera exp ${getCameraExponent().toFixed(2)}`;
+      return `할인 ${Math.round(getExpansionDiscount() * 100)}% · 화면 안정 ${getCameraExponent().toFixed(2)}`;
+    case "brokerageOffice":
+      return `자동판매 수수료 ${Math.round(getAutoSaleFeeRate() * 100)}%`;
+    case "twinConveyor":
+      return hasTwinConveyor() ? "오른쪽 벨트 활성" : "추가 벨트 미설치";
+    case "goldenMulch":
+      return `황금 사과 ${formatPercent(getGoldenAppleChance())} · 황금 보너스 x${getGoldenBonusScale().toFixed(2)}`;
+    case "sortingShed":
+      return `썩은 사과 ${formatPercent(getRottenAppleChance())}`;
     case "offlineOrchard":
       return `오프라인 배율 x${getOfflineMultiplier().toFixed(2)}`;
     case "mergeLedger":
-      return `메타 가치 배율 x${getMetaValueMultiplier().toFixed(2)}`;
+      return `점수/런 재화 x${getMetaValueMultiplier().toFixed(2)}`;
     default:
       return "";
   }
+}
+
+function getUpgradeAssetPath(key) {
+  return UPGRADE_ASSET_PATHS[key] || "";
 }
 
 function buildUpgradeCardMarkup(shop, key) {
@@ -1831,25 +2523,32 @@ function buildUpgradeCardMarkup(shop, key) {
     capped ? "capped" : "",
     locked ? "locked" : "",
   ].filter(Boolean).join(" ");
-  const levelText = finiteCap ? `Lv ${level} / ${definition.cap}` : `Lv ${level}`;
+  const levelText = finiteCap ? `${level}단계 / ${definition.cap}` : `${level}단계`;
 
-  let stateLabel = `₳ ${formatNumber(cost)}`;
+  let stateLabel = shop === "run" ? formatRunCurrency(cost) : formatLabCurrency(cost);
   if (locked) {
-    stateLabel = "LOCKED";
+    stateLabel = "잠김";
   } else if (capped) {
-    stateLabel = "MAX";
+    stateLabel = "최대";
   }
+
+  const assetPath = getUpgradeAssetPath(key);
+  const artClasses = ["upgrade-art", assetPath ? "has-image" : ""].filter(Boolean).join(" ");
+  const artStyle = assetPath ? ` style="--asset-image:url('${assetPath}');"` : "";
 
   return `
     <button class="${classes}" data-shop="${shop}" data-key="${key}" ${locked || capped ? "disabled" : ""}>
-      <div class="upgrade-head">
-        <span class="upgrade-title">${definition.label}</span>
-        <span class="upgrade-level">${levelText}</span>
-      </div>
-      <p class="upgrade-note">${note}</p>
-      <div class="upgrade-foot">
-        <span class="upgrade-cost">${stateLabel}</span>
-        <span class="upgrade-tag">${definition.tag}</span>
+      <div class="${artClasses}" data-icon="${definition.icon || "ART"}" data-asset="${definition.asset || "slot"}"${artStyle}></div>
+      <div class="upgrade-copy">
+        <div class="upgrade-head">
+          <span class="upgrade-title">${definition.label}</span>
+          <span class="upgrade-level">${levelText}</span>
+        </div>
+        <p class="upgrade-note">${note}</p>
+        <div class="upgrade-foot">
+          <span class="upgrade-cost">${stateLabel}</span>
+          <span class="upgrade-tag">${definition.tag}</span>
+        </div>
       </div>
     </button>
   `;
@@ -1892,68 +2591,94 @@ function buildAutomationMarkup() {
   const spinnerSpec = getAutoSpinnerSpec();
   const spinnerText = spinnerSpec
     ? `${Math.round(spinnerSpec.threshold * 100)}% / ${formatSeconds(spinnerSpec.cooldownSeconds)}`
-    : "Locked";
+    : "잠김";
   const cooldownText = state.run.timers.autoSpinCooldown > 0
     ? formatSeconds(state.run.timers.autoSpinCooldown / 60)
-    : "Ready";
+    : "준비";
   const specialChances = getSpecialChances();
   const tierInfo = getDropTierInfo();
   const topTierName = state.run.topTier >= 0 ? APPLE_TYPES[state.run.topTier].name : "-";
+  const goldenChance = getGoldenAppleChance();
+  const rottenChance = getRottenAppleChance();
   const devSpeedRow = IS_DEV_HOST ? `
     <div class="stat-row">
-      <dt>Dev Speed</dt>
+      <dt>개발 배속</dt>
       <dd>x${state.devSpeed}</dd>
     </div>
   ` : "";
 
   return `
     <div class="stat-row">
-      <dt>Auto Drop</dt>
+      <dt>자동 투입</dt>
       <dd>${formatSeconds(getDropIntervalFrames() / 60)}</dd>
     </div>
     ${devSpeedRow}
     <div class="stat-row">
-      <dt>Drop Tier</dt>
+      <dt>기본 등급</dt>
       <dd>${tierInfo.base + 1}<br>${Math.round(tierInfo.nextChance * 100)}%</dd>
     </div>
     <div class="stat-row">
-      <dt>Season</dt>
+      <dt>위험 구역</dt>
+      <dd>${Math.round(getDangerZoneTopRatio() * 100)}% - ${Math.round(getDangerZoneBottomRatio() * 100)}%</dd>
+    </div>
+    <div class="stat-row">
+      <dt>시즌</dt>
       <dd>${state.run.season + 1}</dd>
     </div>
     <div class="stat-row">
-      <dt>Bomb Rate</dt>
+      <dt>폭탄 확률</dt>
       <dd>${formatPercent(specialChances.bomb)}</dd>
     </div>
     <div class="stat-row">
-      <dt>Prism Rate</dt>
+      <dt>프리즘 확률</dt>
       <dd>${formatPercent(specialChances.prism)}</dd>
     </div>
     <div class="stat-row">
-      <dt>Auto Spinner</dt>
+      <dt>자동 뒤집기</dt>
       <dd>${spinnerText}<br>${cooldownText}</dd>
     </div>
     <div class="stat-row">
-      <dt>Crate Scale</dt>
+      <dt>상자 크기</dt>
       <dd>x${state.run.boxScale.toFixed(2)}</dd>
     </div>
     <div class="stat-row">
-      <dt>Sell Appraisal</dt>
-      <dd>${formatNumber(state.run.sellPreview)}</dd>
+      <dt>예상 감정가</dt>
+      <dd>${formatLabCurrency(state.run.sellPreview)}</dd>
     </div>
     <div class="stat-row">
-      <dt>Sell Ready</dt>
-      <dd>${canSellCrate() ? "YES" : "NO"}</dd>
+      <dt>황금 사과</dt>
+      <dd>${formatPercent(goldenChance)}</dd>
     </div>
     <div class="stat-row">
-      <dt>Offline / sec</dt>
-      <dd>${formatNumber(getOfflineRatePerSecond())}</dd>
+      <dt>썩은 사과</dt>
+      <dd>${formatPercent(rottenChance)}</dd>
     </div>
     <div class="stat-row">
-      <dt>Best Score</dt>
+      <dt>자동 수수료</dt>
+      <dd>${Math.round(getAutoSaleFeeRate() * 100)}%</dd>
+    </div>
+    <div class="stat-row">
+      <dt>판매 가능</dt>
+      <dd>${canSellCrate() ? "가능" : "잠김"}</dd>
+    </div>
+    <div class="stat-row">
+      <dt>이번 경매</dt>
+      <dd>판매 순간 랜덤</dd>
+    </div>
+    <div class="stat-row">
+      <dt>오프라인 /초</dt>
+      <dd>${formatLabCurrency(getOfflineRatePerSecond())}</dd>
+    </div>
+    <div class="stat-row">
+      <dt>컨베이어</dt>
+      <dd>${hasTwinConveyor() ? "듀얼" : "싱글"}</dd>
+    </div>
+    <div class="stat-row">
+      <dt>최고 점수</dt>
       <dd>${formatNumber(state.meta.bestScore)}</dd>
     </div>
     <div class="stat-row">
-      <dt>Top Tier</dt>
+      <dt>최고 등급</dt>
       <dd>${topTierName}</dd>
     </div>
   `;
@@ -1962,27 +2687,31 @@ function buildAutomationMarkup() {
 function buildBadgeMarkup() {
   const spinnerSpec = getAutoSpinnerSpec();
   const spinnerReady = spinnerSpec
-    ? (state.run.timers.autoSpinCooldown > 0 ? `COOLDOWN ${formatSeconds(state.run.timers.autoSpinCooldown / 60)}` : "READY")
-    : "LOCKED";
+    ? (state.run.timers.autoSpinCooldown > 0 ? `대기 ${formatSeconds(state.run.timers.autoSpinCooldown / 60)}` : "준비")
+    : "잠김";
   const chances = getSpecialChances();
   const dangerRatio = clamp(state.run.dangerRatio, 0, 1);
   const tierInfo = getDropTierInfo();
+  const goldenChance = getGoldenAppleChance();
+  const rottenChance = getRottenAppleChance();
   const badges = [
-    `<span class="badge"><strong>AUTO DROP</strong>${formatSeconds(getDropIntervalFrames() / 60)}</span>`,
+    `<span class="badge"><strong>자동투입</strong>${formatSeconds(getDropIntervalFrames() / 60)}</span>`,
   ];
 
   if (IS_DEV_HOST) {
-    badges.push(`<span class="badge"><strong>SIM</strong>x${state.devSpeed}</span>`);
+    badges.push(`<span class="badge"><strong>배속</strong>x${state.devSpeed}</span>`);
   }
 
   return badges.concat([
-    `<span class="badge"><strong>DROP TIER</strong>${tierInfo.base + 1}</span>`,
-    `<span class="badge"><strong>DANGER</strong>${Math.round(dangerRatio * 100)}%</span>`,
-    `<span class="badge"><strong>SPINNER</strong>${spinnerReady}</span>`,
-    `<span class="badge"><strong>APPRAISAL</strong>${formatNumber(state.run.sellPreview)}</span>`,
-    `<span class="badge"><strong>SELL</strong>${canSellCrate() ? "READY" : "LOCKED"}</span>`,
-    `<span class="badge"><strong>BOMB</strong>${formatPercent(chances.bomb)}</span>`,
-    `<span class="badge"><strong>PRISM</strong>${formatPercent(chances.prism)}</span>`,
+    `<span class="badge"><strong>드롭 등급</strong>${tierInfo.base + 1}</span>`,
+    `<span class="badge"><strong>위험도</strong>${Math.round(dangerRatio * 100)}%</span>`,
+    `<span class="badge"><strong>뒤집기</strong>${spinnerReady}</span>`,
+    `<span class="badge"><strong>감정가</strong>${formatLabCurrency(state.run.sellPreview)}</span>`,
+    `<span class="badge"><strong>판매</strong>${canSellCrate() ? "가능" : "잠김"}</span>`,
+    `<span class="badge"><strong>황금</strong>${formatPercent(goldenChance)}</span>`,
+    `<span class="badge"><strong>썩음</strong>${formatPercent(rottenChance)}</span>`,
+    `<span class="badge"><strong>폭탄</strong>${formatPercent(chances.bomb)}</span>`,
+    `<span class="badge"><strong>프리즘</strong>${formatPercent(chances.prism)}</span>`,
   ]).join("");
 }
 
@@ -1990,10 +2719,10 @@ function buildLegend() {
   ui.legend.innerHTML = APPLE_TYPES.map((apple, index) => {
     return `
       <article class="legend-row" style="--apple-main:${apple.color}; --apple-highlight:${apple.highlight}; --apple-shadow:${apple.shadow}; --apple-leaf:${apple.leaf};">
-        <div class="legend-icon" aria-hidden="true"></div>
+        <div class="legend-icon" aria-hidden="true"><div class="legend-apple"></div></div>
         <div class="legend-copy">
           <strong>${apple.name}</strong>
-          <span>Tier ${index + 1} · radius ${apple.radius}</span>
+          <span>${index + 1}단계 · 반지름 ${apple.radius}</span>
         </div>
         <span class="legend-points">${formatNumber(apple.points)}</span>
       </article>
@@ -2001,8 +2730,34 @@ function buildLegend() {
   }).join("");
 }
 
+function renderGuideModal() {
+  const activePane = sanitizeGuidePane(state.guidePane);
+  ui.guideTabs.innerHTML = GUIDE_PANES.map((pane) => {
+    const data = GUIDE_DATA[pane];
+    const active = pane === activePane;
+    return `<button class="guide-tab ${active ? "is-active" : ""}" data-guide-pane="${pane}" type="button">${data.label}</button>`;
+  }).join("");
+
+  const pane = GUIDE_DATA[activePane];
+  ui.guideContent.innerHTML = `
+    <section class="guide-section">
+      <div class="guide-grid">
+        ${pane.items.map((item) => `
+          <article class="guide-tile">
+            <div class="guide-icon" data-icon="${item.icon}"></div>
+            <div class="guide-copy">
+              <strong>${item.title}</strong>
+              <p>${item.body}</p>
+            </div>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function syncControlUi(force) {
-  const snapshot = `${state.activeMenu}|${state.devSpeed}`;
+  const snapshot = `${state.activeMenu}|${state.sheetOpen}|${state.devSpeed}|${state.guidePane}`;
   if (!force && state.controlSnapshot === snapshot) {
     return;
   }
@@ -2023,7 +2778,7 @@ function syncControlUi(force) {
   const menuButtons = ui.menuTabs ? ui.menuTabs.querySelectorAll("[data-menu]") : [];
   menuButtons.forEach((button) => {
     const menu = button.dataset.menu;
-    const active = menu === state.activeMenu;
+    const active = menu === state.activeMenu && state.sheetOpen;
     button.classList.toggle("is-active", active);
     button.setAttribute("aria-pressed", active ? "true" : "false");
   });
@@ -2032,12 +2787,30 @@ function syncControlUi(force) {
     pane.classList.toggle("is-active", pane.dataset.menuPane === state.activeMenu);
   });
 
+  if (ui.bottomSheet) {
+    ui.bottomSheet.classList.toggle("is-open", state.sheetOpen);
+  }
+
+  if (ui.sheetTitle) {
+    const sheetTitles = {
+      automation: "경매 현황",
+      run: "상점",
+      lab: "연구실",
+      ladder: "사과 도감",
+    };
+    ui.sheetTitle.textContent = sheetTitles[state.activeMenu] || "경매 현황";
+  }
+
+  if (ui.guideModal) {
+    renderGuideModal();
+  }
+
   state.controlSnapshot = snapshot;
 }
 
 function syncUi(force) {
   state.run.topTier = state.apples.reduce((highest, apple) => Math.max(highest, apple.level), state.run.topTier);
-  state.run.sellPreview = getAppraisalValue();
+  state.run.sellPreview = isSaleActive() ? state.sale.appraisal : getAppraisalValue();
   const dangerPercent = `${Math.round(clamp(state.run.dangerRatio, 0, 1) * 100)}%`;
   const snapshot = [
     state.run.score,
@@ -2053,6 +2826,8 @@ function syncUi(force) {
     state.run.topTier,
     state.run.elapsedFrames,
     state.run.season,
+    state.sale.active,
+    state.sale.reason,
     state.run.timers.autoSpinCooldown,
     state.run.redLineFrames,
     state.spin.phase,
@@ -2062,16 +2837,16 @@ function syncUi(force) {
 
   if (force || state.uiSnapshot !== snapshot) {
     ui.score.textContent = formatNumber(state.run.score);
-    ui.cash.textContent = formatNumber(state.run.cash);
-    ui.bank.textContent = formatNumber(state.meta.bank);
+    ui.cash.textContent = formatRunCurrency(state.run.cash);
+    ui.bank.textContent = formatLabCurrency(state.meta.bank);
     ui.danger.textContent = dangerPercent;
     ui.status.textContent = getStatusText();
-    ui.appraisalValue.textContent = formatNumber(state.run.sellPreview);
+    ui.appraisalValue.textContent = formatLabCurrency(state.run.sellPreview);
     ui.sellHint.textContent = getSellGateText();
-    ui.pauseButton.textContent = state.paused ? "재개" : "일시정지";
+    ui.pauseButton.textContent = state.paused ? "재개" : "멈춤";
     ui.pauseButton.disabled = !state.run.alive;
-    ui.sellButton.disabled = !canSellCrate();
-    ui.sellButton.textContent = state.run.alive ? "Sell Crate" : "Run Closed";
+    ui.sellButton.disabled = !canSellCrate() || isSaleActive();
+    ui.sellButton.textContent = isSaleActive() ? "포장 중..." : (state.run.alive ? "경매 올리기" : "종료됨");
     state.uiSnapshot = snapshot;
   }
 
@@ -2091,7 +2866,7 @@ function syncUi(force) {
   renderShops(force);
 
   if (state.offlineSummary) {
-    ui.offlineText.textContent = `${formatDuration(state.offlineSummary.elapsedSeconds)} 동안 과수원이 은행 자금 ${formatNumber(state.offlineSummary.gain)}을 모았습니다. 현재 런 상태는 저장 시점 그대로 복구되었습니다.`;
+    ui.offlineText.textContent = `${formatDuration(state.offlineSummary.elapsedSeconds)} 동안 과수원이 ${formatLabCurrency(state.offlineSummary.gain)}을 모았습니다. 현재 런 상태는 저장 시점 그대로 복구되었습니다.`;
     ui.offlineModal.classList.remove("hidden");
   } else {
     ui.offlineModal.classList.add("hidden");
@@ -2111,15 +2886,43 @@ function setDevSpeed(speed) {
 function setActiveMenu(menu) {
   const nextMenu = sanitizeMenuPane(menu);
   if (state.activeMenu === nextMenu) {
+    state.sheetOpen = !state.sheetOpen;
+    audioManager.play("ui-confirm");
+    syncUi(true);
     return;
   }
   state.activeMenu = nextMenu;
+  state.sheetOpen = true;
   audioManager.play("ui-confirm");
   syncUi(true);
 }
 
+function openGuide() {
+  state.guidePane = sanitizeGuidePane(state.guidePane);
+  state.sheetOpen = false;
+  renderGuideModal();
+  ui.guideModal.classList.remove("hidden");
+  audioManager.play("ui-confirm");
+  syncUi(true);
+}
+
+function closeGuide() {
+  ui.guideModal.classList.add("hidden");
+  audioManager.play("ui-confirm");
+}
+
+function setGuidePane(pane) {
+  const nextPane = sanitizeGuidePane(pane);
+  if (nextPane === state.guidePane) {
+    return;
+  }
+  state.guidePane = nextPane;
+  renderGuideModal();
+  audioManager.play("ui-confirm");
+}
+
 function canBuyRunUpgrade(key) {
-  if (!state.run.alive) {
+  if (!state.run.alive || isSaleActive()) {
     return false;
   }
 
@@ -2135,6 +2938,9 @@ function canBuyRunUpgrade(key) {
 }
 
 function canBuyMetaUpgrade(key) {
+  if (isSaleActive()) {
+    return false;
+  }
   const definition = META_UPGRADES[key];
   const level = state.meta.upgrades[key];
   if (typeof definition.cap === "number" && level >= definition.cap) {
@@ -2160,11 +2966,15 @@ function purchaseRunUpgrade(key) {
   }
 
   if (key === "autoSpinner") {
-    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "AUTO SPINNER", "#e7f0ff", 52);
+    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "자동 뒤집개", "#e7f0ff", 52);
+  }
+
+  if (key === "dangerBuffer") {
+    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "위험 구역 하강", "#ffd7a8", 52);
   }
 
   if (key === "dropTier") {
-    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "DROP TIER UP", "#fff0d5", 52);
+    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "우량 품종", "#fff0d5", 52);
   }
 
   state.run.targetBoxScale = getBoxScaleForLevel(state.run.upgrades.crateExpansion);
@@ -2185,6 +2995,26 @@ function purchaseMetaUpgrade(key) {
 
   if (key === "durableCrate") {
     state.run.redLineFrames = Math.max(0, state.run.redLineFrames - 12);
+  }
+
+  if (key === "brokerageOffice") {
+    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "수수료 인하", "#cfe9ff", 48);
+  }
+
+  if (key === "twinConveyor") {
+    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "보조 벨트", "#e6f4ff", 56);
+  }
+
+  if (key === "goldenMulch") {
+    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "황금 거름", "#fff0a8", 52);
+  }
+
+  if (key === "sortingShed") {
+    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "선별 강화", "#d8f0af", 52);
+  }
+
+  if (key === "mergeLedger") {
+    spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "고급 농약", "#ffd7a8", 52);
   }
 
   audioManager.play("ui-confirm");
@@ -2222,11 +3052,28 @@ function drawSpecialType() {
   return null;
 }
 
+function drawTraitType() {
+  const goldenChance = getGoldenAppleChance();
+  const rottenChance = getRottenAppleChance();
+  const roll = Math.random();
+  if (roll < goldenChance) {
+    return "golden";
+  }
+  if (roll < goldenChance + rottenChance) {
+    return "rotten";
+  }
+  return null;
+}
+
 function createInfeedToken() {
   const interval = getDropIntervalFrames();
+  const lanes = getActiveConveyorLanes();
+  const lane = lanes.length > 1 && state.run.drops % 2 === 1 ? "right" : "left";
   state.infeed = {
+    lane,
     level: rollDropLevel(),
     special: drawSpecialType(),
+    trait: drawTraitType(),
     frame: 0,
     beltFrames: getBeltFrames(interval),
   };
@@ -2237,7 +3084,7 @@ function isSpinActive() {
 }
 
 function isAnimationBlockingFeed() {
-  return isSpinActive() || state.boxAnimation.active;
+  return isSpinActive() || state.boxAnimation.active || isSaleActive();
 }
 
 function getInfeedProgress() {
@@ -2252,7 +3099,7 @@ function getInfeedVisual() {
     return null;
   }
 
-  const geometry = getConveyorGeometry();
+  const geometry = getConveyorGeometry(state.infeed.lane);
   const progress = getInfeedProgress();
   const x = geometry.startX + (geometry.endX - geometry.startX) * progress;
   const y = geometry.startY + (geometry.endY - geometry.startY) * progress;
@@ -2260,13 +3107,16 @@ function getInfeedVisual() {
   const dy = geometry.endY - geometry.startY;
   const length = Math.hypot(dx, dy) || 1;
   const angle = Math.atan2(dy, dx);
-  const spin = (length * progress) / Math.max(12, APPLE_TYPES[state.infeed.level].radius);
+  const spinDirection = state.infeed.lane === "right" ? -1 : 1;
+  const spin = spinDirection * (length * progress) / Math.max(12, APPLE_TYPES[state.infeed.level].radius);
 
   return {
     x,
     y,
     angle,
     spin,
+    unitX: dx / length,
+    unitY: dy / length,
   };
 }
 
@@ -2275,14 +3125,16 @@ function releaseInfeedApple() {
     return;
   }
 
-  const geometry = getConveyorGeometry();
+  const visual = getInfeedVisual();
   const dropLevel = state.infeed.level;
-  const apple = createApple(dropLevel, geometry.endX, geometry.endY, {
+  const tangentSpeed = 2.05;
+  const apple = createApple(dropLevel, visual.x, visual.y, {
     special: state.infeed.special,
-    vx: 1.8,
-    vy: 0.4,
-    spinVelocity: 0.09 + 0.01 * dropLevel,
-    spin: 0,
+    trait: state.infeed.trait,
+    vx: visual.unitX * tangentSpeed,
+    vy: visual.unitY * tangentSpeed,
+    spinVelocity: (state.infeed.lane === "right" ? -1 : 1) * (0.07 + 0.008 * dropLevel),
+    spin: visual.spin,
   });
 
   state.apples.push(apple);
@@ -2331,7 +3183,7 @@ function startSpinSkill() {
   state.spin.lidProgress = 0;
   audioManager.play("spinner-start");
   flashScreen("rgba(188, 223, 255, 0.38)", 0.15);
-  spawnFloatingText(orchard.centerX, orchard.y - 24, "AUTO ROTATE", "#edf7ff", 48);
+  spawnFloatingText(orchard.centerX, orchard.y - 24, "자동 회전", "#edf7ff", 48);
   return true;
 }
 
@@ -2358,7 +3210,7 @@ function startBoxExpansion() {
   state.run.targetBoxScale = nextScale;
   audioManager.play("crate-expand");
   flashScreen("rgba(159, 255, 220, 0.3)", 0.16);
-  spawnFloatingText(orchard.centerX, orchard.y - 24, "ORCHARD EXPANDED", "#e9fff4", 58);
+  spawnFloatingText(orchard.centerX, orchard.y - 24, "상자 증축", "#e9fff4", 58);
   spawnShockwave(orchard.centerX, orchard.bottom - 12, "#74e0b5", orchard.w * 0.7, 18, 20);
 }
 
@@ -2400,7 +3252,7 @@ function updateSpinSkill() {
       state.spin.phase = "rotating";
       state.spin.frame = 0;
       state.spin.lidProgress = 1;
-      spawnFloatingText(orchard.centerX, orchard.y - 24, "ROTATE", "#d9ebff", 42);
+      spawnFloatingText(orchard.centerX, orchard.y - 24, "회전 시작", "#d9ebff", 42);
     }
     return;
   }
@@ -2427,7 +3279,7 @@ function updateSpinSkill() {
       state.spin.phase = "idle";
       state.spin.frame = 0;
       state.spin.lidProgress = 0;
-      spawnFloatingText(orchard.centerX, orchard.y - 24, "OPEN", "#fff1cf", 36);
+      spawnFloatingText(orchard.centerX, orchard.y - 24, "뚜껑 개방", "#fff1cf", 36);
     }
   }
 }
@@ -2610,12 +3462,14 @@ function applyMergePairs(mergePairs) {
     const appleType = APPLE_TYPES[nextLevel];
     const orchard = getOrchardBounds();
     const horizontal = getHorizontalBounds(appleType.radius);
+    const mergedTrait = resolveMergedTrait(first.trait, second.trait);
     const mergedApple = createApple(
       nextLevel,
       clamp((first.x + second.x) * 0.5, horizontal.minX, horizontal.maxX),
       Math.min((first.y + second.y) * 0.5, orchard.bottom - appleType.radius),
       {
         fromMerge: true,
+        trait: mergedTrait,
         vy: Math.min((first.vy + second.vy) * 0.5 - 2.4, 2.2),
         vx: (first.vx + second.vx) * 0.5,
         spinVelocity: (first.spinVelocity + second.spinVelocity) * 0.5 + (Math.random() - 0.5) * 0.03,
@@ -2644,6 +3498,13 @@ function applyMergePairs(mergePairs) {
   if (spawnedApples.length > 0) {
     state.apples = state.apples.filter((apple) => !consumedIds.has(apple.id)).concat(spawnedApples);
   }
+}
+
+function resolveMergedTrait(firstTrait, secondTrait) {
+  if (firstTrait && secondTrait) {
+    return firstTrait === secondTrait ? firstTrait : null;
+  }
+  return firstTrait || secondTrait || null;
 }
 
 function applySpecialEvents(specialEvents) {
@@ -2735,8 +3596,8 @@ function triggerBombExplosion(source, target, appleMap) {
   spawnShockwave(centerX, centerY, SPECIAL_TYPES.bomb.accent, blastRadius * 1.18, 24, 18);
   spawnParticles(centerX, centerY, SPECIAL_TYPES.bomb.accent, 44, 8.5);
   spawnParticles(centerX, centerY, "#ffe2b8", 30, 6.2);
-  spawnFloatingText(centerX, centerY - 12, `BOMB +${formatNumber(gainedValue)}`, "#fff1c6", 62);
-  spawnFloatingText(centerX, centerY + 24, `${affectedCount} apples displaced`, "#ffd0b8", 52);
+  spawnFloatingText(centerX, centerY - 12, `폭탄 +${formatNumber(gainedValue)}`, "#fff1c6", 62);
+  spawnFloatingText(centerX, centerY + 24, `${affectedCount}개 흔들림`, "#ffd0b8", 52);
 }
 
 function triggerPrismUpgrade(source, target, consumedIds, spawnedApples) {
@@ -2752,6 +3613,7 @@ function triggerPrismUpgrade(source, target, consumedIds, spawnedApples) {
     Math.min(target.y, orchard.bottom - nextType.radius),
     {
       fromMerge: true,
+      trait: resolveMergedTrait(source.trait, target.trait),
       vx: (source.vx + target.vx) * 0.18,
       vy: Math.min(target.vy - 3.6, 1.2),
     },
@@ -2767,7 +3629,7 @@ function triggerPrismUpgrade(source, target, consumedIds, spawnedApples) {
   spawnShockwave(target.x, target.y, SPECIAL_TYPES.prism.accent, Math.max(110, nextType.radius * 2.05), 20, 22);
   spawnParticles(target.x, target.y, SPECIAL_TYPES.prism.accent, 26, 6.4);
   spawnParticles(target.x, target.y, nextType.highlight, 22, 5.3);
-  spawnFloatingText(target.x, target.y - 8, `PRISM +${formatNumber(gainedValue)}`, "#ebfbff", 60);
+  spawnFloatingText(target.x, target.y - 8, `프리즘 +${formatNumber(gainedValue)}`, "#ebfbff", 60);
 }
 
 function getCircleAreaAboveLine(radius, lineOffsetFromCenter) {
@@ -2794,7 +3656,7 @@ function getCircleAreaInBand(apple, topY, bottomY) {
 }
 
 function getDangerZoneMetrics(orchard) {
-  const bandTop = orchard.y;
+  const bandTop = orchard.dangerTopY;
   const bandBottom = orchard.dangerY;
   const bandArea = Math.max(1, (orchard.w - 16) * (bandBottom - bandTop));
   let occupiedArea = 0;
@@ -2823,9 +3685,8 @@ function getDangerZoneMetrics(orchard) {
 function updateDangerState() {
   const orchard = getOrchardBounds();
   const metrics = getDangerZoneMetrics(orchard);
-  const seasonHazard = getSeasonHazard(state.run.season);
   const recoveryFrames = getRedLineRecoveryFrames();
-  state.run.dangerRatio = clamp(metrics.fillRatio * (0.98 + (seasonHazard - 1) * 0.08), 0, 1.6);
+  state.run.dangerRatio = clamp(metrics.fillRatio, 0, 1.6);
   state.run.dangerFrames = safeRound(clamp(state.run.dangerRatio, 0, 1) * 100);
 
   if (isSpinActive()) {
@@ -2840,7 +3701,7 @@ function updateDangerState() {
   }
 
   if (state.run.redLineFrames >= BALANCE.redLineHoldFrames) {
-    finishRun("game_over");
+    startSaleSequence("auto_sold");
   }
 }
 
@@ -2917,6 +3778,16 @@ function updateFloatingTexts() {
 
 function worldStep() {
   state.time += 1;
+
+  if (isSaleActive()) {
+    updateSaleSequence();
+    updateParticles();
+    updateShockwaves();
+    updateFloatingTexts();
+    state.screenFlash *= 0.92;
+    return;
+  }
+
   state.run.elapsedFrames += 1;
   state.run.season = Math.floor(state.run.elapsedFrames / BALANCE.seasonFrames);
 
@@ -3003,104 +3874,140 @@ function drawBackdrop(shakeX) {
   ctx.scale(bgScale, bgScale);
   ctx.translate(-WIDTH / 2, -HEIGHT / 2);
 
-  const sky = ctx.createLinearGradient(0, 0, 0, HEIGHT);
-  sky.addColorStop(0, "#c5ecff");
-  sky.addColorStop(0.34, "#f6e7c3");
-  sky.addColorStop(1, "#c89e63");
+  const sky = ctx.createLinearGradient(0, -HEIGHT, 0, HEIGHT * 2);
+  sky.addColorStop(0, "#cfeeff");
+  sky.addColorStop(0.42, "#eff8ff");
+  sky.addColorStop(0.62, "#f7f0dc");
+  sky.addColorStop(1, "#ead6ad");
   ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, WIDTH, HEIGHT);
+  ctx.fillRect(-WIDTH, -HEIGHT, WIDTH * 3, HEIGHT * 3);
 
-  const sunX = 720 - shakeX * 0.2;
-  const sun = ctx.createRadialGradient(sunX, 114, 8, sunX, 114, 110);
-  sun.addColorStop(0, "rgba(255, 247, 216, 0.96)");
+  const sunX = 708 - shakeX * 0.12;
+  const sun = ctx.createRadialGradient(sunX, 126, 10, sunX, 126, 92);
+  sun.addColorStop(0, "rgba(255, 249, 228, 0.96)");
   sun.addColorStop(1, "rgba(255, 247, 216, 0)");
   ctx.fillStyle = sun;
   ctx.beginPath();
-  ctx.arc(sunX, 114, 110, 0, Math.PI * 2);
+  ctx.arc(sunX, 126, 92, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = "#7eaf5b";
-  for (let index = 0; index < 6; index += 1) {
-    const baseX = 30 + index * 160 - shakeX * 0.15;
+  const horizon = 520;
+  const farHill = ctx.createLinearGradient(0, 350, 0, 620);
+  farHill.addColorStop(0, "#bad9a9");
+  farHill.addColorStop(1, "#93bd7d");
+  ctx.fillStyle = farHill;
+  for (let index = -4; index < 8; index += 1) {
+    const baseX = -240 + index * 260 - ((((shakeX * 0.08) % 260) + 260) % 260);
     ctx.beginPath();
-    ctx.moveTo(baseX, 520);
-    ctx.quadraticCurveTo(baseX + 90, 380 - (index % 2) * 30, baseX + 190, 520);
+    ctx.moveTo(baseX, horizon + 30);
+    ctx.quadraticCurveTo(baseX + 110, 400, baseX + 260, horizon + 30);
+    ctx.lineTo(baseX + 260, HEIGHT + 180);
+    ctx.lineTo(baseX, HEIGHT + 180);
     ctx.closePath();
     ctx.fill();
   }
 
-  for (let index = 0; index < 10; index += 1) {
-    const x = 40 + index * 90 - shakeX * 0.3;
-    const y = 80 + (index % 4) * 32;
-    drawCloud(x, y, 0.75 + (index % 3) * 0.16);
+  const nearHill = ctx.createLinearGradient(0, 470, 0, HEIGHT);
+  nearHill.addColorStop(0, "#8fbe70");
+  nearHill.addColorStop(1, "#6f9d56");
+  ctx.fillStyle = nearHill;
+  for (let index = -4; index < 8; index += 1) {
+    const baseX = -260 + index * 240 - ((((shakeX * 0.16) % 240) + 240) % 240);
+    ctx.beginPath();
+    ctx.moveTo(baseX, horizon + 100);
+    ctx.quadraticCurveTo(baseX + 100, 470 + (index % 2) * 18, baseX + 240, horizon + 100);
+    ctx.lineTo(baseX + 240, HEIGHT + 180);
+    ctx.lineTo(baseX, HEIGHT + 180);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
+  const cloudOffset = ((shakeX * 0.22) % 150 + 150) % 150;
+  for (let row = 0; row < 4; row += 1) {
+    for (let index = -3; index < 10; index += 1) {
+      const x = -180 + index * 150 - cloudOffset + (row % 2) * 40;
+      const y = 78 + row * 48;
+      drawCloud(x, y, 0.6 + ((index + row + 10) % 2) * 0.12);
+    }
+  }
+
+  ctx.fillStyle = "rgba(120, 164, 85, 0.16)";
+  for (let row = 0; row < 8; row += 1) {
+    const stripeY = 620 + row * 46;
+    ctx.fillRect(-WIDTH, stripeY, WIDTH * 3, 10);
   }
 
   ctx.restore();
 }
 
 function drawConveyor() {
-  const geometry = getConveyorGeometry();
-  const dx = geometry.endX - geometry.startX;
-  const dy = geometry.endY - geometry.startY;
-  const angle = Math.atan2(dy, dx);
-  const length = Math.hypot(dx, dy);
+  const lanes = getActiveConveyorLanes();
   const offset = (state.beltTime * BALANCE.conveyor.slatSpeed) % BALANCE.conveyor.slatGap;
 
-  ctx.save();
-  ctx.translate(geometry.startX, geometry.startY);
-  ctx.rotate(angle);
+  for (const lane of lanes) {
+    const geometry = getConveyorGeometry(lane);
+    const dx = geometry.endX - geometry.startX;
+    const dy = geometry.endY - geometry.startY;
+    const angle = Math.atan2(dy, dx);
+    const length = Math.hypot(dx, dy);
 
-  ctx.strokeStyle = "rgba(27, 15, 9, 0.34)";
-  ctx.lineWidth = geometry.width + 10;
-  ctx.lineCap = "round";
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(length, 0);
-  ctx.stroke();
+    ctx.save();
+    ctx.translate(geometry.startX, geometry.startY);
+    ctx.rotate(angle);
 
-  ctx.strokeStyle = "#2c251f";
-  ctx.lineWidth = geometry.width;
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(length, 0);
-  ctx.stroke();
+    ctx.strokeStyle = "rgba(27, 15, 9, 0.34)";
+    ctx.lineWidth = geometry.width + 10;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(length, 0);
+    ctx.stroke();
 
-  ctx.strokeStyle = "#50463e";
-  ctx.lineWidth = geometry.width - 18;
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(length, 0);
-  ctx.stroke();
+    ctx.strokeStyle = "#2c251f";
+    ctx.lineWidth = geometry.width;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(length, 0);
+    ctx.stroke();
 
-  ctx.strokeStyle = "rgba(255, 238, 207, 0.12)";
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(0, -(geometry.width * 0.28));
-  ctx.lineTo(length, -(geometry.width * 0.28));
-  ctx.stroke();
+    ctx.strokeStyle = "#50463e";
+    ctx.lineWidth = geometry.width - 18;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(length, 0);
+    ctx.stroke();
 
-  for (let position = -offset; position <= length + BALANCE.conveyor.slatGap; position += BALANCE.conveyor.slatGap) {
-    ctx.fillStyle = "rgba(235, 221, 197, 0.12)";
-    ctx.fillRect(position, -(geometry.width * 0.33), 7, geometry.width * 0.66);
+    ctx.strokeStyle = "rgba(255, 238, 207, 0.12)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, -(geometry.width * 0.28));
+    ctx.lineTo(length, -(geometry.width * 0.28));
+    ctx.stroke();
+
+    for (let position = -offset; position <= length + BALANCE.conveyor.slatGap; position += BALANCE.conveyor.slatGap) {
+      ctx.fillStyle = "rgba(235, 221, 197, 0.12)";
+      ctx.fillRect(position, -(geometry.width * 0.33), 7, geometry.width * 0.66);
+    }
+
+    ctx.fillStyle = "#5d3f27";
+    ctx.beginPath();
+    ctx.arc(0, 0, geometry.width * 0.33, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(length, 0, geometry.width * 0.33, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#27170d";
+    ctx.beginPath();
+    ctx.arc(0, 0, geometry.width * 0.14, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(length, 0, geometry.width * 0.14, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
   }
-
-  ctx.fillStyle = "#5d3f27";
-  ctx.beginPath();
-  ctx.arc(0, 0, geometry.width * 0.33, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(length, 0, geometry.width * 0.33, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.fillStyle = "#27170d";
-  ctx.beginPath();
-  ctx.arc(0, 0, geometry.width * 0.14, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.arc(length, 0, geometry.width * 0.14, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.restore();
 }
 
 function drawInfeedApple() {
@@ -3112,6 +4019,7 @@ function drawInfeedApple() {
   drawApple({
     level: state.infeed.level,
     special: state.infeed.special,
+    trait: state.infeed.trait,
     x: visual.x,
     y: visual.y,
     r: APPLE_TYPES[state.infeed.level].radius,
@@ -3156,13 +4064,15 @@ function drawOrchardBack() {
   ctx.lineWidth = 4;
   ctx.setLineDash([14, 12]);
   ctx.beginPath();
+  ctx.moveTo(orchard.x + 12, orchard.dangerTopY);
+  ctx.lineTo(orchard.x + orchard.w - 12, orchard.dangerTopY);
   ctx.moveTo(orchard.x + 12, orchard.dangerY);
   ctx.lineTo(orchard.x + orchard.w - 12, orchard.dangerY);
   ctx.stroke();
   ctx.setLineDash([]);
 
   ctx.fillStyle = `rgba(255, 120, 84, ${0.06 + dangerRatio * 0.18})`;
-  ctx.fillRect(orchard.x, orchard.y, orchard.w, orchard.dangerY - orchard.y);
+  ctx.fillRect(orchard.x, orchard.dangerTopY, orchard.w, orchard.dangerY - orchard.dangerTopY);
 
   ctx.strokeStyle = `rgba(255, 68, 68, ${0.45 + redLineRatio * 0.5})`;
   ctx.lineWidth = 3 + redLineRatio * 2;
@@ -3185,9 +4095,9 @@ function drawOrchardBack() {
   ctx.textAlign = "left";
   ctx.textBaseline = "alphabetic";
   ctx.fillStyle = `rgba(255, 245, 228, ${0.5 + dangerRatio * 0.4})`;
-  ctx.fillText("DANGER LINE", orchard.x + 18, orchard.dangerY - 12);
+  ctx.fillText("위험 구역", orchard.x + 18, orchard.dangerTopY - 12);
   ctx.fillStyle = `rgba(255, 198, 198, ${0.55 + redLineRatio * 0.35})`;
-  ctx.fillText("FAIL LINE · 2 APPLES / 2.0s", orchard.x + 18, orchard.redLineY - 12);
+  ctx.fillText(`자동 판매선 · 수수료 ${Math.round(getAutoSaleFeeRate() * 100)}%`, orchard.x + 18, orchard.redLineY - 12);
 
   ctx.restore();
 }
@@ -3215,6 +4125,7 @@ function drawAppleShadow(apple) {
 function drawApple(apple, alpha) {
   const appleType = APPLE_TYPES[apple.level];
   const special = apple.special ? SPECIAL_TYPES[apple.special] : null;
+  const trait = apple.trait ? TRAIT_TYPES[apple.trait] : null;
   const badgeRadius = Math.max(11, apple.r * 0.33);
   const badgeFontSize = Math.max(12, apple.r * 0.48);
 
@@ -3232,6 +4143,19 @@ function drawApple(apple, alpha) {
     ctx.shadowBlur = Math.max(22, apple.r * 0.5);
     ctx.beginPath();
     ctx.arc(0, 0, apple.r * 1.04, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  if (trait) {
+    ctx.save();
+    ctx.globalAlpha = alpha * 0.78;
+    ctx.strokeStyle = trait.glow;
+    ctx.lineWidth = Math.max(5, apple.r * 0.08);
+    ctx.shadowColor = trait.glow;
+    ctx.shadowBlur = Math.max(20, apple.r * 0.45);
+    ctx.beginPath();
+    ctx.arc(0, 0, apple.r * 1.1, 0, Math.PI * 2);
     ctx.stroke();
     ctx.restore();
   }
@@ -3285,6 +4209,43 @@ function drawApple(apple, alpha) {
     ctx.stroke();
   }
 
+  if (apple.trait === "golden") {
+    ctx.strokeStyle = "rgba(255, 228, 122, 0.88)";
+    ctx.lineWidth = Math.max(3, apple.r * 0.05);
+    ctx.beginPath();
+    ctx.arc(0, 0, apple.r * 0.86, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.fillStyle = "#fff4b0";
+    ctx.beginPath();
+    ctx.moveTo(0, -apple.r * 0.72);
+    ctx.lineTo(apple.r * 0.1, -apple.r * 0.5);
+    ctx.lineTo(apple.r * 0.32, -apple.r * 0.48);
+    ctx.lineTo(apple.r * 0.16, -apple.r * 0.3);
+    ctx.lineTo(apple.r * 0.24, -apple.r * 0.06);
+    ctx.lineTo(0, -apple.r * 0.2);
+    ctx.lineTo(-apple.r * 0.24, -apple.r * 0.06);
+    ctx.lineTo(-apple.r * 0.16, -apple.r * 0.3);
+    ctx.lineTo(-apple.r * 0.32, -apple.r * 0.48);
+    ctx.lineTo(-apple.r * 0.1, -apple.r * 0.5);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  if (apple.trait === "rotten") {
+    ctx.strokeStyle = "rgba(155, 204, 89, 0.82)";
+    ctx.lineWidth = Math.max(3, apple.r * 0.05);
+    ctx.setLineDash([apple.r * 0.14, apple.r * 0.1]);
+    ctx.beginPath();
+    ctx.arc(0, 0, apple.r * 0.86, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = "rgba(133, 173, 71, 0.85)";
+    ctx.beginPath();
+    ctx.arc(-apple.r * 0.18, apple.r * 0.18, apple.r * 0.16, 0, Math.PI * 2);
+    ctx.arc(apple.r * 0.16, apple.r * 0.02, apple.r * 0.13, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
   if (apple.level >= 5) {
     ctx.strokeStyle = "rgba(255, 241, 188, 0.5)";
     ctx.lineWidth = 3;
@@ -3319,6 +4280,12 @@ function drawApple(apple, alpha) {
     ctx.fillStyle = special.accent;
     ctx.font = `800 ${Math.max(10, apple.r * 0.18)}px "Avenir Next Condensed", "Arial Narrow", sans-serif`;
     ctx.fillText(special.shortLabel, 0, apple.r * 0.48);
+  }
+
+  if (trait) {
+    ctx.fillStyle = trait.accent;
+    ctx.font = `900 ${Math.max(10, apple.r * 0.16)}px "Avenir Next Condensed", "Arial Narrow", sans-serif`;
+    ctx.fillText(trait.shortLabel, 0, apple.r * 0.68);
   }
 
   ctx.restore();
@@ -3409,12 +4376,227 @@ function drawSkillLid() {
   }
 }
 
+function drawSalePackaging() {
+  if (!isSaleActive()) {
+    return;
+  }
+
+  const orchard = getOrchardBounds();
+  const packingProgress = state.sale.phase === "packing"
+    ? clamp(state.sale.frame / BALANCE.sale.packFrames, 0, 1)
+    : 1;
+  const shippingProgress = state.sale.phase === "shipping"
+    ? clamp(state.sale.frame / BALANCE.sale.shipFrames, 0, 1)
+    : 0;
+  const wobble = Math.sin(state.time * 12) * (1 - shippingProgress) * 6;
+  const squash = 1 - packingProgress * 0.02;
+  const lidY = orchard.y - 16 - packingProgress * 4;
+  const lidHeight = 34;
+  const lidX = orchard.x - 26;
+  const lidWidth = orchard.w + 52;
+
+  ctx.save();
+  ctx.translate(orchard.centerX, orchard.centerY);
+  ctx.rotate(wobble * 0.008);
+  ctx.scale(1, squash);
+  ctx.translate(-orchard.centerX, -orchard.centerY);
+
+  const lidGradient = ctx.createLinearGradient(0, lidY, 0, lidY + lidHeight);
+  lidGradient.addColorStop(0, "#d9ab73");
+  lidGradient.addColorStop(1, "#8d572d");
+  ctx.fillStyle = lidGradient;
+  ctx.fillRect(lidX, lidY, lidWidth, lidHeight);
+  ctx.fillStyle = "rgba(255, 241, 219, 0.22)";
+  ctx.fillRect(lidX, lidY, lidWidth, 5);
+
+  const strapAlpha = 0.32 + packingProgress * 0.42;
+  ctx.fillStyle = `rgba(236, 216, 183, ${strapAlpha})`;
+  ctx.fillRect(orchard.x + orchard.w * 0.22, orchard.y - 16, 14, orchard.h + 34);
+  ctx.fillRect(orchard.x + orchard.w * 0.68, orchard.y - 16, 14, orchard.h + 34);
+  ctx.fillRect(orchard.x - 16, orchard.y + orchard.h * 0.34, orchard.w + 32, 12);
+
+  ctx.strokeStyle = `rgba(255, 255, 255, ${0.14 + packingProgress * 0.22})`;
+  ctx.lineWidth = 5;
+  for (let streak = 0; streak < 5; streak += 1) {
+    const y = orchard.y + 64 + streak * 126;
+    ctx.beginPath();
+    ctx.moveTo(orchard.x + 26, y);
+    ctx.lineTo(orchard.x + orchard.w - 26, y - 10);
+    ctx.stroke();
+  }
+
+  const labelWidth = Math.max(148, orchard.w * 0.22);
+  const labelHeight = 70;
+  const labelX = orchard.centerX - labelWidth / 2;
+  const labelY = orchard.centerY - labelHeight / 2;
+  ctx.fillStyle = "rgba(255, 250, 238, 0.95)";
+  ctx.fillRect(labelX, labelY, labelWidth, labelHeight);
+  ctx.strokeStyle = "rgba(120, 81, 44, 0.24)";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(labelX, labelY, labelWidth, labelHeight);
+  ctx.fillStyle = "#6c401b";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.font = '900 20px "Avenir Next Condensed", "Arial Narrow", sans-serif';
+  ctx.fillText(state.sale.reason === "auto_sold" ? "자동 경매" : "수동 경매", orchard.centerX, orchard.centerY - 18);
+  ctx.font = '700 14px "Avenir Next Condensed", "Arial Narrow", sans-serif';
+  ctx.fillText(`${state.sale.auctionShortLabel || "경매"} x${state.sale.auctionMultiplier.toFixed(2)}`, orchard.centerX, orchard.centerY + 4);
+  ctx.fillText(`보너스 ${formatLabCurrency(state.sale.displayedBonus)} · 감액 ${Math.round(state.sale.rottenPenaltyRate * 100)}%`, orchard.centerX, orchard.centerY + 24);
+
+  if (state.sale.phase === "shipping") {
+    ctx.strokeStyle = "rgba(255, 233, 188, 0.46)";
+    ctx.lineWidth = 5;
+    for (let line = 0; line < 4; line += 1) {
+      const x = orchard.x - 120 + line * 28 - shippingProgress * 120;
+      const y = orchard.y + 90 + line * 92;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + 86, y + 6);
+      ctx.stroke();
+    }
+  }
+
+  ctx.restore();
+}
+
+function formatCompactNumber(value) {
+  const absolute = Math.abs(value);
+  if (absolute >= 1e9) {
+    return `${(value / 1e9).toFixed(absolute >= 1e10 ? 0 : 1)}B`;
+  }
+  if (absolute >= 1e6) {
+    return `${(value / 1e6).toFixed(absolute >= 1e7 ? 0 : 1)}M`;
+  }
+  if (absolute >= 1e4) {
+    return `${(value / 1e3).toFixed(absolute >= 1e5 ? 0 : 1)}K`;
+  }
+  return formatNumber(value);
+}
+
+function traceRoundedRect(x, y, width, height, radius) {
+  const safeRadius = Math.min(radius, width * 0.5, height * 0.5);
+  ctx.beginPath();
+  ctx.moveTo(x + safeRadius, y);
+  ctx.lineTo(x + width - safeRadius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + safeRadius);
+  ctx.lineTo(x + width, y + height - safeRadius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - safeRadius, y + height);
+  ctx.lineTo(x + safeRadius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - safeRadius);
+  ctx.lineTo(x, y + safeRadius);
+  ctx.quadraticCurveTo(x, y, x + safeRadius, y);
+  ctx.closePath();
+}
+
+function getCanvasHudStatus() {
+  if (!state.run.alive) {
+    return state.run.exitReason === "auto_sold" ? "상자 자동 경매 완료" : "상자 경매 완료";
+  }
+  if (isSaleActive()) {
+    return state.sale.reason === "auto_sold" ? "상자 자동 포장 중" : "상자 경매 포장 중";
+  }
+  if (state.paused) {
+    return "일시 정지";
+  }
+  if (state.spin.phase === "rotating") {
+    return "상자 자동 회전 중";
+  }
+  if (state.run.redLineFrames > 0) {
+    return `자동 판매선 경고 ${Math.max(0, Math.ceil((BALANCE.redLineHoldFrames - state.run.redLineFrames) / 60))}s`;
+  }
+  if (canSellCrate()) {
+    return `경매 가능 · 예상 ${formatLabCurrency(state.run.sellPreview)}`;
+  }
+  return `${state.run.season + 1}철 · ${hasTwinConveyor() ? "쌍벨트" : "단일벨트"} · ${formatSeconds(getDropIntervalFrames() / 60)}`;
+}
+
+function drawHudChip(x, y, width, label, value, accent, fill) {
+  const height = 48;
+  const radius = 20;
+  ctx.save();
+  ctx.fillStyle = fill;
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.24)";
+  ctx.lineWidth = 1.5;
+  traceRoundedRect(x, y, width, height, radius);
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = "rgba(255, 246, 230, 0.74)";
+  ctx.font = '700 12px "Pretendard", "Apple SD Gothic Neo", sans-serif';
+  ctx.textAlign = "left";
+  ctx.textBaseline = "alphabetic";
+  ctx.fillText(label, x + 14, y + 16);
+
+  ctx.fillStyle = "#fffdfa";
+  ctx.font = '900 17px "Pretendard", "Apple SD Gothic Neo", sans-serif';
+  ctx.fillText(value, x + 14, y + 36);
+
+  ctx.fillStyle = accent;
+  ctx.beginPath();
+  ctx.arc(x + width - 16, y + 16, 4.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawCanvasHud() {
+  const paddingX = 18;
+  const topY = 18;
+  const gap = 8;
+  const chipWidth = (WIDTH - paddingX * 2 - gap * 3) / 4;
+  const dangerRatio = clamp(state.run.dangerRatio, 0, 1);
+  const chips = [
+    ["점수", formatCompactNumber(state.run.score), "#ffce71", "rgba(80, 46, 24, 0.68)"],
+    ["런 재화", formatCompactNumber(state.run.cash), "#f79d56", "rgba(116, 55, 28, 0.68)"],
+    ["연구 자금", formatCompactNumber(state.meta.bank), "#71b8ff", "rgba(44, 71, 104, 0.68)"],
+    ["상자 가치", formatCompactNumber(state.run.sellPreview), "#ffe59b", "rgba(94, 68, 39, 0.7)"],
+  ];
+
+  chips.forEach((chip, index) => {
+    drawHudChip(paddingX + index * (chipWidth + gap), topY, chipWidth, chip[0], chip[1], chip[2], chip[3]);
+  });
+
+  const dangerY = topY + 58;
+  const dangerWidth = WIDTH - paddingX * 2;
+  ctx.save();
+  ctx.fillStyle = "rgba(59, 37, 21, 0.7)";
+  traceRoundedRect(paddingX, dangerY, dangerWidth, 24, 12);
+  ctx.fill();
+  ctx.fillStyle = dangerRatio >= 0.72 ? "#ff7869" : "#f1bb62";
+  traceRoundedRect(paddingX, dangerY, Math.max(34, dangerWidth * Math.max(0.04, dangerRatio)), 24, 12);
+  ctx.fill();
+  ctx.fillStyle = "#fffaf2";
+  ctx.font = '800 13px "Pretendard", "Apple SD Gothic Neo", sans-serif';
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  ctx.fillText(`위험 수치 ${Math.round(dangerRatio * 100)}%`, paddingX + 12, dangerY + 12);
+  ctx.restore();
+
+  const statusText = getCanvasHudStatus();
+  const statusWidth = Math.min(WIDTH - 36, 520);
+  const statusX = (WIDTH - statusWidth) / 2;
+  const statusY = HEIGHT - 46;
+  ctx.save();
+  ctx.fillStyle = "rgba(56, 35, 19, 0.72)";
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.18)";
+  ctx.lineWidth = 1.5;
+  traceRoundedRect(statusX, statusY, statusWidth, 32, 16);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = "#fffaf2";
+  ctx.font = '800 15px "Pretendard", "Apple SD Gothic Neo", sans-serif';
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(statusText, WIDTH / 2, statusY + 17);
+  ctx.restore();
+}
+
 function drawScene() {
   const shakeX = state.shake === 0 ? 0 : Math.sin(state.time * 1.7) * state.shake;
   const shakeY = state.shake === 0 ? 0 : Math.cos(state.time * 1.35) * state.shake * 0.45;
   const orchard = getOrchardBounds();
   const viewportAnchor = getViewportAnchor();
   const cameraScale = getCameraScale();
+  const saleShiftX = getSaleShiftX();
 
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
   drawBackdrop(shakeX);
@@ -3433,6 +4615,7 @@ function drawScene() {
   ctx.translate(viewportAnchor.centerX, viewportAnchor.centerY);
   ctx.scale(cameraScale, cameraScale);
   ctx.translate(-viewportAnchor.centerX, -viewportAnchor.centerY);
+  ctx.translate(saleShiftX, 0);
   ctx.translate(orchard.centerX, orchard.centerY);
   ctx.rotate(state.spin.angle);
   ctx.translate(-orchard.centerX, -orchard.centerY);
@@ -3442,6 +4625,7 @@ function drawScene() {
   drawShockwavesOnCanvas();
   drawFloatingTextOnCanvas();
   drawSkillLid();
+  drawSalePackaging();
   drawOrchardFront();
   ctx.restore();
 
@@ -3452,6 +4636,8 @@ function drawScene() {
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
     ctx.restore();
   }
+
+  drawCanvasHud();
 }
 
 function handleShopClick(event) {
@@ -3485,6 +4671,24 @@ function handleMenuTabClick(event) {
   setActiveMenu(button.dataset.menu);
 }
 
+function handleGuideTabClick(event) {
+  const button = event.target.closest("[data-guide-pane]");
+  if (!button) {
+    return;
+  }
+  setGuidePane(button.dataset.guidePane);
+}
+
+function handleGuideButtonClick() {
+  openGuide();
+}
+
+function handleGuideModalClick(event) {
+  if (event.target === ui.guideModal) {
+    closeGuide();
+  }
+}
+
 function handleOverlayClick(event) {
   const restartButton = event.target.closest("#overlayRestartButton");
   if (restartButton) {
@@ -3510,6 +4714,11 @@ function handleKeyDown(event) {
 
   if (event.code === "Escape" && state.offlineSummary) {
     dismissOfflineModal();
+    event.preventDefault();
+  }
+
+  if (event.code === "Escape" && !ui.guideModal.classList.contains("hidden")) {
+    closeGuide();
     event.preventDefault();
   }
 }
@@ -3586,6 +4795,8 @@ function getSampleProfile(profile) {
           bombOrchard: 3,
           prismOrchard: 2,
           expansionEngineering: 8,
+          brokerageOffice: 4,
+          twinConveyor: 1,
           offlineOrchard: 8,
           mergeLedger: 7,
         },
@@ -3600,6 +4811,8 @@ function getSampleProfile(profile) {
           bombOrchard: 6,
           prismOrchard: 5,
           expansionEngineering: 18,
+          brokerageOffice: 8,
+          twinConveyor: 1,
           offlineOrchard: 22,
           mergeLedger: 18,
         },
@@ -3633,9 +4846,9 @@ function chooseSamplePurchase(meta, runLevels, cash, danger) {
   const priorities = [];
 
   if (danger > 0.58) {
-    priorities.push("crateExpansion", "autoSpinner", "shockEngine", "valuePress", "dropMotor");
+    priorities.push("dangerBuffer", "crateExpansion", "autoSpinner", "shockEngine", "valuePress", "dropMotor");
   } else {
-    priorities.push("dropMotor", "valuePress", "crateExpansion", "dropTier", "autoSpinner", "shockEngine");
+    priorities.push("dropMotor", "valuePress", "crateExpansion", "dangerBuffer", "dropTier", "autoSpinner", "shockEngine");
   }
 
   if (meta.upgrades.bombOrchard > 0) {
@@ -3683,14 +4896,16 @@ function sampleSingleRun(profileMeta) {
     const special = getSpecialChances(meta, fakeRun);
     const shock = getShockMultiplier(fakeRun);
     const boxScale = getBoxScaleForLevel(runLevels.crateExpansion);
+    const dangerBottom = getDangerZoneBottomRatio(fakeRun);
     const dangerLimit = getDangerLimit(meta);
     const valueMult = getCombinedValueMultiplier(meta, fakeRun);
     const spinner = getAutoSpinnerSpec(fakeRun);
     const seasonHazard = getSeasonHazard(season);
+    const conveyors = hasTwinConveyor(meta) ? 2 : 1;
 
     const mergeEfficiency = 0.42 + 0.09 * Math.log1p(boxScale * 3) + 0.04 * Math.log1p(shock);
     const specialValueBoost = 1 + special.bomb * 0.55 + special.prism * 0.95;
-    const gainPerSecond = dropsPerSecond * pointValue * mergeEfficiency * valueMult * specialValueBoost * (0.88 + Math.random() * 0.24);
+    const gainPerSecond = dropsPerSecond * pointValue * mergeEfficiency * valueMult * specialValueBoost * (0.88 + Math.random() * 0.24) * (1 + (conveyors - 1) * 0.08);
 
     score += gainPerSecond;
     cash += gainPerSecond;
@@ -3700,7 +4915,7 @@ function sampleSingleRun(profileMeta) {
     applesApprox = Math.max(0, applesApprox);
 
     const pressure = dropsPerSecond * (0.36 + tierReal * 0.18) / Math.max(1.1, 1 + boxScale * 0.9 + dangerLimit / 180);
-    const relief = 0.06 * shock + (spinner ? (0.18 + (0.88 - spinner.threshold) * 0.7) : 0);
+    const relief = 0.06 * shock + (spinner ? (0.18 + (0.88 - spinner.threshold) * 0.7) : 0) + Math.max(0, dangerBottom - BALANCE.dangerZoneBaseBottomRatio) * 1.8;
     danger += Math.max(0, pressure * seasonHazard - relief) * (0.85 + Math.random() * 0.3);
     danger -= 0.03 + Math.log1p(boxScale) * 0.02;
     danger = clamp(danger, 0, 1.4);
@@ -3719,17 +4934,21 @@ function sampleSingleRun(profileMeta) {
       runLevels[next] += 1;
     }
 
+    const estimatedAppraisal = score * clamp(0.08 + 0.07 * Math.log1p(topTier + 1) + 0.04 * Math.log1p(applesApprox + 1), 0.12, 1.35);
+
     if (
       timeSeconds >= BALANCE.sellGateFrames / 60
-      && (score >= BALANCE.sellGateScore || applesApprox >= BALANCE.sellGateApples || topTier >= BALANCE.sellGateTier)
-      && danger >= 0.62
+      && (estimatedAppraisal >= BALANCE.sellGateValue || applesApprox >= BALANCE.sellGateApples || topTier >= BALANCE.sellGateTier)
+      && danger >= 0.68
     ) {
       sold = true;
+      appraisal = estimatedAppraisal;
       break;
     }
 
     if (danger >= 1) {
-      sold = false;
+      sold = true;
+      appraisal = estimatedAppraisal;
       break;
     }
 
@@ -3737,14 +4956,15 @@ function sampleSingleRun(profileMeta) {
   }
 
   if (sold) {
-    appraisal = score * clamp(0.18 + 0.04 * Math.log1p(getBoxScaleForLevel(runLevels.crateExpansion)) + 0.02 * Math.log1p(topTier + 1), 0.18, 0.30);
+    const feeRate = danger >= 1 ? getAutoSaleFeeRate(meta) : 0;
+    appraisal *= 1 - feeRate;
   }
 
   return {
     runtime: timeSeconds,
     sold,
     sellBonusRatio: sold ? appraisal / Math.max(1, score) : 0,
-    bankGain: score + appraisal,
+    bankGain: appraisal,
     spend: totalSpend,
   };
 }
@@ -3794,15 +5014,48 @@ window.__appleBalance = {
   },
 };
 
-ui.runShop.addEventListener("click", handleShopClick);
-ui.labShop.addEventListener("click", handleShopClick);
-ui.devSpeedControls.addEventListener("click", handleDevSpeedClick);
-ui.menuTabs.addEventListener("click", handleMenuTabClick);
-ui.restartButton.addEventListener("click", startNewRun);
-ui.pauseButton.addEventListener("click", () => togglePause());
-ui.sellButton.addEventListener("click", attemptSellCrate);
-ui.overlay.addEventListener("click", handleOverlayClick);
-ui.offlineDismissButton.addEventListener("click", dismissOfflineModal);
+if (ui.runShop) {
+  ui.runShop.addEventListener("click", handleShopClick);
+}
+if (ui.labShop) {
+  ui.labShop.addEventListener("click", handleShopClick);
+}
+if (ui.devSpeedControls) {
+  ui.devSpeedControls.addEventListener("click", handleDevSpeedClick);
+}
+if (ui.menuTabs) {
+  ui.menuTabs.addEventListener("click", handleMenuTabClick);
+}
+if (ui.restartButton) {
+  ui.restartButton.addEventListener("click", startNewRun);
+}
+if (ui.pauseButton) {
+  ui.pauseButton.addEventListener("click", () => togglePause());
+}
+if (ui.sellButton) {
+  ui.sellButton.addEventListener("click", attemptSellCrate);
+}
+if (ui.overlay) {
+  ui.overlay.addEventListener("click", handleOverlayClick);
+}
+if (ui.guideButton) {
+  ui.guideButton.addEventListener("click", handleGuideButtonClick);
+}
+if (ui.guideDockButton) {
+  ui.guideDockButton.addEventListener("click", handleGuideButtonClick);
+}
+if (ui.guideTabs) {
+  ui.guideTabs.addEventListener("click", handleGuideTabClick);
+}
+if (ui.guideModal) {
+  ui.guideModal.addEventListener("click", handleGuideModalClick);
+}
+if (ui.guideCloseButton) {
+  ui.guideCloseButton.addEventListener("click", closeGuide);
+}
+if (ui.offlineDismissButton) {
+  ui.offlineDismissButton.addEventListener("click", dismissOfflineModal);
+}
 window.addEventListener("keydown", handleKeyDown, { passive: false });
 window.addEventListener("beforeunload", saveState);
 document.addEventListener("visibilitychange", handleVisibilityChange);
