@@ -11,7 +11,7 @@
   --lab-dark: #316fa6;
   --danger: #ff6a57;
   --accent: #5fa96f;
-  --dock-space: 112px;
+  --dock-space: 176px;
 }
 
 * {
@@ -196,6 +196,93 @@ canvas {
   min-width: 62px;
 }
 
+.action-button,
+.tool-button,
+.dock-tab,
+.summon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-label,
+.tab-label,
+.summon-label {
+  min-width: 0;
+}
+
+.dock-tab {
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.button-icon,
+.tab-icon,
+.summon-icon {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid rgba(121, 82, 39, 0.12);
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.96), rgba(255, 226, 180, 0.86) 40%, rgba(225, 166, 88, 0.94) 100%);
+}
+
+.button-icon,
+.tab-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.summon-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}
+
+.button-icon.has-image,
+.tab-icon.has-image,
+.summon-icon.has-image {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)),
+    var(--asset-image) center / contain no-repeat,
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.96), rgba(255, 226, 180, 0.86) 40%, rgba(225, 166, 88, 0.94) 100%);
+}
+
+.sell-button .button-icon,
+.tool-button.accent .button-icon,
+.dock-tab.is-active .tab-icon {
+  border-color: rgba(255, 247, 238, 0.18);
+  background: rgba(255, 252, 247, 0.1);
+  box-shadow: none;
+}
+
+.sell-button .button-icon.has-image,
+.tool-button.accent .button-icon.has-image,
+.dock-tab.is-active .tab-icon.has-image {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0)),
+    var(--asset-image) center / contain no-repeat;
+}
+
+.button-icon::before,
+.tab-icon::before,
+.summon-icon::before {
+  content: attr(data-icon);
+  color: rgba(88, 51, 18, 0.92);
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.button-icon.has-image::before,
+.tab-icon.has-image::before,
+.summon-icon.has-image::before {
+  display: none;
+}
+
 .tool-button.accent,
 .dock-tab.accent,
 .speed-button.is-active,
@@ -320,8 +407,8 @@ canvas {
   position: relative;
   z-index: 9;
   display: grid;
-  gap: 6px;
-  margin-top: -12px;
+  gap: 8px;
+  margin-top: -16px;
 }
 
 .action-row {
@@ -345,6 +432,100 @@ canvas {
   padding: 8px 8px;
 }
 
+.summon-row {
+  display: flex;
+  justify-content: center;
+  padding: 2px 0 2px;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.control-dock.is-sheet-open .summon-row {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.summon-button {
+  position: relative;
+  display: inline-flex;
+  align-items: end;
+  justify-content: center;
+  width: 158px;
+  min-width: 158px;
+  min-height: 104px;
+  border: 0;
+  border-radius: 40% 40% 48% 48% / 30% 30% 60% 60%;
+  padding: 42px 18px 14px;
+  color: #fffdf8;
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0) 18%),
+    radial-gradient(circle at 68% 24%, rgba(255, 182, 164, 0.72), rgba(255, 182, 164, 0) 22%),
+    radial-gradient(circle at 50% 120%, rgba(120, 0, 0, 0.34), rgba(120, 0, 0, 0) 42%),
+    linear-gradient(180deg, #ff7a68 0%, #f44a31 54%, #b91813 100%);
+  box-shadow:
+    0 16px 30px rgba(190, 40, 24, 0.26),
+    inset 0 2px 0 rgba(255, 242, 234, 0.5),
+    inset 0 -10px 16px rgba(122, 12, 12, 0.26);
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  isolation: isolate;
+}
+
+.summon-button::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 12px;
+  height: 28px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #8f5431, #5a3017);
+  transform: translateX(-50%) rotate(-8deg);
+  box-shadow: 0 2px 4px rgba(54, 28, 12, 0.18);
+}
+
+.summon-button::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: calc(50% + 10px);
+  width: 34px;
+  height: 20px;
+  border-radius: 100% 10% 100% 10%;
+  background: linear-gradient(180deg, #a6db58, #4a992f);
+  transform: rotate(-16deg);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    0 3px 8px rgba(42, 95, 21, 0.22);
+}
+
+.summon-button:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.summon-button:disabled,
+.tool-button:disabled {
+  opacity: 0.56;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.summon-label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(117, 15, 12, 0.28);
+  border: 1px solid rgba(255, 233, 224, 0.24);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  font-size: 0.92rem;
+  line-height: 1;
+  text-shadow: 0 1px 0 rgba(102, 10, 10, 0.28);
+}
+
 .dock-tab {
   min-height: 48px;
   padding: 8px 6px;
@@ -355,13 +536,13 @@ canvas {
   position: absolute;
   left: 8px;
   right: 8px;
-  bottom: calc(env(safe-area-inset-bottom) + var(--dock-space) - 2px);
+  bottom: calc(env(safe-area-inset-bottom) + 118px);
   z-index: 7;
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   gap: 10px;
   min-height: 240px;
-  max-height: min(52dvh, 500px);
+  max-height: min(60dvh, 620px);
   padding: 10px;
   border-radius: 28px;
   transform: translateY(calc(100% + 12px));
@@ -541,7 +722,9 @@ canvas {
   aspect-ratio: 1;
 }
 
-.upgrade-art.has-image {
+.upgrade-art.has-image,
+.guide-icon.has-image,
+.guide-badge.has-image {
   border-style: solid;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)),
@@ -550,7 +733,9 @@ canvas {
 }
 
 .upgrade-art.has-image::before,
-.upgrade-art.has-image::after {
+.upgrade-art.has-image::after,
+.guide-icon.has-image::before,
+.guide-badge.has-image::before {
   display: none;
 }
 
@@ -718,6 +903,70 @@ canvas {
   line-height: 1.55;
 }
 
+.overlay-card {
+  width: min(100%, 520px);
+  max-height: 100%;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.overlay-lead {
+  margin: 0;
+  color: rgba(255, 245, 230, 0.92);
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+
+.overlay-results {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 248, 238, 0.08);
+  border: 1px solid rgba(255, 241, 222, 0.12);
+  text-align: left;
+}
+
+.overlay-stat-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.overlay-stat-row strong {
+  color: #fff8ef;
+  font-weight: 900;
+}
+
+.overlay-stat-row span {
+  color: rgba(255, 241, 222, 0.88);
+  font-weight: 800;
+}
+
+.overlay-note {
+  margin: 0;
+  color: rgba(255, 233, 205, 0.88);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.overlay-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.overlay-actions .tool-button,
+.overlay-actions .action-button {
+  width: min(100%, 220px);
+  min-width: 0;
+  white-space: nowrap;
+}
+
 .hidden {
   display: none;
 }
@@ -847,7 +1096,7 @@ canvas {
 
 @media (max-width: 560px) {
   :root {
-    --dock-space: 104px;
+    --dock-space: 166px;
   }
 
   .app-shell {
@@ -875,8 +1124,8 @@ canvas {
   .bottom-sheet {
     left: 6px;
     right: 6px;
-    bottom: calc(env(safe-area-inset-bottom) + var(--dock-space) - 2px);
-    max-height: min(48dvh, 460px);
+    bottom: calc(env(safe-area-inset-bottom) + 110px);
+    max-height: min(58dvh, 560px);
     min-height: 210px;
     padding: 8px;
     border-radius: 24px;
@@ -884,7 +1133,23 @@ canvas {
 
   .control-dock {
     gap: 4px;
-    margin-top: -14px;
+    margin-top: -16px;
+  }
+
+  .summon-row {
+    padding-bottom: 2px;
+  }
+
+  .summon-button {
+    width: 146px;
+    min-width: 146px;
+    min-height: 94px;
+    padding: 38px 16px 12px;
+  }
+
+  .summon-label {
+    padding: 6px 10px;
+    font-size: 0.82rem;
   }
 
   .action-row {
@@ -938,6 +1203,12 @@ canvas {
     border-radius: 16px;
   }
 
+  .button-icon,
+  .tab-icon {
+    width: 23px;
+    height: 23px;
+  }
+
   .dock-tabs {
     gap: 6px;
     padding: 6px;
@@ -957,5 +1228,28 @@ canvas {
   .overlay p {
     font-size: 0.86rem;
     line-height: 1.42;
+  }
+
+  .overlay-card {
+    gap: 8px;
+  }
+
+  .overlay-results {
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .overlay-stat-row {
+    font-size: 0.8rem;
+    gap: 7px;
+  }
+
+  .overlay-actions {
+    gap: 8px;
+  }
+
+  .overlay-actions .tool-button,
+  .overlay-actions .action-button {
+    min-width: 112px;
   }
 }

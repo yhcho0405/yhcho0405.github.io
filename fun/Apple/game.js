@@ -21,6 +21,8 @@ const ui = {
   appraisalValue: document.getElementById("appraisalValue"),
   sellHint: document.getElementById("sellHint"),
   sellButton: document.getElementById("sellButton"),
+  summonButton: document.getElementById("summonButton"),
+  controlDock: document.querySelector(".control-dock"),
   devSpeedControls: document.getElementById("devSpeedControls"),
   menuTabs: document.getElementById("menuTabs"),
   bottomSheet: document.getElementById("bottomSheet"),
@@ -68,12 +70,13 @@ const UPGRADE_ASSET_PATHS = {
   bombOrchard: "assets/bomb_orchard.png",
   prismOrchard: "assets/prism_research.png",
   expansionEngineering: "assets/expansion_engineering.png",
+  conveyorWorkshop: "assets/conveyor_belt_icon.png",
   brokerageOffice: "assets/fee_negotiation.png",
-  twinConveyor: "assets/belt_accel.png",
-  goldenMulch: "assets/research_liquid.png",
-  sortingShed: "assets/durable_wood.png",
-  offlineOrchard: "assets/research_liquid.png",
-  mergeLedger: "assets/research_liquid.png",
+  twinConveyor: "assets/twin_belt.png",
+  goldenMulch: "assets/gold_fertilizer.png",
+  sortingShed: "assets/sorting_warehouse.png",
+  offlineOrchard: "assets/offline_harvest.png",
+  mergeLedger: "assets/gold_pesticide.png",
 };
 
 const BALANCE = {
@@ -105,10 +108,13 @@ const BALANCE = {
     openFrames: 24,
   },
   sale: {
-    packFrames: 58,
-    shipFrames: 92,
+    packFrames: 86,
+    shipFrames: 148,
     burstGapFrames: 3,
   },
+  overlayAutoAdvanceMs: 30 * 1000,
+  crateBurstWarnFrames: 5 * 60,
+  crateBurstExplodeFrames: 56,
   conveyor: {
     width: 68,
     laneOuterOffset: 150,
@@ -124,20 +130,22 @@ const BALANCE = {
     maxVoices: 18,
     minGapMs: 22,
     eventCooldownMs: {
-      uiHover: 24,
-      uiDenied: 110,
-      uiConfirm: 36,
-      uiPause: 80,
-      uiRestart: 120,
+      "ui-hover": 24,
+      "ui-denied": 110,
+      "ui-confirm": 36,
+      pause: 80,
+      restart: 120,
       sell: 180,
-      offlineDismiss: 120,
-      dropRelease: 32,
+      summon: 70,
+      "offline-dismiss": 120,
+      "drop-release": 32,
       merge: 24,
       bomb: 80,
       prism: 70,
-      spinnerStart: 260,
-      spinnerEnd: 180,
-      crateExpand: 130,
+      "spinner-start": 260,
+      "spinner-end": 180,
+      "crate-expand": 130,
+      "crate-burst": 260,
       gameOver: 220,
     },
   },
@@ -222,7 +230,7 @@ const META_UPGRADES = {
     tag: "연구",
     icon: "DRB",
     asset: "wood",
-    note: "자동 판매선 압박을 더 빨리 회복하도록 돕습니다.",
+    note: "자동 판매선에 잠깐 걸친 사과가 내려가면 경고가 더 빨리 가라앉게 합니다.",
   },
   bombOrchard: {
     label: "폭탄 과수원",
@@ -246,6 +254,13 @@ const META_UPGRADES = {
     icon: "ENG",
     asset: "eng",
     note: "상자 확장 비용을 낮추고 화면 안정화를 제공합니다.",
+  },
+  conveyorWorkshop: {
+    label: "벨트 정비소",
+    tag: "연구",
+    icon: "CVY",
+    asset: "belt",
+    note: "모든 벨트의 사과 투입 간격을 줄이고, 일정 단계부터 중앙 급송 벨트를 엽니다.",
   },
   brokerageOffice: {
     label: "경매 중개소",
@@ -364,37 +379,37 @@ const GUIDE_DATA = {
   basics: {
     label: "기본",
     items: [
-      { icon: "RUN", title: "이번 런 목표", body: "사과는 자동으로 떨어집니다. 상자 안 사과의 경매 가치를 키우고, 적절한 타이밍에 경매장에 넘기는 것이 핵심입니다." },
-      { icon: "BOX", title: "상자 상태", body: "위험 구역이 차오르면 자동 뒤집기가 작동하고, 빨간 자동 판매선에 오래 걸리면 수수료를 떼고 강제 경매됩니다." },
-      { icon: "R$", title: "런 재화", body: "점수와 함께 쌓이며 이번 런 상점에서만 사용합니다. 런이 끝나면 사라집니다." },
-      { icon: "L$", title: "과수원 자금", body: "경매가 끝날 때 들어오는 영구 자금입니다. 연구소 업그레이드를 사서 다음 런을 더 강하게 만듭니다." },
+      { icon: "RUN", asset: "assets/conveyor_belt_icon.png", title: "이번 런 목표", body: "사과는 자동으로 떨어집니다. 상자 안 사과의 경매 가치를 키우고, 적절한 타이밍에 경매장에 넘기는 것이 핵심입니다." },
+      { icon: "BOX", asset: "assets/auto_sell_warning.png", title: "상자 상태", body: "위험 구역이 차오르면 자동 뒤집기가 작동하고, 빨간 자동 판매선에 오래 걸리면 수수료를 떼고 강제 경매됩니다." },
+      { icon: "R$", asset: "assets/run_coin.png", title: "런 재화", body: "점수와 함께 쌓이며 이번 런 상점에서만 사용합니다. 런이 끝나면 사라집니다." },
+      { icon: "L$", asset: "assets/research_liquid.png", title: "과수원 자금", body: "경매가 끝날 때 들어오는 영구 자금입니다. 연구소 업그레이드를 사서 다음 런을 더 강하게 만듭니다." },
     ],
   },
   auction: {
     label: "경매",
     items: [
-      { icon: "BID", title: "경매 등급", body: "박스를 팔 때마다 좌판, 동네, 야시장, 황금장, 왕실 경매 중 하나가 랜덤으로 붙습니다. 등급이 높을수록 배수가 커집니다." },
-      { icon: "GAV", title: "상자 예상가", body: "화면에 보이는 값은 경매 전 예상가입니다. 실제 판매 순간 경매 등급, 황금 보너스, 썩은 감액이 합산됩니다." },
-      { icon: "FEE", title: "자동 판매", body: "상자가 너무 넘치면 자동으로 경매장에 끌려가며 수수료를 뗍니다. 수수료 협상 연구로 손해를 줄일 수 있습니다." },
-      { icon: "PRE", title: "도파민 정산", body: "판매할 때 고급 사과 보너스가 하나씩 빠르게 튀어나오고, 마지막에 경매장이 총액을 확정합니다." },
+      { icon: "BID", asset: "assets/auction_house.png", title: "경매 등급", body: "박스를 팔 때마다 좌판, 동네, 야시장, 황금장, 왕실 경매 중 하나가 랜덤으로 붙습니다. 등급이 높을수록 배수가 커집니다." },
+      { icon: "GAV", asset: "assets/settlement_ledger.png", title: "상자 예상가", body: "화면에 보이는 값은 경매 전 예상가입니다. 실제 판매 순간 경매 등급, 황금 보너스, 썩은 감액이 합산됩니다." },
+      { icon: "FEE", asset: "assets/auto_sell_warning.png", title: "자동 판매", body: "상자가 너무 넘치면 자동으로 경매장에 끌려가며 수수료를 뗍니다. 수수료 협상 연구로 손해를 줄일 수 있습니다." },
+      { icon: "PRE", asset: "assets/manual_sell_btn.png", title: "도파민 정산", body: "판매할 때 고급 사과 보너스가 하나씩 빠르게 튀어나오고, 마지막에 경매장이 총액을 확정합니다." },
     ],
   },
   traits: {
     label: "속성",
     items: [
-      { icon: "GLD", title: "황금 사과", body: "경매에서 따로 큰 보너스를 줍니다. 황금 사과끼리 합치거나 일반 사과와 합치면 계속 황금 속성이 유지됩니다." },
-      { icon: "ROT", title: "썩은 사과", body: "박스 전체 경매가를 퍼센트로 깎아먹습니다. 썩은 사과끼리 합치거나 일반 사과와 합치면 계속 썩은 속성이 남습니다." },
-      { icon: "CLR", title: "속성 해제", body: "황금 사과와 썩은 사과가 서로 합쳐지면 두 속성이 상쇄되어 일반 사과로 돌아옵니다." },
-      { icon: "SEL", title: "선별 창고", body: "연구소의 선별 창고를 키우면 썩은 사과 등장률을 계속 낮출 수 있습니다." },
+      { icon: "GLD", asset: "assets/gold_apple.png", title: "황금 사과", body: "경매에서 따로 큰 보너스를 줍니다. 황금 사과끼리 합치거나 일반 사과와 합치면 계속 황금 속성이 유지됩니다." },
+      { icon: "ROT", asset: "assets/rotten_apple.png", title: "썩은 사과", body: "박스 전체 경매가를 퍼센트로 깎아먹습니다. 썩은 사과끼리 합치거나 일반 사과와 합치면 계속 썩은 속성이 남습니다." },
+      { icon: "CLR", asset: "assets/apple_box_icon.png", title: "속성 해제", body: "황금 사과와 썩은 사과가 서로 합쳐지면 두 속성이 상쇄되어 일반 사과로 돌아옵니다." },
+      { icon: "SEL", asset: "assets/sorting_warehouse.png", title: "선별 창고", body: "연구소의 선별 창고를 키우면 썩은 사과 등장률을 계속 낮출 수 있습니다." },
     ],
   },
   specials: {
     label: "특수",
     items: [
-      { icon: "BMB", title: "폭탄 사과", body: "주변 사과를 흔들어 배치를 다시 섞습니다. 없애는 용도가 아니라 꼬인 더미를 푸는 용도입니다." },
-      { icon: "PRM", title: "프리즘 사과", body: "닿은 사과를 한 단계 올려 줍니다. 고등급 박스를 빠르게 만드는 핵심 장치입니다." },
-      { icon: "SPN", title: "자동 뒤집기", body: "위험 구역이 많이 차면 뚜껑을 덮고 상자를 회전시켜 더미를 재배치합니다." },
-      { icon: "MED", title: "황금 농약", body: "연구소에서 더 좋은 약을 쓰면 모든 사과의 점수와 런 재화 가치가 바로 올라갑니다." },
+      { icon: "BMB", asset: "assets/bomb_apple.png", title: "폭탄 사과", body: "주변 사과를 흔들어 배치를 다시 섞습니다. 없애는 용도가 아니라 꼬인 더미를 푸는 용도입니다." },
+      { icon: "PRM", asset: "assets/prism_apple.png", title: "프리즘 사과", body: "닿은 사과를 한 단계 올려 줍니다. 고등급 박스를 빠르게 만드는 핵심 장치입니다." },
+      { icon: "SPN", asset: "assets/auto_flip_btn.png", title: "자동 뒤집기", body: "위험 구역이 많이 차면 뚜껑을 덮고 상자를 회전시켜 더미를 재배치합니다." },
+      { icon: "MED", asset: "assets/gold_pesticide.png", title: "황금 농약", body: "연구소에서 더 좋은 약을 쓰면 모든 사과의 점수와 런 재화 가치가 바로 올라갑니다." },
     ],
   },
 };
@@ -800,6 +815,27 @@ function createAudioManager() {
           },
         ]);
         break;
+      case "summon":
+        playSequence([
+          {
+            wave: "triangle",
+            startFreq: 520 + (detail.level || 0) * 10,
+            endFreq: 720 + (detail.level || 0) * 14,
+            duration: 0.06,
+            release: 0.05,
+            peak: 0.05,
+          },
+          {
+            wave: "sine",
+            startFreq: 860,
+            endFreq: 1080,
+            duration: 0.05,
+            release: 0.05,
+            peak: 0.03,
+            delayMs: 24,
+          },
+        ]);
+        break;
       case "offline-dismiss":
         playSequence([
           {
@@ -890,6 +926,29 @@ function createAudioManager() {
             release: 0.08,
             peak: 0.038,
             delayMs: 42,
+          },
+        ]);
+        break;
+      case "crate-burst":
+        playSequence([
+          {
+            wave: "sawtooth",
+            startFreq: 180,
+            endFreq: 72,
+            duration: 0.16,
+            release: 0.1,
+            peak: 0.12,
+            filterType: "lowpass",
+            filterFreq: 720,
+          },
+          {
+            wave: "triangle",
+            startFreq: 340,
+            endFreq: 120,
+            duration: 0.12,
+            release: 0.08,
+            peak: 0.08,
+            delayMs: 34,
           },
         ]);
         break;
@@ -1046,6 +1105,16 @@ function sanitizeGuidePane(pane) {
   return GUIDE_PANES.includes(pane) ? pane : "basics";
 }
 
+function createLaneDropTimers() {
+  const baseInterval = BALANCE.baseDropInterval;
+  const startAfter = Math.max(1, baseInterval - getBeltFrames(baseInterval));
+  return {
+    left: safeRound(startAfter * 0.56),
+    center: safeRound(startAfter * 0.18),
+    right: 0,
+  };
+}
+
 function createMetaState() {
   return {
     balanceVersion: BALANCE.version,
@@ -1088,7 +1157,7 @@ function createRunState(meta) {
     targetBoxScale: 1,
     sellPreview: 0,
     timers: {
-      drop: 24,
+      drop: createLaneDropTimers(),
       autoSpinCooldown: 0,
       autosave: BALANCE.autosaveFrames,
     },
@@ -1108,7 +1177,7 @@ function createFreshState() {
     particles: [],
     shockwaves: [],
     floatingTexts: [],
-    infeed: null,
+    infeeds: [],
     paused: false,
     hiddenAt: null,
     devSpeed: 1,
@@ -1159,6 +1228,18 @@ function createFreshState() {
       burstIndex: 0,
       burstTicker: 0,
       displayedBonus: 0,
+      bonusTrails: [],
+      labelPulse: 0,
+    },
+    overlayMode: "none",
+    confirmAction: "",
+    nextSideLane: "left",
+    summonHistory: [],
+    crateBurst: {
+      appleId: 0,
+      warningFrames: 0,
+      exploding: false,
+      explodeFrames: 0,
     },
     offlineSummary: null,
     uiSnapshot: "",
@@ -1250,7 +1331,7 @@ function sanitizeRun(rawRun, meta) {
   }
 
   run.alive = rawRun.alive !== false;
-  run.exitReason = rawRun.exitReason === "sold" || rawRun.exitReason === "auto_sold" ? rawRun.exitReason : "";
+  run.exitReason = ["sold", "auto_sold", "burst"].includes(rawRun.exitReason) ? rawRun.exitReason : "";
   run.score = Math.max(0, Number(rawRun.score) || 0);
   run.cash = Math.max(0, Number(rawRun.cash) || 0);
   run.upgrades = sanitizeUpgrades(rawRun.upgrades, RUN_UPGRADES);
@@ -1267,7 +1348,16 @@ function sanitizeRun(rawRun, meta) {
   run.sellPreview = Math.max(0, Number(rawRun.sellPreview) || 0);
 
   if (rawRun.timers && typeof rawRun.timers === "object") {
-    run.timers.drop = Math.max(0, Number(rawRun.timers.drop) || 0);
+    if (rawRun.timers.drop && typeof rawRun.timers.drop === "object") {
+      run.timers.drop.left = Math.max(0, Number(rawRun.timers.drop.left) || 0);
+      run.timers.drop.center = Math.max(0, Number(rawRun.timers.drop.center) || 0);
+      run.timers.drop.right = Math.max(0, Number(rawRun.timers.drop.right) || 0);
+    } else {
+      const legacyDropTimer = Math.max(0, Number(rawRun.timers.drop) || 0);
+      run.timers.drop.left = legacyDropTimer;
+      run.timers.drop.center = legacyDropTimer;
+      run.timers.drop.right = legacyDropTimer;
+    }
     run.timers.autoSpinCooldown = Math.max(0, Number(rawRun.timers.autoSpinCooldown) || 0);
     run.timers.autosave = BALANCE.autosaveFrames;
   }
@@ -1304,14 +1394,34 @@ function sanitizeInfeed(rawInfeed) {
     return null;
   }
 
+  const lane = rawInfeed.lane === "right" || rawInfeed.lane === "center" ? rawInfeed.lane : "left";
   return {
-    lane: rawInfeed.lane === "right" ? "right" : "left",
+    lane,
     level: clamp(Number(rawInfeed.level) || 0, 0, APPLE_TYPES.length - 1),
     special: rawInfeed.special === "bomb" || rawInfeed.special === "prism" ? rawInfeed.special : null,
     trait: rawInfeed.trait === "golden" || rawInfeed.trait === "rotten" ? rawInfeed.trait : null,
     frame: Math.max(0, Number(rawInfeed.frame) || 0),
     beltFrames: Math.max(BALANCE.conveyor.minFrames, Number(rawInfeed.beltFrames) || BALANCE.conveyor.minFrames),
   };
+}
+
+function sanitizeInfeeds(rawInfeeds, legacyInfeed) {
+  const source = Array.isArray(rawInfeeds)
+    ? rawInfeeds
+    : (legacyInfeed ? [legacyInfeed] : []);
+  const seen = new Set();
+  const infeeds = [];
+
+  for (const rawInfeed of source) {
+    const infeed = sanitizeInfeed(rawInfeed);
+    if (!infeed || seen.has(infeed.lane)) {
+      continue;
+    }
+    seen.add(infeed.lane);
+    infeeds.push(infeed);
+  }
+
+  return infeeds;
 }
 
 function serializeApple(apple) {
@@ -1331,19 +1441,15 @@ function serializeApple(apple) {
   };
 }
 
-function serializeInfeed() {
-  if (!state.infeed) {
-    return null;
-  }
-
-  return {
-    lane: state.infeed.lane,
-    level: state.infeed.level,
-    special: state.infeed.special,
-    trait: state.infeed.trait,
-    frame: state.infeed.frame,
-    beltFrames: state.infeed.beltFrames,
-  };
+function serializeInfeeds() {
+  return state.infeeds.map((infeed) => ({
+    lane: infeed.lane,
+    level: infeed.level,
+    special: infeed.special,
+    trait: infeed.trait,
+    frame: infeed.frame,
+    beltFrames: infeed.beltFrames,
+  }));
 }
 
 function saveState() {
@@ -1368,7 +1474,7 @@ function saveState() {
       sellPreview: state.run.sellPreview,
       timers: state.run.timers,
       apples: state.apples.map(serializeApple),
-      infeed: serializeInfeed(),
+      infeeds: serializeInfeeds(),
     },
     lastSeenAt: state.lastSeenAt,
   };
@@ -1401,7 +1507,7 @@ function migrateLegacySave(parsed) {
 
   migrated.run.exitReason = "";
   migrated.run.sellPreview = 0;
-  migrated.run.infeed = null;
+  migrated.run.infeeds = [];
   migrated.meta.balanceVersion = BALANCE.version;
   migrated.meta.stats.soldRuns = migrated.meta.stats.soldRuns || 0;
   migrated.meta.stats.autoSoldRuns = migrated.meta.stats.autoSoldRuns || 0;
@@ -1441,7 +1547,7 @@ function loadState() {
   fresh.meta = sanitizeMeta(parsed.meta);
   fresh.run = sanitizeRun(parsed.run, fresh.meta);
   fresh.apples = sanitizeApples(parsed.run && parsed.run.apples);
-  fresh.infeed = sanitizeInfeed(parsed.run && parsed.run.infeed);
+  fresh.infeeds = sanitizeInfeeds(parsed.run && parsed.run.infeeds, parsed.run && parsed.run.infeed);
   fresh.lastSeenAt = Date.now();
 
   nextId = fresh.apples.reduce((highest, apple) => Math.max(highest, apple.id), 0) + 1;
@@ -1461,7 +1567,9 @@ function loadState() {
   }
 
   if (!state.run.alive) {
-    showRunResultOverlay(state.run.exitReason || "sold", getPendingSaleData(state.run.exitReason || "sold", state.apples));
+    const reason = state.run.exitReason || "sold";
+    const resultData = reason === "burst" ? getBurstLossData() : getPendingSaleData(reason, state.apples);
+    showRunResultOverlay(reason, resultData);
   }
 
   if (usedLegacy) {
@@ -1498,9 +1606,23 @@ function getAutoSaleFeeRate(meta) {
   return Math.max(0.08, 0.5 - softPow(level, 0.055, 0.92));
 }
 
+function getConveyorWorkshopLevel(meta) {
+  const currentMeta = meta || state.meta;
+  return currentMeta.upgrades.conveyorWorkshop;
+}
+
+function getConveyorWorkshopMultiplier(meta) {
+  const level = getConveyorWorkshopLevel(meta);
+  return 1 + softPow(level, 0.12, 0.82);
+}
+
 function hasTwinConveyor(meta) {
   const currentMeta = meta || state.meta;
   return currentMeta.upgrades.twinConveyor > 0;
+}
+
+function hasCenterConveyor(meta) {
+  return getConveyorWorkshopLevel(meta) >= 4;
 }
 
 function getExpansionDiscount(meta) {
@@ -1551,7 +1673,7 @@ function getSeasonHazard(season) {
 function getDropIntervalFrames(run) {
   const currentRun = run || state.run;
   const seasonFactor = getSeasonFactor(currentRun.season);
-  const divisor = 1 + softPow(currentRun.upgrades.dropMotor, 0.11, 0.82);
+  const divisor = (1 + softPow(currentRun.upgrades.dropMotor, 0.11, 0.82)) * getConveyorWorkshopMultiplier();
   return Math.max(BALANCE.minDropInterval, safeRound(BALANCE.baseDropInterval * seasonFactor / divisor));
 }
 
@@ -1561,14 +1683,69 @@ function getDropTierReal(run) {
 }
 
 function getDropTierInfo(run) {
+  const currentRun = run || state.run;
   const tierReal = getDropTierReal(run);
-  const base = Math.floor(tierReal);
-  const nextChance = tierReal - base;
+  const lastLevel = APPLE_TYPES.length - 1;
+  const upperLevel = currentRun.upgrades.dropTier <= 0 ? 0 : Math.min(lastLevel, Math.floor(tierReal) + 1);
+  const exponent = 0.58 + tierReal * 0.3;
+  const distribution = [];
+  let totalWeight = 0;
+
+  for (let level = 0; level <= upperLevel; level += 1) {
+    const distancePenalty = 1 / Math.pow(1 + Math.max(0, level - tierReal) * 1.4, 2.2);
+    const weight = Math.pow(level + 1, exponent) * distancePenalty;
+    distribution.push({
+      level,
+      weight,
+    });
+    totalWeight += weight;
+  }
+
+  let dominantLevel = 0;
+  let dominantChance = 1;
+  distribution.forEach((entry, index) => {
+    entry.chance = totalWeight > 0 ? entry.weight / totalWeight : (index === 0 ? 1 : 0);
+    delete entry.weight;
+    if (entry.chance >= dominantChance) {
+      dominantLevel = entry.level;
+      dominantChance = entry.chance;
+    }
+  });
+
   return {
     tierReal,
-    base,
-    nextChance,
+    dominantLevel,
+    dominantChance,
+    upperLevel,
+    distribution,
   };
+}
+
+function sampleFromDistribution(distribution) {
+  let roll = Math.random();
+  for (const entry of distribution) {
+    roll -= entry.chance;
+    if (roll <= 0) {
+      return entry.level;
+    }
+  }
+  return distribution.length > 0 ? distribution[distribution.length - 1].level : 0;
+}
+
+function getDropDistributionText(run, limit) {
+  const tierInfo = getDropTierInfo(run);
+  const maxItems = limit || 4;
+  const highlighted = tierInfo.distribution.filter((entry) => {
+    return entry.chance >= 0.09 || entry.level === tierInfo.dominantLevel || entry.level === tierInfo.upperLevel;
+  });
+  const visible = (highlighted.length > 0 ? highlighted : tierInfo.distribution).slice(-maxItems);
+  return visible.map((entry) => `${entry.level + 1}단계 ${Math.round(entry.chance * 100)}%`).join(" · ");
+}
+
+function getExpectedDropPointValue(run) {
+  return getDropTierInfo(run).distribution.reduce((sum, entry) => {
+    return sum + APPLE_TYPES[entry.level].points * entry.chance;
+  }, 0);
 }
 
 function getDangerZoneBottomRatio(run) {
@@ -1710,6 +1887,8 @@ function getMetaUpgradeCost(key, level) {
       return safeRound(580 * Math.pow(1.84, targetLevel));
     case "expansionEngineering":
       return costFormula(360, 1.19, targetLevel, 8, 1.2);
+    case "conveyorWorkshop":
+      return costFormula(420, 1.2, targetLevel, 8, 1.18);
     case "brokerageOffice":
       return costFormula(420, 1.2, targetLevel, 8, 1.18);
     case "twinConveyor":
@@ -1800,7 +1979,14 @@ function getHorizontalBounds(radius) {
 }
 
 function getActiveConveyorLanes(meta) {
-  return hasTwinConveyor(meta) ? ["left", "right"] : ["left"];
+  const lanes = ["left"];
+  if (hasCenterConveyor(meta)) {
+    lanes.push("center");
+  }
+  if (hasTwinConveyor(meta)) {
+    lanes.push("right");
+  }
+  return lanes;
 }
 
 function getConveyorGeometry(lane) {
@@ -1808,6 +1994,17 @@ function getConveyorGeometry(lane) {
   const gapScale = Math.min(2.2, 1 + Math.max(0, state.run.boxScale - 1) * 0.9);
   const outerOffset = BALANCE.conveyor.laneOuterOffset * gapScale;
   const endOffset = BALANCE.conveyor.laneEndOffset * gapScale;
+  if (lane === "center") {
+    return {
+      lane: "center",
+      startX: orchard.centerX,
+      startY: orchard.y + BALANCE.conveyor.startYOffset - 16,
+      endX: orchard.centerX,
+      endY: orchard.y + BALANCE.conveyor.endYOffset - 10,
+      width: BALANCE.conveyor.width - 8,
+    };
+  }
+
   if (lane === "right") {
     return {
       lane: "right",
@@ -1827,6 +2024,10 @@ function getConveyorGeometry(lane) {
     endY: orchard.y + BALANCE.conveyor.endYOffset,
     width: BALANCE.conveyor.width,
   };
+}
+
+function getConveyorSpinDirection(lane) {
+  return lane === "right" ? -1 : 1;
 }
 
 function getBeltFrames(interval) {
@@ -1862,7 +2063,7 @@ function resetTransientEffects() {
   state.floatingTexts = [];
   state.shake = 0;
   state.screenFlash = 0;
-  state.infeed = null;
+  state.infeeds = [];
   state.spin.phase = "idle";
   state.spin.frame = 0;
   state.spin.angle = 0;
@@ -1889,6 +2090,16 @@ function resetTransientEffects() {
   state.sale.burstIndex = 0;
   state.sale.burstTicker = 0;
   state.sale.displayedBonus = 0;
+  state.sale.bonusTrails = [];
+  state.sale.labelPulse = 0;
+  state.overlayMode = "none";
+  state.confirmAction = "";
+  state.nextSideLane = "left";
+  state.summonHistory = [];
+  state.crateBurst.appleId = 0;
+  state.crateBurst.warningFrames = 0;
+  state.crateBurst.exploding = false;
+  state.crateBurst.explodeFrames = 0;
 }
 
 function startNewRun() {
@@ -2064,8 +2275,29 @@ function getPendingSaleData(reason, apples) {
   };
 }
 
+function getBurstLossData() {
+  return {
+    reason: "burst",
+    appraisal: 0,
+    baseAppraisal: 0,
+    baseValue: 0,
+    premiumValue: 0,
+    goldenValue: 0,
+    rottenPenaltyRate: 0,
+    rottenPenaltyValue: 0,
+    qualityMultiplier: 0,
+    premiumBursts: [],
+    auctionName: "경매 취소",
+    auctionShortLabel: "취소",
+    auctionMultiplier: 0,
+    feeRate: 0,
+    feeAmount: 0,
+    bankGain: 0,
+  };
+}
+
 function canSellCrate() {
-  if (!state.run.alive || isSaleActive()) {
+  if (!state.run.alive || isSaleActive() || state.crateBurst.exploding) {
     return false;
   }
 
@@ -2087,6 +2319,15 @@ function getSellGateText() {
 
   if (!state.run.alive) {
     return "런이 종료되었습니다.";
+  }
+
+  if (state.crateBurst.exploding) {
+    return "상자 폭발 사고가 발생했습니다. 이번 런 보상은 0으로 고정됩니다.";
+  }
+
+  if (state.crateBurst.warningFrames > 0) {
+    const secondsLeft = Math.max(0, Math.ceil((BALANCE.crateBurstWarnFrames - state.crateBurst.warningFrames) / 60));
+    return `너무 큰 사과가 상자를 가로막고 있습니다. ${secondsLeft}s 안에 정리하지 못하면 상자가 폭발합니다.`;
   }
 
   if (isSaleActive()) {
@@ -2112,7 +2353,7 @@ function getSellGateText() {
 }
 
 function startSaleSequence(reason) {
-  if (!state.run.alive || isSaleActive()) {
+  if (!state.run.alive || isSaleActive() || state.crateBurst.exploding) {
     return false;
   }
 
@@ -2142,9 +2383,12 @@ function startSaleSequence(reason) {
   state.sale.burstIndex = 0;
   state.sale.burstTicker = 0;
   state.sale.displayedBonus = 0;
+  state.sale.bonusTrails = [];
+  state.sale.labelPulse = 0;
+  state.paused = false;
   state.run.sellPreview = saleData.appraisal;
-  state.run.timers.drop = 0;
-  state.infeed = null;
+  state.run.timers.drop = createLaneDropTimers();
+  state.infeeds = [];
   flashScreen(reason === "auto_sold" ? "rgba(255, 176, 136, 0.24)" : "rgba(255, 230, 178, 0.22)", 0.16);
   spawnFloatingText(
     getOrchardBounds().centerX,
@@ -2164,6 +2408,42 @@ function getSaleShiftX() {
   }
   const progress = clamp(state.sale.frame / BALANCE.sale.shipFrames, 0, 1);
   return Math.pow(progress, 1.1) * 460;
+}
+
+function pushSaleBonusTrail(burst) {
+  const orchard = getOrchardBounds();
+  const targetX = orchard.centerX;
+  const targetY = orchard.centerY + 2;
+  state.sale.bonusTrails.push({
+    x: burst.x,
+    y: burst.y,
+    fromX: burst.x,
+    fromY: burst.y,
+    targetX,
+    targetY,
+    life: 20,
+    maxLife: 20,
+    color: burst.name.includes("황금") ? "#ffe08b" : "#ffd3a1",
+  });
+}
+
+function updateSaleBonusTrails() {
+  state.sale.bonusTrails = state.sale.bonusTrails.filter((trail) => {
+    trail.life -= 1;
+    const progress = 1 - trail.life / Math.max(1, trail.maxLife);
+    const eased = 1 - Math.pow(1 - progress, 2.4);
+    trail.x = trail.fromX + (trail.targetX - trail.fromX) * eased;
+    trail.y = trail.fromY + (trail.targetY - trail.fromY) * eased - Math.sin(progress * Math.PI) * 22;
+    if (trail.life <= 0) {
+      spawnParticles(trail.targetX, trail.targetY, trail.color, 6, 2.8);
+      return false;
+    }
+    return true;
+  });
+  state.sale.labelPulse *= 0.9;
+  if (state.sale.labelPulse < 0.03) {
+    state.sale.labelPulse = 0;
+  }
 }
 
 function updateSaleSequence() {
@@ -2192,6 +2472,8 @@ function updateSaleSequence() {
       state.sale.burstTicker -= BALANCE.sale.burstGapFrames;
       state.sale.burstIndex += 1;
       state.sale.displayedBonus += burst.value;
+      state.sale.labelPulse = 1;
+      pushSaleBonusTrail(burst);
       spawnFloatingText(
         burst.x + (Math.random() - 0.5) * 18,
         burst.y - state.sale.burstIndex * 4,
@@ -2199,11 +2481,21 @@ function updateSaleSequence() {
         "#ffe59b",
         44,
       );
+      spawnFloatingText(
+        getOrchardBounds().centerX + (Math.random() - 0.5) * 30,
+        getOrchardBounds().centerY + 18 + (Math.random() - 0.5) * 8,
+        `보너스 +${formatLabCurrency(burst.value)}`,
+        burst.name.includes("황금") ? "#fff0aa" : "#ffe0bd",
+        34,
+      );
+      spawnShockwave(burst.x, burst.y, burst.name.includes("황금") ? "#ffe6a0" : "#ffd3a1", 42, 6, 14);
       spawnParticles(burst.x, burst.y, "#ffd87c", 8, 3.8);
     }
 
     state.sale.premiumBurstsDone = state.sale.burstIndex >= state.sale.premiumBursts.length;
   }
+
+  updateSaleBonusTrails();
 
   if (state.sale.phase === "packing" && state.sale.frame >= BALANCE.sale.packFrames) {
     state.sale.phase = "shipping";
@@ -2242,8 +2534,10 @@ function finishRun(reason) {
     return;
   }
 
-  const exitReason = reason === "auto_sold" ? "auto_sold" : "sold";
-  const saleData = isSaleActive() ? state.sale : getPendingSaleData(exitReason);
+  const exitReason = reason === "auto_sold" ? "auto_sold" : (reason === "burst" ? "burst" : "sold");
+  const saleData = exitReason === "burst"
+    ? getBurstLossData()
+    : (isSaleActive() ? state.sale : getPendingSaleData(exitReason));
   const appraisal = saleData.appraisal;
   const bankGain = saleData.bankGain;
 
@@ -2255,6 +2549,10 @@ function finishRun(reason) {
   state.sale.phase = "idle";
   state.sale.shippedX = 0;
   state.sale.frame = 0;
+  state.crateBurst.exploding = false;
+  state.crateBurst.explodeFrames = 0;
+  state.crateBurst.warningFrames = 0;
+  state.crateBurst.appleId = 0;
 
   state.meta.bank += bankGain;
   state.meta.bestScore = Math.max(state.meta.bestScore, state.run.score);
@@ -2270,11 +2568,13 @@ function finishRun(reason) {
     state.meta.stats.totalAppraisalGain += appraisal;
     state.meta.stats.lastSaleAppraisal = appraisal;
     audioManager.play("sell");
-  } else {
+  } else if (exitReason === "auto_sold") {
     state.meta.stats.autoSoldRuns += 1;
     state.meta.stats.totalAppraisalGain += appraisal;
     state.meta.stats.lastSaleAppraisal = bankGain;
     audioManager.play("sell");
+  } else {
+    state.meta.stats.lastSaleAppraisal = 0;
   }
 
   showRunResultOverlay(exitReason, saleData);
@@ -2290,8 +2590,30 @@ function attemptSellCrate() {
   startSaleSequence("sold");
 }
 
+function requestSellCrate() {
+  if (!canSellCrate()) {
+    audioManager.play("ui-denied");
+    return;
+  }
+  showConfirmOverlay("sell");
+  audioManager.play("ui-confirm");
+}
+
+function requestRestartRun() {
+  if (!state.run.alive) {
+    startNewRun();
+    return;
+  }
+  if (isSaleActive() || state.crateBurst.exploding) {
+    audioManager.play("ui-denied");
+    return;
+  }
+  showConfirmOverlay("restart");
+  audioManager.play("ui-confirm");
+}
+
 function togglePause(forceValue) {
-  if (!state.run.alive || isSaleActive()) {
+  if (!state.run.alive || isSaleActive() || state.crateBurst.exploding) {
     audioManager.play("ui-denied");
     return;
   }
@@ -2299,21 +2621,31 @@ function togglePause(forceValue) {
   state.paused = typeof forceValue === "boolean" ? forceValue : !state.paused;
   audioManager.play("pause", { paused: state.paused });
   if (state.paused) {
-    showOverlay("잠시 멈춤", "컨베이어와 상자 물리를 잠시 멈췄습니다. 버튼이나 P 키로 다시 이어갈 수 있습니다.");
+    showOverlay(
+      "잠시 멈춤",
+      `<p class="overlay-lead">컨베이어와 상자 물리를 잠시 멈췄습니다. 버튼이나 P 키로 다시 이어갈 수 있습니다.</p>`,
+      "",
+      { mode: "pause", eyebrow: "과수원 알림" },
+    );
   } else {
     hideOverlay();
   }
   syncUi(true);
 }
 
-function showOverlay(title, text, buttonMarkup) {
+function showOverlay(title, contentHtml, buttonMarkup, options) {
   clearOverlayAutoAdvance();
+  const config = options || {};
   const content = buttonMarkup || "";
+  state.overlayMode = config.mode || "info";
+  state.confirmAction = config.action || "";
+  ui.overlay.dataset.mode = state.overlayMode;
+  ui.overlay.dataset.action = state.confirmAction;
   ui.overlay.innerHTML = `
-    <div>
-      <p class="modal-eyebrow">과수원 정산</p>
+    <div class="overlay-card">
+      <p class="modal-eyebrow">${config.eyebrow || "과수원 알림"}</p>
       <h2>${title}</h2>
-      <p>${text}</p>
+      ${contentHtml}
       ${content}
     </div>
   `;
@@ -2321,32 +2653,55 @@ function showOverlay(title, text, buttonMarkup) {
 }
 
 function showRunResultOverlay(reason, saleData) {
-  const title = reason === "auto_sold" ? "자동 판매 완료" : "박스 판매 완료";
+  const title = reason === "auto_sold"
+    ? "자동 경매 정산"
+    : (reason === "burst" ? "상자 폭발" : "박스 경매 정산");
   const buttonLabel = "다음 런";
-  const summaryText = [
-    `최종 점수 ${formatNumber(state.run.score)}`,
-    `경매장 ${saleData.auctionName} x${saleData.auctionMultiplier.toFixed(2)}`,
-    `망치가 ${formatLabCurrency(saleData.appraisal)}`,
-    `고품질 프리미엄 ${formatLabCurrency(saleData.premiumValue)}`,
-    `황금 보너스 ${formatLabCurrency(saleData.goldenValue)}`,
-    `썩은 감액 ${Math.round(saleData.rottenPenaltyRate * 100)}%`,
-    reason === "auto_sold" ? `자동판매 수수료 ${Math.round(saleData.feeRate * 100)}%` : "수동 판매 보너스",
-    `실수령 연구 자금 ${formatLabCurrency(saleData.bankGain)}`,
-    `생존 시간 ${formatDuration(state.run.elapsedFrames / 60)}`,
-    `최고 단계 ${state.run.topTier >= 0 ? APPLE_TYPES[state.run.topTier].name : "-"}`,
-    `5초 뒤 자동으로 다음 런`,
-  ].join(" · ");
+  const rows = reason === "burst"
+    ? [
+      ["최종 점수", formatNumber(state.run.score)],
+      ["이번 보상", formatLabCurrency(0)],
+      ["생존 시간", formatDuration(state.run.elapsedFrames / 60)],
+      ["최고 단계", state.run.topTier >= 0 ? APPLE_TYPES[state.run.topTier].name : "-"],
+    ]
+    : [
+      ["최종 점수", formatNumber(state.run.score)],
+      ["경매장", `${saleData.auctionName} x${saleData.auctionMultiplier.toFixed(2)}`],
+      ["정산 금액", formatLabCurrency(saleData.appraisal)],
+      ["보너스", `${formatLabCurrency(saleData.premiumValue + saleData.goldenValue)} / 감액 ${Math.round(saleData.rottenPenaltyRate * 100)}%`],
+      ...(reason === "auto_sold" ? [["자동판매 수수료", `${Math.round(saleData.feeRate * 100)}%`]] : []),
+      ["실수령 연구 자금", formatLabCurrency(saleData.bankGain)],
+      ["생존 시간", formatDuration(state.run.elapsedFrames / 60)],
+      ["최고 단계", state.run.topTier >= 0 ? APPLE_TYPES[state.run.topTier].name : "-"],
+    ];
+  const summaryHtml = `
+    <div class="overlay-actions">
+      <button id="overlayRestartButton" class="action-button primary">${buttonLabel}</button>
+    </div>
+    <div class="overlay-results">
+      ${rows.map((row) => `<div class="overlay-stat-row"><strong>${row[0]}</strong><span>${row[1]}</span></div>`).join("")}
+    </div>
+    <p class="overlay-note" id="overlayCountdownText">30초 뒤 자동으로 다음 런이 시작됩니다.</p>
+  `;
 
   showOverlay(
     title,
-    summaryText,
-    `<button id="overlayRestartButton" class="action-button primary">${buttonLabel}</button>`,
+    summaryHtml,
+    "",
+    {
+      mode: "result",
+      eyebrow: reason === "burst" ? "과수원 사고" : "경매 정산",
+    },
   );
   scheduleOverlayAutoAdvance();
 }
 
 function hideOverlay() {
   clearOverlayAutoAdvance();
+  state.overlayMode = "none";
+  state.confirmAction = "";
+  delete ui.overlay.dataset.mode;
+  delete ui.overlay.dataset.action;
   ui.overlay.classList.add("hidden");
 }
 
@@ -2360,16 +2715,22 @@ function clearOverlayAutoAdvance() {
 
 function scheduleOverlayAutoAdvance() {
   clearOverlayAutoAdvance();
-  state.overlayAutoAdvanceEndsAt = Date.now() + 5000;
+  state.overlayAutoAdvanceEndsAt = Date.now() + BALANCE.overlayAutoAdvanceMs;
   state.overlayAutoAdvanceTimer = window.setInterval(() => {
     const button = document.getElementById("overlayRestartButton");
+    const countdownText = document.getElementById("overlayCountdownText");
     if (!button) {
       clearOverlayAutoAdvance();
       return;
     }
 
     const secondsLeft = Math.max(0, Math.ceil((state.overlayAutoAdvanceEndsAt - Date.now()) / 1000));
-    button.textContent = secondsLeft > 0 ? `다음 런 (${secondsLeft})` : "다음 런";
+    button.textContent = "다음 런";
+    if (countdownText) {
+      countdownText.textContent = secondsLeft > 0
+        ? `${secondsLeft}초 뒤 자동으로 다음 런이 시작됩니다.`
+        : "지금 다음 런을 시작합니다.";
+    }
     if (secondsLeft <= 0) {
       clearOverlayAutoAdvance();
       startNewRun();
@@ -2377,15 +2738,57 @@ function scheduleOverlayAutoAdvance() {
   }, 150);
 }
 
+function showConfirmOverlay(action) {
+  const config = action === "sell"
+    ? {
+      title: "이 상자를 경매에 올릴까요?",
+      eyebrow: "확인 필요",
+      body: `<p class="overlay-lead">지금 경매를 시작하면 포장과 배송 연출이 진행되고 이번 런이 끝납니다. 예상 상자 가치는 ${formatLabCurrency(state.run.sellPreview)}입니다.</p>`,
+      confirm: "경매 진행",
+    }
+    : {
+      title: "정말 새 런으로 넘어갈까요?",
+      eyebrow: "확인 필요",
+      body: `<p class="overlay-lead">현재 런 진행 상황과 이번 런 상점 구매가 모두 초기화됩니다. 지금 점수와 런 재화는 정산되지 않습니다.</p>`,
+      confirm: "새 런 시작",
+    };
+
+  showOverlay(
+    config.title,
+    `${config.body}<p class="overlay-note">취소하면 현재 상태로 계속 진행됩니다.</p>`,
+    `
+      <div class="overlay-actions">
+        <button id="overlayCancelButton" class="tool-button" type="button">취소</button>
+        <button id="overlayConfirmButton" class="action-button primary" type="button">${config.confirm}</button>
+      </div>
+    `,
+    {
+      mode: "confirm",
+      action,
+      eyebrow: config.eyebrow,
+    },
+  );
+}
+
 function getStatusText() {
   if (!state.run.alive) {
-    return state.run.exitReason === "auto_sold"
+    return state.run.exitReason === "burst"
+      ? "상자가 폭발해 이번 런 보상이 0이 되었습니다."
+      : state.run.exitReason === "auto_sold"
       ? "상자가 꽉 차 자동 판매되었습니다. 수수료가 적용된 연구 자금만 회수했습니다."
       : "박스를 수동 판매했습니다. 연구소를 강화하고 다음 런으로 이어가십시오.";
   }
 
   if (state.paused) {
     return "컨베이어와 물리가 일시정지 상태입니다.";
+  }
+
+  if (state.crateBurst.exploding) {
+    return "상자가 폭발하는 중입니다. 이번 런 정산은 0으로 고정됩니다.";
+  }
+
+  if (state.crateBurst.warningFrames > 0) {
+    return `상자 폭발 경고. 너무 큰 사과가 양쪽 벽을 동시에 밀고 있습니다. ${Math.max(0, Math.ceil((BALANCE.crateBurstWarnFrames - state.crateBurst.warningFrames) / 60))}초 안에 정리해야 합니다.`;
   }
 
   if (isSaleActive()) {
@@ -2460,10 +2863,8 @@ function getRunUpgradeDetail(key) {
     case "valuePress":
       return `이번 런 점수/재화 x${getRunValueMultiplier().toFixed(2)}`;
     case "dropTier": {
-      const nextLabel = tierInfo.base < APPLE_TYPES.length - 1
-        ? ` · 다음 ${tierInfo.base + 2}단계 ${Math.round(tierInfo.nextChance * 100)}%`
-        : "";
-      return `보장 ${tierInfo.base + 1}단계${nextLabel}`;
+      const rangeText = `${tierInfo.distribution[0].level + 1}~${tierInfo.upperLevel + 1}단계`;
+      return `투입 범위 ${rangeText} · 주력 ${tierInfo.dominantLevel + 1}단계 ${Math.round(tierInfo.dominantChance * 100)}%`;
     }
     default:
       return "";
@@ -2475,17 +2876,19 @@ function getMetaUpgradeDetail(key) {
     case "starterFund":
       return `다음 런 시작 자금 ${formatRunCurrency(getStarterCash())}`;
     case "durableCrate":
-      return `자동 판매선 회복 속도 +${getRedLineRecoveryFrames()}`;
+      return `자동 판매선 경고가 초당 ${getRedLineRecoveryFrames()}프레임씩 더 빨리 사라짐`;
     case "bombOrchard":
       return `기본 폭탄 확률 ${formatPercent(getBaseBombChance())}`;
     case "prismOrchard":
       return `기본 프리즘 확률 ${formatPercent(getBasePrismChance())}`;
     case "expansionEngineering":
       return `할인 ${Math.round(getExpansionDiscount() * 100)}% · 화면 안정 ${getCameraExponent().toFixed(2)}`;
+    case "conveyorWorkshop":
+      return `벨트 속도 x${getConveyorWorkshopMultiplier().toFixed(2)} · 중앙 벨트 ${hasCenterConveyor() ? "개방" : "잠김"}`;
     case "brokerageOffice":
       return `자동판매 수수료 ${Math.round(getAutoSaleFeeRate() * 100)}%`;
     case "twinConveyor":
-      return hasTwinConveyor() ? "오른쪽 벨트 활성" : "추가 벨트 미설치";
+      return hasTwinConveyor() ? "오른쪽 벨트 활성" : "오른쪽 벨트 미설치";
     case "goldenMulch":
       return `황금 사과 ${formatPercent(getGoldenAppleChance())} · 황금 보너스 x${getGoldenBonusScale().toFixed(2)}`;
     case "sortingShed":
@@ -2600,6 +3003,10 @@ function buildAutomationMarkup() {
   const topTierName = state.run.topTier >= 0 ? APPLE_TYPES[state.run.topTier].name : "-";
   const goldenChance = getGoldenAppleChance();
   const rottenChance = getRottenAppleChance();
+  const conveyorLanes = getActiveConveyorLanes();
+  const feedLabel = hasCenterConveyor()
+    ? (hasTwinConveyor() ? "좌우 묶음 + 중앙" : "왼쪽 + 중앙")
+    : (hasTwinConveyor() ? "좌우 묶음" : "왼쪽");
   const devSpeedRow = IS_DEV_HOST ? `
     <div class="stat-row">
       <dt>개발 배속</dt>
@@ -2614,8 +3021,12 @@ function buildAutomationMarkup() {
     </div>
     ${devSpeedRow}
     <div class="stat-row">
-      <dt>기본 등급</dt>
-      <dd>${tierInfo.base + 1}<br>${Math.round(tierInfo.nextChance * 100)}%</dd>
+      <dt>주력 품종</dt>
+      <dd>${tierInfo.dominantLevel + 1}단계<br>${Math.round(tierInfo.dominantChance * 100)}%</dd>
+    </div>
+    <div class="stat-row">
+      <dt>투입 분포</dt>
+      <dd>${getDropDistributionText(undefined, 3)}</dd>
     </div>
     <div class="stat-row">
       <dt>위험 구역</dt>
@@ -2671,7 +3082,7 @@ function buildAutomationMarkup() {
     </div>
     <div class="stat-row">
       <dt>컨베이어</dt>
-      <dd>${hasTwinConveyor() ? "듀얼" : "싱글"}</dd>
+      <dd>${feedLabel}<br>표시 벨트 ${conveyorLanes.length}줄</dd>
     </div>
     <div class="stat-row">
       <dt>최고 점수</dt>
@@ -2703,7 +3114,8 @@ function buildBadgeMarkup() {
   }
 
   return badges.concat([
-    `<span class="badge"><strong>드롭 등급</strong>${tierInfo.base + 1}</span>`,
+    `<span class="badge"><strong>주력 품종</strong>${tierInfo.dominantLevel + 1}단계</span>`,
+    `<span class="badge"><strong>투입 범위</strong>1~${tierInfo.upperLevel + 1}단계</span>`,
     `<span class="badge"><strong>위험도</strong>${Math.round(dangerRatio * 100)}%</span>`,
     `<span class="badge"><strong>뒤집기</strong>${spinnerReady}</span>`,
     `<span class="badge"><strong>감정가</strong>${formatLabCurrency(state.run.sellPreview)}</span>`,
@@ -2742,18 +3154,35 @@ function renderGuideModal() {
   ui.guideContent.innerHTML = `
     <section class="guide-section">
       <div class="guide-grid">
-        ${pane.items.map((item) => `
+        ${pane.items.map((item) => {
+          const iconClasses = ["guide-icon", item.asset ? "has-image" : ""].filter(Boolean).join(" ");
+          const iconStyle = item.asset ? ` style="--asset-image:url(${item.asset});"` : "";
+          return `
           <article class="guide-tile">
-            <div class="guide-icon" data-icon="${item.icon}"></div>
+            <div class="${iconClasses}" data-icon="${item.icon}"${iconStyle}></div>
             <div class="guide-copy">
               <strong>${item.title}</strong>
               <p>${item.body}</p>
             </div>
           </article>
-        `).join("")}
+        `;
+        }).join("")}
       </div>
     </section>
   `;
+}
+
+function setButtonLabel(button, label) {
+  if (!button) {
+    return;
+  }
+  const labelNode = button.querySelector(".button-label");
+  if (labelNode) {
+    labelNode.textContent = label;
+  } else {
+    button.textContent = label;
+  }
+  button.setAttribute("aria-label", label);
 }
 
 function syncControlUi(force) {
@@ -2789,6 +3218,9 @@ function syncControlUi(force) {
 
   if (ui.bottomSheet) {
     ui.bottomSheet.classList.toggle("is-open", state.sheetOpen);
+  }
+  if (ui.controlDock) {
+    ui.controlDock.classList.toggle("is-sheet-open", state.sheetOpen);
   }
 
   if (ui.sheetTitle) {
@@ -2830,6 +3262,8 @@ function syncUi(force) {
     state.sale.reason,
     state.run.timers.autoSpinCooldown,
     state.run.redLineFrames,
+    state.crateBurst.warningFrames,
+    state.crateBurst.exploding,
     state.spin.phase,
     state.boxAnimation.active,
     canSellCrate(),
@@ -2843,10 +3277,14 @@ function syncUi(force) {
     ui.status.textContent = getStatusText();
     ui.appraisalValue.textContent = formatLabCurrency(state.run.sellPreview);
     ui.sellHint.textContent = getSellGateText();
-    ui.pauseButton.textContent = state.paused ? "재개" : "멈춤";
-    ui.pauseButton.disabled = !state.run.alive;
-    ui.sellButton.disabled = !canSellCrate() || isSaleActive();
-    ui.sellButton.textContent = isSaleActive() ? "포장 중..." : (state.run.alive ? "경매 올리기" : "종료됨");
+    setButtonLabel(ui.pauseButton, state.paused ? "재개" : "멈춤");
+    ui.pauseButton.disabled = !state.run.alive || state.crateBurst.exploding;
+    ui.restartButton.disabled = isSaleActive() || state.crateBurst.exploding;
+    ui.sellButton.disabled = !canSellCrate() || isSaleActive() || state.crateBurst.exploding;
+    setButtonLabel(ui.sellButton, state.crateBurst.exploding ? "사고 처리 중" : (isSaleActive() ? "포장 중..." : (state.run.alive ? "경매 올리기" : "종료됨")));
+    if (ui.summonButton) {
+      ui.summonButton.disabled = !state.run.alive || state.paused || isSaleActive() || state.crateBurst.exploding;
+    }
     state.uiSnapshot = snapshot;
   }
 
@@ -2922,7 +3360,7 @@ function setGuidePane(pane) {
 }
 
 function canBuyRunUpgrade(key) {
-  if (!state.run.alive || isSaleActive()) {
+  if (!state.run.alive || isSaleActive() || state.crateBurst.exploding) {
     return false;
   }
 
@@ -2938,7 +3376,7 @@ function canBuyRunUpgrade(key) {
 }
 
 function canBuyMetaUpgrade(key) {
-  if (isSaleActive()) {
+  if (isSaleActive() || state.crateBurst.exploding) {
     return false;
   }
   const definition = META_UPGRADES[key];
@@ -2989,6 +3427,7 @@ function purchaseMetaUpgrade(key) {
     return;
   }
 
+  const previousLevel = state.meta.upgrades[key];
   const cost = getMetaUpgradeCost(key, state.meta.upgrades[key]);
   state.meta.bank -= cost;
   state.meta.upgrades[key] += 1;
@@ -3001,7 +3440,20 @@ function purchaseMetaUpgrade(key) {
     spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "수수료 인하", "#cfe9ff", 48);
   }
 
+  if (key === "conveyorWorkshop") {
+    const seededTimers = createLaneDropTimers();
+    if (hasCenterConveyor() && previousLevel < 4) {
+      state.run.timers.drop.center = Math.max(state.run.timers.drop.center, seededTimers.center);
+      spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "중앙 벨트 개방", "#d8f6ff", 56);
+    } else {
+      spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "벨트 정비", "#dff4ff", 48);
+    }
+  }
+
   if (key === "twinConveyor") {
+    const seededTimers = createLaneDropTimers();
+    state.nextSideLane = "right";
+    state.run.timers.drop.left = Math.max(state.run.timers.drop.left, seededTimers.left);
     spawnFloatingText(getOrchardBounds().centerX, getOrchardBounds().y - 20, "보조 벨트", "#e6f4ff", 56);
   }
 
@@ -3033,11 +3485,7 @@ function awardValue(baseAmount) {
 
 function rollDropLevel() {
   const tierInfo = getDropTierInfo();
-  const nextLevel = Math.min(APPLE_TYPES.length - 1, tierInfo.base + 1);
-  if (tierInfo.nextChance > 0 && Math.random() < tierInfo.nextChance) {
-    return nextLevel;
-  }
-  return tierInfo.base;
+  return sampleFromDistribution(tierInfo.distribution);
 }
 
 function drawSpecialType() {
@@ -3065,11 +3513,39 @@ function drawTraitType() {
   return null;
 }
 
-function createInfeedToken() {
+function getInfeedByLane(lane) {
+  return state.infeeds.find((infeed) => infeed.lane === lane) || null;
+}
+
+function getActiveSideLanes() {
+  const lanes = ["left"];
+  if (hasTwinConveyor()) {
+    lanes.push("right");
+  }
+  return lanes;
+}
+
+function getNextSideSpawnLane() {
+  const sideLanes = getActiveSideLanes();
+  if (sideLanes.length === 1) {
+    state.nextSideLane = "left";
+    return "left";
+  }
+
+  const preferred = sideLanes.includes(state.nextSideLane) ? state.nextSideLane : "left";
+  const available = sideLanes.filter((lane) => !getInfeedByLane(lane));
+  if (available.length === 0) {
+    return null;
+  }
+  if (available.includes(preferred)) {
+    return preferred;
+  }
+  return available[0];
+}
+
+function createInfeedToken(lane) {
   const interval = getDropIntervalFrames();
-  const lanes = getActiveConveyorLanes();
-  const lane = lanes.length > 1 && state.run.drops % 2 === 1 ? "right" : "left";
-  state.infeed = {
+  const token = {
     lane,
     level: rollDropLevel(),
     special: drawSpecialType(),
@@ -3077,6 +3553,57 @@ function createInfeedToken() {
     frame: 0,
     beltFrames: getBeltFrames(interval),
   };
+  state.infeeds.push(token);
+  if (lane === "left" || lane === "right") {
+    state.nextSideLane = lane === "left" ? "right" : "left";
+  }
+  return token;
+}
+
+function canSummonAppleNow() {
+  const now = performance.now();
+  state.summonHistory = state.summonHistory.filter((timestamp) => now - timestamp < 1000);
+  if (state.summonHistory.length >= 10) {
+    return false;
+  }
+  state.summonHistory.push(now);
+  return true;
+}
+
+function summonAppleFromSky() {
+  if (!state.run.alive || state.paused || isSaleActive() || state.crateBurst.exploding) {
+    audioManager.play("ui-denied");
+    return;
+  }
+
+  if (!canSummonAppleNow()) {
+    audioManager.play("ui-denied");
+    return;
+  }
+
+  const level = rollDropLevel();
+  const orchard = getOrchardBounds();
+  const radius = APPLE_TYPES[level].radius;
+  const bounds = getHorizontalBounds(radius);
+  const spread = Math.min(orchard.w * 0.18, 110);
+  const spawnX = clamp(
+    orchard.centerX + (Math.random() - 0.5) * spread * 2,
+    bounds.minX,
+    bounds.maxX,
+  );
+  const apple = createApple(level, spawnX, orchard.y - radius - 26, {
+    vx: (Math.random() - 0.5) * 0.8,
+    vy: 0.6,
+    spinVelocity: (Math.random() - 0.5) * 0.08,
+  });
+
+  state.apples.push(apple);
+  state.run.drops += 1;
+  state.shake = Math.max(state.shake, 3.2);
+  audioManager.play("summon", { level });
+  spawnParticles(spawnX, orchard.y - radius + 12, APPLE_TYPES[level].highlight, 10, 2.6);
+  spawnFloatingText(spawnX, orchard.y - radius - 24, `사과 소환 ${level + 1}단계`, "#fff4db", 34);
+  syncUi(true);
 }
 
 function isSpinActive() {
@@ -3084,31 +3611,31 @@ function isSpinActive() {
 }
 
 function isAnimationBlockingFeed() {
-  return isSpinActive() || state.boxAnimation.active || isSaleActive();
+  return isSpinActive() || state.boxAnimation.active || isSaleActive() || state.crateBurst.exploding;
 }
 
-function getInfeedProgress() {
-  if (!state.infeed) {
+function getInfeedProgress(infeed) {
+  if (!infeed) {
     return 0;
   }
-  return clamp(state.infeed.frame / Math.max(1, state.infeed.beltFrames), 0, 1);
+  return clamp(infeed.frame / Math.max(1, infeed.beltFrames), 0, 1);
 }
 
-function getInfeedVisual() {
-  if (!state.infeed) {
+function getInfeedVisual(infeed) {
+  if (!infeed) {
     return null;
   }
 
-  const geometry = getConveyorGeometry(state.infeed.lane);
-  const progress = getInfeedProgress();
+  const geometry = getConveyorGeometry(infeed.lane);
+  const progress = getInfeedProgress(infeed);
   const x = geometry.startX + (geometry.endX - geometry.startX) * progress;
   const y = geometry.startY + (geometry.endY - geometry.startY) * progress;
   const dx = geometry.endX - geometry.startX;
   const dy = geometry.endY - geometry.startY;
   const length = Math.hypot(dx, dy) || 1;
   const angle = Math.atan2(dy, dx);
-  const spinDirection = state.infeed.lane === "right" ? -1 : 1;
-  const spin = spinDirection * (length * progress) / Math.max(12, APPLE_TYPES[state.infeed.level].radius);
+  const spinDirection = getConveyorSpinDirection(infeed.lane);
+  const spin = spinDirection * (length * progress) / Math.max(12, APPLE_TYPES[infeed.level].radius);
 
   return {
     x,
@@ -3120,20 +3647,20 @@ function getInfeedVisual() {
   };
 }
 
-function releaseInfeedApple() {
-  if (!state.infeed) {
+function releaseInfeedApple(infeed) {
+  if (!infeed) {
     return;
   }
 
-  const visual = getInfeedVisual();
-  const dropLevel = state.infeed.level;
+  const visual = getInfeedVisual(infeed);
+  const dropLevel = infeed.level;
   const tangentSpeed = 2.05;
   const apple = createApple(dropLevel, visual.x, visual.y, {
-    special: state.infeed.special,
-    trait: state.infeed.trait,
+    special: infeed.special,
+    trait: infeed.trait,
     vx: visual.unitX * tangentSpeed,
     vy: visual.unitY * tangentSpeed,
-    spinVelocity: (state.infeed.lane === "right" ? -1 : 1) * (0.07 + 0.008 * dropLevel),
+    spinVelocity: getConveyorSpinDirection(infeed.lane) * (0.07 + 0.008 * dropLevel),
     spin: visual.spin,
   });
 
@@ -3142,37 +3669,61 @@ function releaseInfeedApple() {
   state.shake = Math.max(state.shake, 4.5);
   audioManager.play("drop-release", { level: dropLevel });
   spawnParticles(apple.x, apple.y + 6, APPLE_TYPES[dropLevel].color, 12, 3.5);
-  state.infeed = null;
-  state.run.timers.drop = 0;
+  state.infeeds = state.infeeds.filter((token) => token !== infeed);
+  if (infeed.lane === "center") {
+    state.run.timers.drop.center = 0;
+  } else {
+    state.run.timers.drop.left = 0;
+    state.run.timers.drop.right = 0;
+  }
 }
 
-function updateInfeed() {
+function updateInfeeds() {
   if (!state.run.alive || state.paused || isAnimationBlockingFeed()) {
     return;
   }
 
   state.beltTime += 1;
+  const interval = getDropIntervalFrames();
+  const beltFrames = getBeltFrames(interval);
+  const startAfter = Math.max(1, interval - beltFrames);
+  let releasedSideLane = false;
+  let releasedCenterLane = false;
 
-  if (!state.infeed) {
-    const interval = getDropIntervalFrames();
-    const beltFrames = getBeltFrames(interval);
-    const startAfter = Math.max(1, interval - beltFrames);
-    state.run.timers.drop += 1;
-
-    if (state.run.timers.drop >= startAfter) {
-      createInfeedToken();
+  for (const infeed of state.infeeds.slice()) {
+    infeed.frame += 1;
+    if (infeed.frame >= infeed.beltFrames) {
+      releaseInfeedApple(infeed);
+      if (infeed.lane === "center") {
+        releasedCenterLane = true;
+      } else {
+        releasedSideLane = true;
+      }
     }
-    return;
   }
 
-  state.infeed.frame += 1;
-  if (state.infeed.frame >= state.infeed.beltFrames) {
-    releaseInfeedApple();
+  const sideLanes = getActiveSideLanes();
+  const hasActiveSideToken = sideLanes.some((lane) => getInfeedByLane(lane));
+  if (!releasedSideLane && !hasActiveSideToken) {
+    state.run.timers.drop.left = Math.max(0, Number(state.run.timers.drop.left) || 0) + 1;
+    if (state.run.timers.drop.left >= startAfter) {
+      const lane = getNextSideSpawnLane();
+      if (lane) {
+        createInfeedToken(lane);
+      }
+    }
+  }
+
+  if (hasCenterConveyor() && !releasedCenterLane && !getInfeedByLane("center")) {
+    state.run.timers.drop.center = Math.max(0, Number(state.run.timers.drop.center) || 0) + 1;
+    if (state.run.timers.drop.center >= startAfter) {
+      createInfeedToken("center");
+    }
   }
 }
 
 function startSpinSkill() {
-  if (!state.run.alive || state.paused || isSpinActive() || state.boxAnimation.active) {
+  if (!state.run.alive || state.paused || isSpinActive() || state.boxAnimation.active || state.crateBurst.exploding) {
     return false;
   }
 
@@ -3188,6 +3739,9 @@ function startSpinSkill() {
 }
 
 function maybeTriggerAutoSpinner() {
+  if (state.crateBurst.warningFrames > 0 || state.crateBurst.exploding) {
+    return;
+  }
   const spec = getAutoSpinnerSpec();
   if (!spec || state.run.timers.autoSpinCooldown > 0) {
     return;
@@ -3705,6 +4259,78 @@ function updateDangerState() {
   }
 }
 
+function findCrateBurstApple(orchard) {
+  for (const apple of state.apples) {
+    if (
+      apple.age > 24
+      && apple.x - apple.r <= orchard.x - 6
+      && apple.x + apple.r >= orchard.x + orchard.w + 6
+    ) {
+      return apple;
+    }
+  }
+  return null;
+}
+
+function triggerCrateBurst(apple) {
+  const orchard = getOrchardBounds();
+  state.crateBurst.exploding = true;
+  state.crateBurst.explodeFrames = 0;
+  state.run.sellPreview = 0;
+  state.sale.active = false;
+  state.infeeds = [];
+  state.run.timers.drop = createLaneDropTimers();
+  flashScreen("rgba(255, 86, 86, 0.95)", 0.46);
+  state.shake = Math.max(state.shake, 22);
+  audioManager.play("crate-burst");
+  spawnShockwave(orchard.centerX, orchard.centerY, "#ff6f59", orchard.w * 0.92, 24, 28);
+  spawnShockwave(orchard.centerX, orchard.centerY, "#ffd7b8", orchard.w * 0.68, 18, 24);
+  spawnParticles(orchard.centerX, orchard.centerY, "#ff7359", 72, 10.5);
+  spawnParticles(orchard.centerX, orchard.centerY, "#ffd0a6", 48, 8.2);
+  spawnFloatingText(orchard.centerX, orchard.centerY - 28, "상자 폭발", "#fff1e2", 64);
+  spawnFloatingText(orchard.centerX, orchard.centerY + 16, "이번 보상 0", "#ffd1cc", 60);
+  if (apple) {
+    spawnFloatingText(apple.x, apple.y - apple.r - 12, `${APPLE_TYPES[apple.level].name} 과대 적재`, "#ffd7c2", 48);
+  }
+}
+
+function updateCrateBurstState() {
+  if (!state.run.alive || isSaleActive()) {
+    return false;
+  }
+
+  if (state.crateBurst.exploding) {
+    state.crateBurst.explodeFrames += 1;
+    if (state.crateBurst.explodeFrames >= BALANCE.crateBurstExplodeFrames) {
+      finishRun("burst");
+    }
+    return true;
+  }
+
+  const orchard = getOrchardBounds();
+  const offender = findCrateBurstApple(orchard);
+  if (offender) {
+    if (state.crateBurst.appleId === offender.id) {
+      state.crateBurst.warningFrames += 1;
+    } else {
+      state.crateBurst.appleId = offender.id;
+      state.crateBurst.warningFrames = 1;
+    }
+
+    if (state.crateBurst.warningFrames >= BALANCE.crateBurstWarnFrames) {
+      triggerCrateBurst(offender);
+      return true;
+    }
+  } else if (state.crateBurst.warningFrames > 0) {
+    state.crateBurst.warningFrames = Math.max(0, state.crateBurst.warningFrames - 3);
+    if (state.crateBurst.warningFrames === 0) {
+      state.crateBurst.appleId = 0;
+    }
+  }
+
+  return false;
+}
+
 function spawnParticles(x, y, color, count, speed) {
   for (let index = 0; index < count; index += 1) {
     const angle = (Math.PI * 2 * index) / count + Math.random() * 0.35;
@@ -3788,6 +4414,16 @@ function worldStep() {
     return;
   }
 
+  if (state.crateBurst.exploding) {
+    updateCrateBurstState();
+    updateParticles();
+    updateShockwaves();
+    updateFloatingTexts();
+    state.shake *= 0.92;
+    state.screenFlash *= 0.9;
+    return;
+  }
+
   state.run.elapsedFrames += 1;
   state.run.season = Math.floor(state.run.elapsedFrames / BALANCE.seasonFrames);
 
@@ -3804,7 +4440,7 @@ function worldStep() {
 
   updateBoxAnimation();
   updateSpinSkill();
-  updateInfeed();
+  updateInfeeds();
 
   const gravity = getGravityVector();
 
@@ -3841,6 +4477,7 @@ function worldStep() {
   updateShockwaves();
   updateFloatingTexts();
   updateDangerState();
+  updateCrateBurstState();
   maybeTriggerAutoSpinner();
 
   state.shake *= 0.9;
@@ -3941,12 +4578,37 @@ function drawBackdrop(shakeX) {
   ctx.restore();
 }
 
+function getConveyorPalette(lane) {
+  if (lane === "center") {
+    return {
+      shadow: "rgba(24, 40, 56, 0.34)",
+      base: "#1f4257",
+      mid: "#2f6583",
+      highlight: "rgba(229, 248, 255, 0.16)",
+      roller: "#5ea7c7",
+      hub: "#103347",
+      slat: "rgba(224, 246, 255, 0.16)",
+    };
+  }
+
+  return {
+    shadow: "rgba(27, 15, 9, 0.34)",
+    base: "#2c251f",
+    mid: "#50463e",
+    highlight: "rgba(255, 238, 207, 0.12)",
+    roller: "#5d3f27",
+    hub: "#27170d",
+    slat: "rgba(235, 221, 197, 0.12)",
+  };
+}
+
 function drawConveyor() {
   const lanes = getActiveConveyorLanes();
   const offset = (state.beltTime * BALANCE.conveyor.slatSpeed) % BALANCE.conveyor.slatGap;
 
   for (const lane of lanes) {
     const geometry = getConveyorGeometry(lane);
+    const palette = getConveyorPalette(lane);
     const dx = geometry.endX - geometry.startX;
     const dy = geometry.endY - geometry.startY;
     const angle = Math.atan2(dy, dx);
@@ -3956,7 +4618,7 @@ function drawConveyor() {
     ctx.translate(geometry.startX, geometry.startY);
     ctx.rotate(angle);
 
-    ctx.strokeStyle = "rgba(27, 15, 9, 0.34)";
+    ctx.strokeStyle = palette.shadow;
     ctx.lineWidth = geometry.width + 10;
     ctx.lineCap = "round";
     ctx.beginPath();
@@ -3964,21 +4626,21 @@ function drawConveyor() {
     ctx.lineTo(length, 0);
     ctx.stroke();
 
-    ctx.strokeStyle = "#2c251f";
+    ctx.strokeStyle = palette.base;
     ctx.lineWidth = geometry.width;
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(length, 0);
     ctx.stroke();
 
-    ctx.strokeStyle = "#50463e";
+    ctx.strokeStyle = palette.mid;
     ctx.lineWidth = geometry.width - 18;
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(length, 0);
     ctx.stroke();
 
-    ctx.strokeStyle = "rgba(255, 238, 207, 0.12)";
+    ctx.strokeStyle = palette.highlight;
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(0, -(geometry.width * 0.28));
@@ -3986,11 +4648,11 @@ function drawConveyor() {
     ctx.stroke();
 
     for (let position = -offset; position <= length + BALANCE.conveyor.slatGap; position += BALANCE.conveyor.slatGap) {
-      ctx.fillStyle = "rgba(235, 221, 197, 0.12)";
+      ctx.fillStyle = palette.slat;
       ctx.fillRect(position, -(geometry.width * 0.33), 7, geometry.width * 0.66);
     }
 
-    ctx.fillStyle = "#5d3f27";
+    ctx.fillStyle = palette.roller;
     ctx.beginPath();
     ctx.arc(0, 0, geometry.width * 0.33, 0, Math.PI * 2);
     ctx.fill();
@@ -3998,7 +4660,7 @@ function drawConveyor() {
     ctx.arc(length, 0, geometry.width * 0.33, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = "#27170d";
+    ctx.fillStyle = palette.hub;
     ctx.beginPath();
     ctx.arc(0, 0, geometry.width * 0.14, 0, Math.PI * 2);
     ctx.fill();
@@ -4011,26 +4673,29 @@ function drawConveyor() {
 }
 
 function drawInfeedApple() {
-  if (!state.infeed) {
-    return;
+  for (const lane of ["left", "center", "right"]) {
+    const infeed = getInfeedByLane(lane);
+    if (!infeed) {
+      continue;
+    }
+    const visual = getInfeedVisual(infeed);
+    drawApple({
+      level: infeed.level,
+      special: infeed.special,
+      trait: infeed.trait,
+      x: visual.x,
+      y: visual.y,
+      r: APPLE_TYPES[infeed.level].radius,
+      spin: visual.spin,
+    }, 1);
   }
-
-  const visual = getInfeedVisual();
-  drawApple({
-    level: state.infeed.level,
-    special: state.infeed.special,
-    trait: state.infeed.trait,
-    x: visual.x,
-    y: visual.y,
-    r: APPLE_TYPES[state.infeed.level].radius,
-    spin: visual.spin,
-  }, 1);
 }
 
 function drawOrchardBack() {
   const orchard = getOrchardBounds();
   const dangerRatio = clamp(state.run.dangerRatio, 0, 1);
   const redLineRatio = clamp(state.run.redLineFrames / BALANCE.redLineHoldFrames, 0, 1);
+  const burstWarningRatio = clamp(state.crateBurst.warningFrames / BALANCE.crateBurstWarnFrames, 0, 1);
   ctx.save();
 
   const wood = ctx.createLinearGradient(0, orchard.y, 0, orchard.bottom);
@@ -4091,6 +4756,15 @@ function drawOrchardBack() {
     ctx.strokeRect(orchard.x - 14, orchard.y - 14, orchard.w + 28, orchard.h + 28);
   }
 
+  if (burstWarningRatio > 0) {
+    const pulse = 0.4 + Math.sin(state.time * 0.55) * 0.18 + burstWarningRatio * 0.28;
+    ctx.strokeStyle = `rgba(255, 74, 74, ${pulse})`;
+    ctx.lineWidth = 8 + burstWarningRatio * 6;
+    ctx.strokeRect(orchard.x - 18, orchard.y - 18, orchard.w + 36, orchard.h + 36);
+    ctx.fillStyle = `rgba(255, 88, 88, ${0.06 + burstWarningRatio * 0.1})`;
+    ctx.fillRect(orchard.x - 8, orchard.y - 8, orchard.w + 16, orchard.h + 16);
+  }
+
   ctx.font = '700 18px "Avenir Next Condensed", "Arial Narrow", sans-serif';
   ctx.textAlign = "left";
   ctx.textBaseline = "alphabetic";
@@ -4098,6 +4772,10 @@ function drawOrchardBack() {
   ctx.fillText("위험 구역", orchard.x + 18, orchard.dangerTopY - 12);
   ctx.fillStyle = `rgba(255, 198, 198, ${0.55 + redLineRatio * 0.35})`;
   ctx.fillText(`자동 판매선 · 수수료 ${Math.round(getAutoSaleFeeRate() * 100)}%`, orchard.x + 18, orchard.redLineY - 12);
+  if (burstWarningRatio > 0) {
+    ctx.fillStyle = `rgba(255, 223, 223, ${0.72 + burstWarningRatio * 0.2})`;
+    ctx.fillText(`상자 폭발 경고 · ${Math.max(0, Math.ceil((BALANCE.crateBurstWarnFrames - state.crateBurst.warningFrames) / 60))}초`, orchard.x + 18, orchard.y + 28);
+  }
 
   ctx.restore();
 }
@@ -4335,6 +5013,9 @@ function drawFloatingTextOnCanvas() {
 
 function drawOrchardFront() {
   const orchard = getOrchardBounds();
+  const burstRatio = state.crateBurst.exploding
+    ? 1
+    : clamp(state.crateBurst.warningFrames / BALANCE.crateBurstWarnFrames, 0, 1);
   const lipGradient = ctx.createLinearGradient(0, orchard.bottom - 8, 0, orchard.bottom + 42);
   lipGradient.addColorStop(0, "#98602f");
   lipGradient.addColorStop(1, "#5e391d");
@@ -4347,6 +5028,19 @@ function drawOrchardFront() {
   ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
   for (let x = orchard.x - 12; x < orchard.x + orchard.w + 12; x += 88) {
     ctx.fillRect(x, orchard.bottom + 10, 40, 5);
+  }
+
+  if (burstRatio > 0) {
+    ctx.strokeStyle = `rgba(255, 128, 128, ${0.46 + burstRatio * 0.32})`;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(orchard.x + orchard.w * 0.1, orchard.bottom - 10);
+    ctx.lineTo(orchard.x + orchard.w * 0.22, orchard.bottom - 26);
+    ctx.lineTo(orchard.x + orchard.w * 0.34, orchard.bottom - 8);
+    ctx.moveTo(orchard.x + orchard.w * 0.62, orchard.bottom - 12);
+    ctx.lineTo(orchard.x + orchard.w * 0.75, orchard.bottom - 30);
+    ctx.lineTo(orchard.x + orchard.w * 0.88, orchard.bottom - 14);
+    ctx.stroke();
   }
 }
 
@@ -4415,6 +5109,11 @@ function drawSalePackaging() {
   ctx.fillRect(orchard.x + orchard.w * 0.68, orchard.y - 16, 14, orchard.h + 34);
   ctx.fillRect(orchard.x - 16, orchard.y + orchard.h * 0.34, orchard.w + 32, 12);
 
+  if (packingProgress > 0.28) {
+    ctx.fillStyle = `rgba(255, 243, 214, ${0.16 + packingProgress * 0.16})`;
+    ctx.fillRect(orchard.x - 10, orchard.y + orchard.h * 0.18, orchard.w + 20, 10);
+  }
+
   ctx.strokeStyle = `rgba(255, 255, 255, ${0.14 + packingProgress * 0.22})`;
   ctx.lineWidth = 5;
   for (let streak = 0; streak < 5; streak += 1) {
@@ -4429,6 +5128,13 @@ function drawSalePackaging() {
   const labelHeight = 70;
   const labelX = orchard.centerX - labelWidth / 2;
   const labelY = orchard.centerY - labelHeight / 2;
+  const labelPulse = state.sale.labelPulse;
+  if (labelPulse > 0) {
+    ctx.save();
+    ctx.translate(orchard.centerX, orchard.centerY);
+    ctx.scale(1 + labelPulse * 0.045, 1 + labelPulse * 0.045);
+    ctx.translate(-orchard.centerX, -orchard.centerY);
+  }
   ctx.fillStyle = "rgba(255, 250, 238, 0.95)";
   ctx.fillRect(labelX, labelY, labelWidth, labelHeight);
   ctx.strokeStyle = "rgba(120, 81, 44, 0.24)";
@@ -4442,16 +5148,35 @@ function drawSalePackaging() {
   ctx.font = '700 14px "Avenir Next Condensed", "Arial Narrow", sans-serif';
   ctx.fillText(`${state.sale.auctionShortLabel || "경매"} x${state.sale.auctionMultiplier.toFixed(2)}`, orchard.centerX, orchard.centerY + 4);
   ctx.fillText(`보너스 ${formatLabCurrency(state.sale.displayedBonus)} · 감액 ${Math.round(state.sale.rottenPenaltyRate * 100)}%`, orchard.centerX, orchard.centerY + 24);
+  if (labelPulse > 0) {
+    ctx.restore();
+  }
+
+  for (const trail of state.sale.bonusTrails) {
+    ctx.save();
+    ctx.fillStyle = trail.color;
+    ctx.globalAlpha = trail.life / trail.maxLife;
+    ctx.beginPath();
+    ctx.arc(trail.x, trail.y, 8, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.4)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(trail.x - 6, trail.y);
+    ctx.lineTo(trail.x + 6, trail.y);
+    ctx.stroke();
+    ctx.restore();
+  }
 
   if (state.sale.phase === "shipping") {
     ctx.strokeStyle = "rgba(255, 233, 188, 0.46)";
     ctx.lineWidth = 5;
     for (let line = 0; line < 4; line += 1) {
-      const x = orchard.x - 120 + line * 28 - shippingProgress * 120;
+      const x = orchard.x - 180 + line * 34 - shippingProgress * 190;
       const y = orchard.y + 90 + line * 92;
       ctx.beginPath();
       ctx.moveTo(x, y);
-      ctx.lineTo(x + 86, y + 6);
+      ctx.lineTo(x + 120, y + 8);
       ctx.stroke();
     }
   }
@@ -4490,10 +5215,19 @@ function traceRoundedRect(x, y, width, height, radius) {
 
 function getCanvasHudStatus() {
   if (!state.run.alive) {
+    if (state.run.exitReason === "burst") {
+      return "상자 폭발 · 보상 0";
+    }
     return state.run.exitReason === "auto_sold" ? "상자 자동 경매 완료" : "상자 경매 완료";
   }
   if (isSaleActive()) {
     return state.sale.reason === "auto_sold" ? "상자 자동 포장 중" : "상자 경매 포장 중";
+  }
+  if (state.crateBurst.exploding) {
+    return "상자 폭발 중";
+  }
+  if (state.crateBurst.warningFrames > 0) {
+    return `상자 폭발 경고 ${Math.max(0, Math.ceil((BALANCE.crateBurstWarnFrames - state.crateBurst.warningFrames) / 60))}s`;
   }
   if (state.paused) {
     return "일시 정지";
@@ -4690,6 +5424,32 @@ function handleGuideModalClick(event) {
 }
 
 function handleOverlayClick(event) {
+  const confirmButton = event.target.closest("#overlayConfirmButton");
+  if (confirmButton) {
+    const action = ui.overlay.dataset.action;
+    hideOverlay();
+    if (action === "sell") {
+      attemptSellCrate();
+    } else if (action === "restart") {
+      startNewRun();
+    }
+    return;
+  }
+
+  const cancelButton = event.target.closest("#overlayCancelButton");
+  if (cancelButton) {
+    hideOverlay();
+    if (state.paused) {
+      showOverlay(
+        "잠시 멈춤",
+        `<p class="overlay-lead">컨베이어와 상자 물리를 잠시 멈췄습니다. 버튼이나 P 키로 다시 이어갈 수 있습니다.</p>`,
+        "",
+        { mode: "pause", eyebrow: "과수원 알림" },
+      );
+    }
+    return;
+  }
+
   const restartButton = event.target.closest("#overlayRestartButton");
   if (restartButton) {
     startNewRun();
@@ -4703,12 +5463,12 @@ function handleKeyDown(event) {
   }
 
   if (event.code === "KeyR") {
-    startNewRun();
+    requestRestartRun();
     event.preventDefault();
   }
 
   if (event.code === "KeyS") {
-    attemptSellCrate();
+    requestSellCrate();
     event.preventDefault();
   }
 
@@ -4778,11 +5538,12 @@ function frame(timestamp) {
 }
 
 function getPointValueAtRealTier(tierReal) {
-  const clamped = clamp(tierReal, 0, APPLE_TYPES.length - 1);
-  const lower = Math.floor(clamped);
-  const upper = Math.min(APPLE_TYPES.length - 1, lower + 1);
-  const mix = clamped - lower;
-  return APPLE_TYPES[lower].points * (1 - mix) + APPLE_TYPES[upper].points * mix;
+  const info = getDropTierInfo({
+    upgrades: {
+      dropTier: tierReal > 0 ? Math.max(1, Math.round(Math.exp(tierReal / 1.4) - 1)) : 0,
+    },
+  });
+  return info.distribution.reduce((sum, entry) => sum + APPLE_TYPES[entry.level].points * entry.chance, 0);
 }
 
 function getSampleProfile(profile) {
@@ -4795,6 +5556,7 @@ function getSampleProfile(profile) {
           bombOrchard: 3,
           prismOrchard: 2,
           expansionEngineering: 8,
+          conveyorWorkshop: 5,
           brokerageOffice: 4,
           twinConveyor: 1,
           offlineOrchard: 8,
@@ -4811,6 +5573,7 @@ function getSampleProfile(profile) {
           bombOrchard: 6,
           prismOrchard: 5,
           expansionEngineering: 18,
+          conveyorWorkshop: 12,
           brokerageOffice: 8,
           twinConveyor: 1,
           offlineOrchard: 22,
@@ -4890,9 +5653,10 @@ function sampleSingleRun(profileMeta) {
       season,
     };
     const interval = getDropIntervalFrames(fakeRun);
-    const dropsPerSecond = 60 / interval;
+    const feedStreams = 1 + (hasCenterConveyor(meta) ? 1 : 0);
+    const dropsPerSecond = (60 / interval) * feedStreams;
     const tierReal = getDropTierReal(fakeRun);
-    const pointValue = getPointValueAtRealTier(tierReal);
+    const pointValue = getExpectedDropPointValue(fakeRun);
     const special = getSpecialChances(meta, fakeRun);
     const shock = getShockMultiplier(fakeRun);
     const boxScale = getBoxScaleForLevel(runLevels.crateExpansion);
@@ -4901,11 +5665,10 @@ function sampleSingleRun(profileMeta) {
     const valueMult = getCombinedValueMultiplier(meta, fakeRun);
     const spinner = getAutoSpinnerSpec(fakeRun);
     const seasonHazard = getSeasonHazard(season);
-    const conveyors = hasTwinConveyor(meta) ? 2 : 1;
 
     const mergeEfficiency = 0.42 + 0.09 * Math.log1p(boxScale * 3) + 0.04 * Math.log1p(shock);
     const specialValueBoost = 1 + special.bomb * 0.55 + special.prism * 0.95;
-    const gainPerSecond = dropsPerSecond * pointValue * mergeEfficiency * valueMult * specialValueBoost * (0.88 + Math.random() * 0.24) * (1 + (conveyors - 1) * 0.08);
+    const gainPerSecond = dropsPerSecond * pointValue * mergeEfficiency * valueMult * specialValueBoost * (0.88 + Math.random() * 0.24);
 
     score += gainPerSecond;
     cash += gainPerSecond;
@@ -5027,13 +5790,16 @@ if (ui.menuTabs) {
   ui.menuTabs.addEventListener("click", handleMenuTabClick);
 }
 if (ui.restartButton) {
-  ui.restartButton.addEventListener("click", startNewRun);
+  ui.restartButton.addEventListener("click", requestRestartRun);
 }
 if (ui.pauseButton) {
   ui.pauseButton.addEventListener("click", () => togglePause());
 }
 if (ui.sellButton) {
-  ui.sellButton.addEventListener("click", attemptSellCrate);
+  ui.sellButton.addEventListener("click", requestSellCrate);
+}
+if (ui.summonButton) {
+  ui.summonButton.addEventListener("click", summonAppleFromSky);
 }
 if (ui.overlay) {
   ui.overlay.addEventListener("click", handleOverlayClick);

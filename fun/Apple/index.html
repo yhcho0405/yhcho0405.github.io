@@ -28,18 +28,24 @@
     </section>
 
     <section class="control-dock" aria-label="게임 조작">
+      <div class="summon-row" aria-label="직접 사과 소환">
+        <button id="summonButton" class="summon-button" type="button" aria-label="사과 소환">
+          <span class="summon-label">사과 소환</span>
+        </button>
+      </div>
+
       <div class="action-row">
-        <button id="sellButton" class="action-button sell-button dock-sell">경매 올리기</button>
-        <button id="pauseButton" class="tool-button dock-tool" type="button">멈춤</button>
-        <button id="restartButton" class="tool-button dock-tool" type="button">새 런</button>
-        <button id="guideButton" class="tool-button accent dock-tool" type="button">설명</button>
+        <button id="sellButton" class="action-button sell-button dock-sell"><span class="button-icon has-image" aria-hidden="true" style="--asset-image:url(assets/manual_sell_btn.png);" data-icon="SELL"></span><span class="button-label">경매 올리기</span></button>
+        <button id="pauseButton" class="tool-button dock-tool" type="button"><span class="button-label">멈춤</span></button>
+        <button id="restartButton" class="tool-button dock-tool" type="button"><span class="button-icon has-image" aria-hidden="true" style="--asset-image:url(assets/apple_box_icon.png);" data-icon="RUN"></span><span class="button-label">새 런</span></button>
+        <button id="guideButton" class="tool-button accent dock-tool" type="button"><span class="button-icon has-image" aria-hidden="true" style="--asset-image:url(assets/manual_icon.png);" data-icon="GUIDE"></span><span class="button-label">설명</span></button>
       </div>
 
       <nav id="menuTabs" class="dock-tabs" aria-label="게임 메뉴">
-        <button class="dock-tab" data-menu="automation">경매장</button>
-        <button class="dock-tab" data-menu="run">상점</button>
-        <button class="dock-tab" data-menu="lab">연구소</button>
-        <button class="dock-tab" data-menu="ladder">도감</button>
+        <button class="dock-tab" data-menu="automation"><span class="tab-icon has-image" aria-hidden="true" style="--asset-image:url(assets/auction_house.png);" data-icon="AUC"></span><span class="tab-label">경매장</span></button>
+        <button class="dock-tab" data-menu="run"><span class="tab-icon has-image" aria-hidden="true" style="--asset-image:url(assets/apple_box_icon.png);" data-icon="RUN"></span><span class="tab-label">상점</span></button>
+        <button class="dock-tab" data-menu="lab"><span class="tab-icon has-image" aria-hidden="true" style="--asset-image:url(assets/research_liquid.png);" data-icon="LAB"></span><span class="tab-label">연구소</span></button>
+        <button class="dock-tab" data-menu="ladder"><span class="tab-icon has-image" aria-hidden="true" style="--asset-image:url(assets/breed_upgrade.png);" data-icon="DEX"></span><span class="tab-label">도감</span></button>
       </nav>
     </section>
 
