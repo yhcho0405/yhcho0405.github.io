@@ -5456,6 +5456,62 @@ function handleOverlayClick(event) {
   }
 }
 
+function registerScrollIntentGuard(element) {
+  if (!element) {
+    return;
+  }
+
+  const gesture = {
+    pointerId: null,
+    startX: 0,
+    startY: 0,
+    suppressUntil: 0,
+  };
+
+  function clearGesture(pointerId) {
+    if (gesture.pointerId === pointerId) {
+      gesture.pointerId = null;
+    }
+  }
+
+  element.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
+    gesture.pointerId = event.pointerId;
+    gesture.startX = event.clientX;
+    gesture.startY = event.clientY;
+  }, { passive: true });
+
+  element.addEventListener("pointermove", (event) => {
+    if (gesture.pointerId !== event.pointerId) {
+      return;
+    }
+
+    const deltaX = Math.abs(event.clientX - gesture.startX);
+    const deltaY = Math.abs(event.clientY - gesture.startY);
+    if (deltaY > 10 || deltaX > 10) {
+      gesture.suppressUntil = Date.now() + 260;
+    }
+  }, { passive: true });
+
+  element.addEventListener("pointerup", (event) => {
+    clearGesture(event.pointerId);
+  }, { passive: true });
+
+  element.addEventListener("pointercancel", (event) => {
+    clearGesture(event.pointerId);
+  }, { passive: true });
+
+  element.addEventListener("click", (event) => {
+    if (Date.now() >= gesture.suppressUntil) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
+}
+
 function handleKeyDown(event) {
   if (event.code === "KeyP") {
     togglePause();
@@ -5822,6 +5878,11 @@ if (ui.guideCloseButton) {
 if (ui.offlineDismissButton) {
   ui.offlineDismissButton.addEventListener("click", dismissOfflineModal);
 }
+registerScrollIntentGuard(ui.automationList);
+registerScrollIntentGuard(ui.runShop);
+registerScrollIntentGuard(ui.labShop);
+registerScrollIntentGuard(ui.legend);
+registerScrollIntentGuard(ui.guideContent);
 window.addEventListener("keydown", handleKeyDown, { passive: false });
 window.addEventListener("beforeunload", saveState);
 document.addEventListener("visibilitychange", handleVisibilityChange);
