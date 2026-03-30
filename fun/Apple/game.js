@@ -27,6 +27,7 @@ const ui = {
   menuTabs: document.getElementById("menuTabs"),
   bottomSheet: document.getElementById("bottomSheet"),
   sheetTitle: document.getElementById("sheetTitle"),
+  sheetCloseButton: document.getElementById("sheetCloseButton"),
   guideButton: document.getElementById("guideButton"),
   guideDockButton: document.getElementById("guideDockButton"),
   guideModal: document.getElementById("guideModal"),
@@ -3335,6 +3336,15 @@ function setActiveMenu(menu) {
   syncUi(true);
 }
 
+function closeBottomSheet() {
+  if (!state.sheetOpen) {
+    return;
+  }
+  state.sheetOpen = false;
+  audioManager.play("ui-confirm");
+  syncUi(true);
+}
+
 function openGuide() {
   state.guidePane = sanitizeGuidePane(state.guidePane);
   state.sheetOpen = false;
@@ -5862,6 +5872,9 @@ if (ui.overlay) {
 }
 if (ui.guideButton) {
   ui.guideButton.addEventListener("click", handleGuideButtonClick);
+}
+if (ui.sheetCloseButton) {
+  ui.sheetCloseButton.addEventListener("click", closeBottomSheet);
 }
 if (ui.guideDockButton) {
   ui.guideDockButton.addEventListener("click", handleGuideButtonClick);

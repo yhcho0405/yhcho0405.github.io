@@ -418,6 +418,10 @@ canvas {
   margin-top: -16px;
 }
 
+.control-dock.is-sheet-open .action-row {
+  pointer-events: none;
+}
+
 .action-row {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) repeat(3, minmax(0, 0.8fr));
@@ -544,7 +548,7 @@ canvas {
   left: 8px;
   right: 8px;
   bottom: calc(env(safe-area-inset-bottom) + 118px);
-  z-index: 7;
+  z-index: 12;
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   gap: 10px;
@@ -575,10 +579,17 @@ canvas {
 }
 
 .sheet-toolbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: start;
-  justify-content: space-between;
   gap: 10px;
+}
+
+.sheet-close-button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px;
+  font-weight: 900;
 }
 
 .sheet-copy h2 {
@@ -1136,11 +1147,13 @@ canvas {
   }
 
   .bottom-sheet {
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 6px);
     left: 6px;
     right: 6px;
-    bottom: calc(env(safe-area-inset-bottom) + 110px);
-    max-height: min(58dvh, 560px);
-    min-height: 210px;
+    bottom: calc(env(safe-area-inset-bottom) + 60px);
+    max-height: none;
+    min-height: 0;
     padding: 8px;
     border-radius: 24px;
   }
@@ -1189,7 +1202,7 @@ canvas {
   }
 
   .sheet-toolbar {
-    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 8px;
   }
 
@@ -1200,6 +1213,7 @@ canvas {
   .dev-speed-card {
     min-width: 0;
     padding: 8px;
+    grid-column: 1 / -1;
   }
 
   .guide-tabs {
