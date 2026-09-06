@@ -1,37 +1,15 @@
-# AXIOM FORGE — GitHub 드래그 업로드용
+# AXIOM FORGE · GitHub Pages 업로드 폴더
 
-이 docs 폴더에는 이미 빌드된 게임이 들어 있습니다. npm 설치나 로컬 빌드가 필요 없습니다.
+빌드가 끝난 게임입니다. Node.js나 npm을 GitHub에서 실행할 필요가 없습니다.
 
-## 올리는 방법
+1. ZIP으로 받았다면 먼저 압축을 푸세요. 이 **docs 폴더 전체**를 GitHub 저장소의 **Add file → Upload files** 화면으로 드래그하고 변경 사항을 커밋하세요.
+2. 저장소 루트에 **docs/index.html**과 **docs/assets/**가 보이는지 확인하세요.
+3. **Settings → Pages → Source → Deploy from a branch**를 선택하세요.
+4. 업로드한 브랜치(보통 main)와 **/docs**를 선택하고 Save를 누르세요.
+5. GitHub가 표시한 Pages 주소를 여세요. 첫 배포는 잠시 걸릴 수 있습니다.
 
-1. GitHub 저장소 루트에서 Add file → Upload files를 엽니다.
-2. 이 **docs 폴더 자체**를 통째로 드래그합니다. 업로드 후 저장소에서 docs/index.html과 docs/assets/가 보여야 합니다.
-3. Commit changes로 저장합니다.
-4. Settings → Pages → Build and deployment에서 Source를 **Deploy from a branch**로 선택합니다.
-5. 방금 업로드한 브랜치(보통 main)와 **/docs**를 선택하고 Save를 누릅니다.
-6. 배포가 끝나면 같은 화면의 Visit site를 누릅니다. 첫 배포는 최대 약 10분 걸릴 수 있습니다.
+소스용 AXIOM FORGE Actions 배포를 이미 설정했다면 중복 배포를 피하도록 해당 Pages 워크플로를 비활성화하고 위 branch 방식을 사용하세요. 파일을 수정하면 소스 폴더에서 **npm run package:pages**를 실행하여 이 폴더를 새로 만드세요.
 
-주의: 상위 outputs 폴더를 올리지 마세요. 저장소 루트 바로 아래에 docs/index.html이 있어야 합니다. index.html만 올리면 실행되지 않으므로 assets 폴더도 함께 올리세요.
+로컬 확인은 이 폴더를 HTTP 정적 서버로 열어야 합니다. index.html을 더블클릭하는 file:// 방식은 지원하지 않습니다. 게임은 외부 CDN·API 키·계정 없이 실행되며 설계 저장은 브라우저에 보관됩니다. 중요한 설계는 게임의 파일 내보내기로 백업하세요.
 
-이미 이전 소스 ZIP의 'Verify and publish AXIOM FORGE' 워크플로를 사용 중인 저장소라면, 이 업로드 방식으로 전환할 때 해당 워크플로만 Actions → 워크플로 선택 → ⋯ → Disable workflow에서 비활성화하세요. 기존 자동 빌드 배포가 새 업로드 결과를 다시 덮지 않도록 하는 조치입니다. 새 저장소라면 이 단계는 필요 없습니다.
-
-.nojekyll은 GitHub의 추가 사이트 변환을 생략하기 위한 파일입니다. 숨김 파일이라도 폴더에 포함되어 있습니다. 이 방식도 GitHub 자체의 Pages 배포 처리는 사용하지만, 직접 npm 명령이나 워크플로 파일을 작성할 필요는 없습니다.
-
-## 폴더 구성
-
-docs/
-  index.html
-  assets/
-    index-Cy1ABxxr.js
-    index-CuxOCa4x.css
-  favicon.svg
-  .nojekyll
-  THIRD_PARTY_NOTICES.txt
-  README.md
-
-게임 파일은 검증된 최종 정적 빌드와 바이트 단위로 같습니다. 외부 API 키·로그인·서버 코드가 필요하지 않습니다. 기체 저장은 브라우저/사이트 주소별 로컬 저장이며 중요한 설계는 게임에서 내보내기로 백업할 수 있습니다.
-
-공식 안내:
-- https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository
-- https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
-- https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site
+공식 안내: [폴더 업로드](https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository), [Pages 게시 폴더 설정](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
